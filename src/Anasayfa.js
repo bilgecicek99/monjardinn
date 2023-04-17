@@ -3,7 +3,7 @@ import Card from './Card';
 import Adminpanel from "./Adminpanel";
 
 
-const Home = () => {
+const Anasayfa = () => {
     const data = [
         { id: 1, title: 'Saksı', content: 'İçerik 1' },
         { id: 2, title: 'Kurutulmuş Çiçek', content: 'İçerik 2' },
@@ -41,4 +41,4 @@ const Home = () => {
 
 
 
-export default Home;
+export default Anasayfa;

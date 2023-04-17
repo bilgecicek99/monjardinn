@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Home';
+import { BrowserRouter as Router, Routes, Route, Redirect } from 'react-router-dom';
+import Anasayfa from './Anasayfa';
+
 import Adminpanel from './Adminpanel';
 import AdminLogin from './AdminLogin';
 import Productlist from './Productlist';
@@ -21,20 +22,20 @@ function App() {
         {menuOpen && (
           <div className="menu-items" onClick={() => setMenuOpen(false)}>
             <NavLink to='/AdminLogin'>Giriş Yap</NavLink>
-            <NavLink to='/Adminpanel'>Adminpanel</NavLink>
-            <NavLink to='/Home'>Home</NavLink>
-            <NavLink to='/Productlist'>Ürün Listele</NavLink>
+            <NavLink to='/Adminpanel'>Adminpanel</NavLink>       
+            <NavLink to='/Productlist'>Ürün Listesi</NavLink>
+            <NavLink to='/Anasayfa'>Anasayfa</NavLink>
           </div>
         )}
       </nav>
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/Adminpanel" element={<Adminpanel />} />
-        <Route path="/Home" element={<Home />} />
         <Route path="/Productlist" element={<Productlist/>} />
+        <Route path="/Anasayfa" element={<Anasayfa />} />
       </Routes>
     </Router>
   );
-}
+} 
 
 export default App;
