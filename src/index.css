@@ -203,7 +203,7 @@ h1 {
 .image__overlay {
   position: absolute;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0);
+  background-color:rgba(0, 0, 0, 0);
   color: #ffff;
   font-family: "Courier New", Courier, monospace;
   display: flex;
@@ -305,6 +305,79 @@ h1 {
     top: 0;
   }
 }
+.admisgiris {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  font-family: sans-serif;
+}
+
+.admisgiris label {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  background-color: plum;
+}
+
+.admisgiris input {
+  border-radius: 5px;
+ 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admisgiris button {
+  background-color: purple;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  height: 40px;
+}
+
+.admisgiris button:hover {
+  background-color: #0069d9;
+}
+
+.admisgiris p {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+
 
 
 
