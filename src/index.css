@@ -104,9 +104,8 @@ button:hover {
   flex-direction: column;
   position: absolute;
   top: 60px;
-  left: 0;
-  right: 0;
-  background-color: #f7f7f7;
+  left: 1020px; /* Örnek olarak sol tarafı 20px olarak ayarladık */
+  background-color: transparent; /* Mor arka plan rengi */
   padding: 20px;
   border-bottom: 1px solid #ccc;
 }
@@ -319,14 +318,14 @@ h1 {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
-  background-color: plum;
+ 
 }
 
 .admisgiris input {
   border-radius: 5px;
  
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #893694;
   border-radius: 5px;
   font-size: 16px;
   width: 100%;
@@ -334,7 +333,7 @@ h1 {
 }
 
 .admisgiris button {
-  background-color: purple;
+  background-color: #893694;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -348,6 +347,43 @@ h1 {
 .admisgiris button:hover {
   background-color: #0069d9;
 }
+.listedeara {
+  position: relative;
+  display: inline-block;
+}
+
+.listedeara input[type="text"] {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 16px;
+}
+
+.listedeara input[type="text"]::placeholder {
+  color: #a9a9a9;
+}
+
+.listedeara button {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.listedeara button:hover {
+  color: #f00;
+}
+
+.listedeara button:focus {
+  outline: none;
+}
+
 
 .admisgiris p {
   color: red;
@@ -376,7 +412,14 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #ddd;
 }
-
+.hosgeldiniz{
+  font-family: "Times New Roman", serif;
+  font-weight: bold;
+  font-style: italic;
+}
+.adgiris{
+  background-color: white;
+}
 
 
 
