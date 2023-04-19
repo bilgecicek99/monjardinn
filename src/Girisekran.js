@@ -45,11 +45,10 @@ const Girisekran = () => {
     <div>
       <App />
       <Row gutter={3}>
-       
+        {cardList}
       </Row>
     </div>
   );
 }
-
-
+a
 export default Girisekran;
