@@ -79,7 +79,7 @@ export default function AdminLogin() {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <button type="submit">Gönder</button>
+        <button  type="submit">Gönder</button>
         <button type="button" onClick={() => setForgotPassword(true)}>Şifremi Unuttum</button>
         {isError && <p>Hata oluştu.</p>}
       </form>

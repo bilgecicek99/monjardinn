@@ -4,6 +4,7 @@ import Anasayfa from './Anasayfa';
 import Adminpanel from './Adminpanel';
 import AdminLogin from './AdminLogin';
 import Productlist from './Productlist';
+import Girisekran from './Girisekran';
 
 
 import { NavLink } from 'react-router-dom';
@@ -23,19 +24,22 @@ function App() {
         </div>
         {menuOpen && (
           <div className="menu-items" onClick={() => setMenuOpen(false)}>
+            <NavLink to='/Girisekran'>Anasayfa</NavLink>
             <NavLink to='/AdminLogin'>Giriş Yap</NavLink>
             <NavLink to='/Adminpanel'>Adminpanel</NavLink>       
             <NavLink to='/Productlist'>Ürün Listesi</NavLink>
+            
             
             
           </div>
         )}
       </nav>
       <Routes>
+        <Route path="/Girisekran" element={<Girisekran />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/Adminpanel" element={<Adminpanel />} />
         <Route path="/Productlist" element={<Productlist/>} />
-  
+          
         
       </Routes>
     </Router>

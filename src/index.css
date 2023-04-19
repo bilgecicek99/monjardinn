@@ -14,6 +14,7 @@ h1 {
   border: 1px solid #ccc;
 }
 
+
 .card img {
   width: 200px;
   height: 200px;
@@ -110,10 +111,13 @@ button:hover {
   border-bottom: 1px solid #ccc;
 }
 .stokkontrol{
+margin-top: 20px;
 font-family: 'Times New Roman';
 font-style: italic;
 font-weight: bold;
 color: #FFFFFF;
+width: 250px;
+height: 100px;
 }
 .baslik{
 font-family: 'Times New Roman';
@@ -342,6 +346,10 @@ h1 {
   cursor: pointer;
   margin-top: 20px;
   height: 40px;
+  margin-left: 57px;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  
 }
 
 .admisgiris button:hover {
@@ -419,6 +427,9 @@ tr:hover {
 }
 .adgiris{
   background-color: white;
+}
+.adminpanelyazi{
+  text-align: left;
 }
 
 
