@@ -50,5 +50,5 @@ const Girisekran = () => {
     </div>
   );
 }
-a
+avs
 export default Girisekran;
