@@ -14,7 +14,7 @@ function CardItem(props) {
               alt="Travel Image"
             />
           </figure>
-          <div className="image__overlay image__overlay--blur">
+          <div >
             <div className="image__title">{props.title}</div>
             <p className="image__description">{props.desc}</p>
           </div>

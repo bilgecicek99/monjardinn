@@ -73,7 +73,7 @@ const Detay = (props) => {
   };
 
   return (
-    <div>
+    <div  style={{ margin: "100px" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* Ürün fotoğrafı */}
         <img src={props.foto} alt={props.ad} style={{ width: "200px", marginRight: "16px" }} />

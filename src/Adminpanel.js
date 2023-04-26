@@ -14,7 +14,7 @@ export default function Adminpanel() {
 
   return (
     <>
-      <div>
+      <div  style={{ margin: "100px" }}>
         {/* ... */}
       </div>
       <h1 className='adminpanelyazi'> Admin Panel</h1> 

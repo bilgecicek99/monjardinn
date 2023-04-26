@@ -23,7 +23,7 @@ const Uyegiris = () => {
   };
 
   return (
-    <div>
+    <div  style={{ margin: "100px" }}>
       <h1>Hoşgeldiniz</h1>
       <form onSubmit={handleSubmit}>
         <label>
