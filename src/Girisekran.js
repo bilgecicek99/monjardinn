@@ -22,7 +22,7 @@ const Girisekran = () => {
   ));
 
   return (
-    <div>
+    <div style={{ margin: "100px" }}>
         <Carousel1/>
         {cardList}
       </div>

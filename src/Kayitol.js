@@ -15,7 +15,7 @@ const Kayitol = () => {
   };
 
   return (
-    <div>
+    <div  style={{ margin: "100px" }}>
       <h1 style={{ textAlign: "center" }}>
         Sizi de Aramızda Görmekten Mutlu Oluruz
       </h1>

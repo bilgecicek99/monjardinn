@@ -3,7 +3,7 @@ import { FaCheck } from "react-icons/fa";
 
 
 
-const products  = [
+const products = [
     
   { id: 1, name: "Mon Jardin", price: 600, category: "Kategori 1", color: "Mor", size: "Boyut 1", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png"  },
   { id: 2, name: "Mon Jardin", price: 200, category: "Kategori 2", color: "Mor", size: "Boyut 2", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
@@ -191,7 +191,7 @@ const Liste = () => {
 </div>
 <div style={{ flex: "0 0 75%", padding: "10px" }}>
 
-<ul>
+<ul style={{display:"flex" }}>
 {filteredProducts.map((product) => (
 <li key={product.id}>
 <img src={product.image} alt={product.name} />
