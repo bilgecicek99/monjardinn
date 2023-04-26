@@ -9,43 +9,33 @@
           <div className="cards__wrapper">
             <ul className="cards__items">
               <CardItem
-                src="images/saksı.png"
+                src="images/renkarka.png"
                 text="Saksı"
                 path=""
                 desc="yükleniyor"
               />
               <CardItem
-                src="/images/saksı.png"
+                src="/images/renkarka.png"
                 text="Kurutulmuş Çiçek"
                 path=""
                 desc="yükleniyor"
               />
-              <CardItem
-                src="/images/saksı.png"
-                text="Büyük Bitki"
-                path=""
-                desc="yükleniyor"
-              />
+            
             </ul>
             <ul className="cards__items">
               <CardItem
-                src="/images/saksı.png"
+                src="/images/renkarka.png"
                 text="Aranjmanlar"
                 path=""
                 desc="yükleniyor"
               />
               <CardItem
-                src="/images/saksı.png"
-                text="Kendin Yap"
+                src="/images/renkarka.png"
+                text="Büyük Bitki"
                 path=""
                 desc="yükleniyor"
               />
-              <CardItem
-                src="/images/saksı.png"
-                text="x"
-                path=""
-                desc="yükleniyor"
-              />
+           
             </ul>
           </div>
         </div>
