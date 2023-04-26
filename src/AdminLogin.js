@@ -60,7 +60,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div>
+    <div  style={{ margin: "100px" }}>
       <h1 className='hosgeldiniz'>Hoşgeldiniz</h1>
       <form className='admisgiris' onSubmit={handleSubmit}>
         <label>

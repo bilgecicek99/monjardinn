@@ -84,13 +84,13 @@ export default function ProductList() {
     setFilteredProducts(filteredList);
   }, [productList, searchTerm]);
 
-const handleProductClick = (productId) => {
-if (expandedProductId === productId) {
-setExpandedProductId(null);
-} else {
-setExpandedProductId(productId);
-}
-};
+  const handleProductClick = (productId) => {
+    if (expandedProductId === productId) {
+    setExpandedProductId(null);
+    } else {
+    setExpandedProductId(productId);
+    }
+  };
 const handleSort = (column) => {
   if (column === sortColumn) {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -119,66 +119,57 @@ const sortedProducts = filteredProducts.sort((a, b) => {
 });
 
 return (
-  <div>
+  <div  style={{ margin: "100px" }}>
     <div className='listedeara'>
-      <input
-        type="text"
-        placeholder="Ara..."
-        value={searchTerm}
-        onChange={(event) => setSearchTerm 
-(event.target.value)}
-/>
-<button onClick={() => setSearchTerm("")}>Temizle</button>
-</div>
+      <input type="text" placeholder="Ara..." value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)}/>
+      <button onClick={() => setSearchTerm("")}>Temizle</button>
+    </div>
 
-<div>
-  <table>
-    <thead>
-      <tr>
-      <th onClick={() => handleSort('id')}>ID</th>
-      <th>Ürün Resmi</th>
-      <th onClick={() => handleSort('name')}>Ürün Adı</th>
-      <th onClick={() => handleSort('stockNo')}>Stok No</th>
-      <th onClick={() => handleSort('quantity')}>Stok Miktarı</th>
-      <th onClick={() => handleSort('price')}>Fiyat</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      {filteredProducts.map((product) => (
-        <tr key={product.id} onClick={() => handleProductClick(product.id)}>
+    <div>
+      <table>
+        <thead>
+          <tr>
+          <th onClick={() => handleSort('id')}>ID</th>
+          <th>Ürün Resmi</th>
+          <th onClick={() => handleSort('name')}>Ürün Adı</th>
+          <th onClick={() => handleSort('stockNo')}>Stok No</th>
+          <th onClick={() => handleSort('quantity')}>Stok Miktarı</th>
+          <th onClick={() => handleSort('price')}>Fiyat</th>
+          </tr>
+        </thead>
         
-          <td>{product.id}</td>
-          <td>
-            <img src={product.image} alt={product.name} />
-          </td>
-          <td>{product.name}</td>
-          <td>{product.stockNo}</td>
-          <td>{product.quantity}</td>
-          <td>{product.price}</td>
-        </tr>
-      ))}
-      {expandedProductId && (
-        <tr>
-          <td colSpan="6">
-            <div>
-              <h3>{productList.find((p) => p.id === expandedProductId).name}</h3>
-              <img
-                src={productList.find((p) => p.id === expandedProductId).image}
-                alt={productList.find((p) => p.id === expandedProductId).name}
-              />
-              <p>{productList.find((p) => p.id === expandedProductId).description}</p>
-              <p>Fiyat: {productList.find((p) => p.id === expandedProductId).price}</p>
-              <p>KDV Oranı: {productList.find((p) => p.id === expandedProductId).taxRate}%</p>
-              <p>Stok Miktarı: {productList.find((p) => p.id === expandedProductId).quantity}</p>
-              <p>Indirim Oranı: {productList.find((p) => p.id === expandedProductId).discount * 100}%</p>
-              <p>Barkod: {productList.find((p) => p.id === expandedProductId).barcode}</p>
-            </div>
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
+        <tbody>
+          {filteredProducts.map((product) => (
+            <tr key={product.id} onClick={() => handleProductClick(product.id)}>     
+              <td>{product.id}</td>
+              <td> <img src={product.image} alt={product.name} /></td>
+              <td>{product.name}</td>
+              <td>{product.stockNo}</td>
+              <td>{product.quantity}</td>
+              <td>{product.price}</td>
+            </tr>
+          ))}
+          {expandedProductId && (
+            <tr>
+              <td colSpan="6">
+                <div>
+                  <h3>{productList.find((p) => p.id === expandedProductId).name}</h3>
+                  <img
+                    src={productList.find((p) => p.id === expandedProductId).image}
+                    alt={productList.find((p) => p.id === expandedProductId).name}
+                  />
+                  <p>{productList.find((p) => p.id === expandedProductId).description}</p>
+                  <p>Fiyat: {productList.find((p) => p.id === expandedProductId).price}</p>
+                  <p>KDV Oranı: {productList.find((p) => p.id === expandedProductId).taxRate}%</p>
+                  <p>Stok Miktarı: {productList.find((p) => p.id === expandedProductId).quantity}</p>
+                  <p>Indirim Oranı: {productList.find((p) => p.id === expandedProductId).discount * 100}%</p>
+                  <p>Barkod: {productList.find((p) => p.id === expandedProductId).barcode}</p>
+                </div>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
 </div>
 )}

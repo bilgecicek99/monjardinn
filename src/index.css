@@ -90,8 +90,7 @@ button:hover {
 }
 .menu-icon {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  
   cursor: pointer;
 }
 
@@ -104,11 +103,20 @@ button:hover {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 60px;
-  left: 1020px; /* Örnek olarak sol tarafı 20px olarak ayarladık */
-  background-color: transparent; /* Mor arka plan rengi */
+ 
+  left: 20px; /* Örnek olarak sol tarafı 20px olarak ayarladık */
+  background-color: white; /* Mor arka plan rengi */
   padding: 20px;
   border-bottom: 1px solid #ccc;
+  z-index: 100;
+}
+.menu-items-link{
+  text-decoration: none;
+  color:black;
+}
+.menu-items-link:hover{
+  text-decoration: none;
+  color:purple;
 }
 .stokkontrol{
 margin-top: 20px;
@@ -123,7 +131,7 @@ height: 100px;
 font-family: 'Times New Roman';
 font-style: italic;
 font-weight: bold;
-
+text-align: center;
 }
 .cards {
   
@@ -203,33 +211,6 @@ h1 {
   font-size: 18px;
   line-height: 24px;
 }
-.image__overlay {
-  position: absolute;
-  height: 100%;
-  background-color:rgba(0, 0, 0, 0);
-  color: #ffff;
-  font-family: "Courier New", Courier, monospace;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.image__overlay--blur {
-  backdrop-filter: blur(5px);
-}
-.image__overlay > * {
-  transform: translateY(20px);
-  transition: transform 0.25s;
-  padding-left: 15px;
-}
-.image__overlay:hover {
-  opacity: 1;
-}
-.image__overlay:hover > * {
-  transform: translateY(0);
-  padding-left: 15px;
-}
 .image__title {
   font-size: 1em;
   font-weight: bold;
@@ -266,25 +247,9 @@ h1 {
     margin-bottom: 2rem;
     width: 80%;
   }
-  .image__overlay:hover > * {
-    transform: translateY(-50px);
-    padding-left: 15px;
-    text-align: left;
-    font-size: 13px;
-    width: 160px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+  
 }
-@media only screen and (min-width: 415px) and (max-width: 1025px) {
-  .image__overlay:hover > * {
-    transform: translateY(-50px);
-    padding-left: 15px;
-    text-align: left;
-    font-size: 15px;
-    width: 200px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-}
+
 .service-title {
   font-family: sans-serif;
   font-size: 9vmin;
@@ -292,22 +257,13 @@ h1 {
   color: #DE9972;
 }
 @media only screen and (max-width: 1024px) {
-  .image__overlay {
-    height: 250px !important;
-    width: 100% !important;
-  }
-  .image__overlay > * {
-    margin-top: 15px;
-  }
+ 
+  
   .image__description {
     max-width: 180px !important;
   }
 }
-@media only screen and (min-width: 1024px) {
-  .image__overlay {
-    top: 0;
-  }
-}
+
 .admisgiris {
   display: flex;
   flex-direction: column;
@@ -327,15 +283,15 @@ h1 {
 
 .admisgiris input {
   border-radius: 5px;
- 
   padding: 10px;
   border: 1px solid #893694;
   border-radius: 5px;
   font-size: 16px;
-  width: 100%;
+  width: 350px;
   box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
 }
-
 .admisgiris button {
   background-color: #893694;
   color: #fff;
@@ -346,7 +302,6 @@ h1 {
   cursor: pointer;
   margin-top: 20px;
   height: 40px;
-  margin-left: 57px;
   font-style: italic;
   font-family: 'Times New Roman', Times, serif;
   
@@ -493,5 +448,22 @@ tr:hover {
 
 
 
+@media screen and (min-width: 993px)  {
+  .navbar-right{
+   position: absolute !important;
+   right:30px !important;
+  }
+  .navbar-left{
+   position: absolute !important;
+   left:30px !important;
+  }
+  .navbar-logo-action{
+   position: relative;
+   left: 600px; 
+  }  
+}
 
 
+.menu-items-icon{
+  margin-right: 10px;
+}

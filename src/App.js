@@ -18,39 +18,65 @@ import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import React, { useState } from 'react';
 import './index.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <Router>
-      <h1 style={{ textAlign: 'center' }} className='baslik'>Mon Jardin</h1>
-      <nav>
-        <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+    
+    <Router> 
+       <Navbar  expand="lg" fixed="top"   >
+      <Container>
+   
+        
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+       
+      <Navbar.Collapse id="basic-navbar-nav" className="navbar-left">
+          <Nav className="me-auto">
+          <nav>
+      <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
           <FiMenu />
         </div>
         {menuOpen && (
           <div className="menu-items" onClick={() => setMenuOpen(false)}>
-            <NavLink to='/Girisekran'>Anasayfa</NavLink>
-            <NavLink to='/AdminLogin'>Giriş Yap</NavLink>
-            <NavLink to='/Adminpanel'>Adminpanel</NavLink>       
-            <NavLink to='/Productlist'>Ürün Listesi</NavLink>
-            <NavLink to='/Liste'>Liste</NavLink>
-            <NavLink to='/Detay'>Detay</NavLink>
-            <NavLink to='/Sepet'>Sepet</NavLink>
-            <NavLink to='/Uyegiris'>Üye Giriş</NavLink>
-            <NavLink to='/Kayitol'>Kaydol</NavLink>
-            <NavLink to='/Yeniparola'>Parola</NavLink>
-            <NavLink to='/Profil'>Profilim</NavLink>
-
-            
-            
-            
-            
-            
+            <NavLink className="menu-items-link" to='/Girisekran'>Anasayfa</NavLink>
+            <NavLink className="menu-items-link" to='/AdminLogin'>Giriş Yap</NavLink>
+            <NavLink className="menu-items-link"  to='/Adminpanel'>Adminpanel</NavLink>       
+            <NavLink className="menu-items-link" to='/Productlist'>Ürün Listesi</NavLink>
+            <NavLink className="menu-items-link" to='/Liste'>Liste</NavLink>
+            <NavLink className="menu-items-link" to='/Detay'>Detay</NavLink>
+            <NavLink className="menu-items-link" to='/Sepet'>Sepet</NavLink>
+            <NavLink className="menu-items-link" to='/Uyegiris'>Üye Giriş</NavLink>
+            <NavLink className="menu-items-link" to='/Kayitol'>Kaydol</NavLink>
+            <NavLink className="menu-items-link" to='/Yeniparola'>Parola</NavLink>
+            <NavLink className="menu-items-link" to='/Profil'>Profilim</NavLink>         
           </div>
         )}
       </nav>
+          </Nav>
+        </Navbar.Collapse>
+        
+        <Navbar.Brand style={{ margin: "auto" }} >
+       <NavLink className="menu-items-link" to='/Girisekran'> <h1  className='baslik'>Mon Jardin</h1></NavLink>
+      </Navbar.Brand>
+       
+        <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
+          <Nav className="me-auto">
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon1.png" alt=""width={40}height={40}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon2.png" alt=""width={40}height={40}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon3.png" alt=""width={40}height={40}/></NavLink>
+
+           
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+      </Navbar>
+    
       <Routes>
         <Route path="/Girisekran" element={<Girisekran />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
