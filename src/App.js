@@ -12,6 +12,8 @@ import Uyegiris from './Uyegiris';
 import Kayitol from './Kayitol';
 import Yeniparola from './Yeniparola';
 import Profil from './Profil';
+import Arama from './Arama';
+import Favori from './Favori';
 
 
 import { NavLink } from 'react-router-dom';
@@ -42,6 +44,10 @@ function App() {
             <NavLink to='/Kayitol'>Kaydol</NavLink>
             <NavLink to='/Yeniparola'>Parola</NavLink>
             <NavLink to='/Profil'>Profilim</NavLink>
+            <NavLink to='/Arama'>Arama</NavLink>
+            <NavLink to='/Favori'>Favori</NavLink>
+
+
 
             
             
@@ -63,6 +69,8 @@ function App() {
         <Route path="/Kayitol" element={<Kayitol/>} />
         <Route path="/Yeniparola" element={<Yeniparola/>} />
         <Route path="/Profil" element={<Profil/>} />
+        <Route path="/Arama" element={<Arama/>} />
+        <Route path="/Favori" element={<Favori/>} />
 
 
           
