@@ -8,6 +8,7 @@ export default function ProductList() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
 
+
   useEffect(() => {
     setProductList([
       {
@@ -142,9 +143,11 @@ return (
       <th onClick={() => handleSort('price')}>Fiyat</th>
       </tr>
     </thead>
+    
     <tbody>
       {filteredProducts.map((product) => (
         <tr key={product.id} onClick={() => handleProductClick(product.id)}>
+        
           <td>{product.id}</td>
           <td>
             <img src={product.image} alt={product.name} />

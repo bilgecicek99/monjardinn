@@ -14,6 +14,7 @@ h1 {
   border: 1px solid #ccc;
 }
 
+
 .card img {
   width: 200px;
   height: 200px;
@@ -110,10 +111,13 @@ button:hover {
   border-bottom: 1px solid #ccc;
 }
 .stokkontrol{
+margin-top: 20px;
 font-family: 'Times New Roman';
 font-style: italic;
 font-weight: bold;
 color: #FFFFFF;
+width: 250px;
+height: 100px;
 }
 .baslik{
 font-family: 'Times New Roman';
@@ -342,6 +346,10 @@ h1 {
   cursor: pointer;
   margin-top: 20px;
   height: 40px;
+  margin-left: 57px;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  
 }
 
 .admisgiris button:hover {
@@ -420,7 +428,67 @@ tr:hover {
 .adgiris{
   background-color: white;
 }
+.adminpanelyazi{
+  text-align: left;
+}
+.carousel {
+ padding: 50px;
 
+  margin: 0 auto; /* Slider'ı ortalamak için kullanılabilir */
+}
+
+.carousel-item img {
+  max-height: 300px; /* Slider içindeki resimlerin maksimum yüksekliğini belirleyin */
+  object-fit: cover; /* Resimlerin kırpılarak sığdırılmasını sağlar */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Başlık ve açıklama için arka plan rengini ayarlayın */
+  padding: 10px; /* Başlık ve açıklama arka planının iç kenar boşluğunu ayarlayın */
+  bottom: 0; /* Başlığı ve açıklamayı sliderın altında hizalayın */
+  width: 100%; /* Başlık ve açıklamanın genişliğini slider ile aynı yapın */
+}
+
+.kategori{
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.renk{
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.fiyat{
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.boyut{
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+.kategori1{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding-bottom: 30px;
+}
+.renk1{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding-bottom: 30px;
+}
+.fiyat1{
+  margin-bottom: 100px;
+  padding-bottom: 30px;
+}
+.boyut1{
+  margin-bottom: 100px;
+  padding-bottom: 30px;
+}
+
+ 
 
 
 
