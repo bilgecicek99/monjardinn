@@ -12,6 +12,8 @@ import Uyegiris from './Uyegiris';
 import Kayitol from './Kayitol';
 import Yeniparola from './Yeniparola';
 import Profil from './Profil';
+import Arama from './Arama';
+import Favori from './Favori';
 
 
 import { NavLink } from 'react-router-dom';
@@ -54,7 +56,9 @@ function App() {
             <NavLink className="menu-items-link" to='/Uyegiris'>Üye Giriş</NavLink>
             <NavLink className="menu-items-link" to='/Kayitol'>Kaydol</NavLink>
             <NavLink className="menu-items-link" to='/Yeniparola'>Parola</NavLink>
-            <NavLink className="menu-items-link" to='/Profil'>Profilim</NavLink>         
+            <NavLink className="menu-items-link" to='/Profil'>Profilim</NavLink>
+            <NavLink className="menu-items-link" to='/Arama'>Arama</NavLink>
+            <NavLink className="menu-items-link" to='/Favori'>Favori</NavLink>         
           </div>
         )}
       </nav>
@@ -89,6 +93,8 @@ function App() {
         <Route path="/Kayitol" element={<Kayitol/>} />
         <Route path="/Yeniparola" element={<Yeniparola/>} />
         <Route path="/Profil" element={<Profil/>} />
+        <Route path="/Arama" element={<Arama/>} />
+        <Route path="/Favori" element={<Favori/>} />
 
 
           
