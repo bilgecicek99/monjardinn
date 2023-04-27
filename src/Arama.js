@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 const Arama = () => {
   const [previousSearches, setPreviousSearches] = useState([]);
   const [recommendedProducts, setRecommendedProducts] = useState([
@@ -34,7 +35,12 @@ const Arama = () => {
       price: "800.00 TL"
     }
   ]);
-
+  const slideImages = [
+    'images/slide_2.jpg',
+    'images/slide_3.jpg',
+    'images/slide_4.jpg'
+  ];
+  
   const search = (event) => {
     event.preventDefault();
     const searchTerm = event.target.elements.searchTerm.value;
@@ -46,8 +52,9 @@ const Arama = () => {
 
   return (
     <>
+     <div className="search-area">
       <form onSubmit={search}>
-        <div className="search-area">
+       
           <input
             type="text"
             name="searchTerm"
@@ -56,7 +63,7 @@ const Arama = () => {
           <button1 type="submit">
             <img src="/images/search.png" alt="" width={"16"} height={"16"} />
           </button1>
-        </div>
+      
       </form>
       <div id="search-results"></div>
       <div className="previous-searches">
@@ -71,11 +78,49 @@ const Arama = () => {
             </li>
           ))}
         </ul>
+        <div className="slide-container">
+      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 6
+        }
+      }, {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      }]}>
+      {recommendedProducts.map((product) => (
+            <div>
+            <li
+              key={product.id}
+              style={{
+                marginRight: "16px",
+                listStyleType: "none",
+                textAlign: "center"
+              }}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                width={"200"}
+                height={"200"}
+              />
+              <p>{product.name}</p>
+              <p>{product.price}</p>
+            </li>
+            </div>
+          ))}
+      </Slide>
+    </div>
       </div>
       <div className="recommended-products">
         <h3>Beğenebilecekleriniz:</h3>
         <ul style={{ display: "flex" }}>
           {recommendedProducts.map((product) => (
+            <div>
             <li
               key={product.id}
               style={{
@@ -93,9 +138,11 @@ const Arama = () => {
               <p>{product.name}</p>
               <p>{product.price}</p>
             </li>
+            </div>
           ))}
         </ul>
       </div>
+        </div>
     </>
   );
 };

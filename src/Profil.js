@@ -35,16 +35,84 @@ const Profil = () => {
     // setSifre(yeniSifre);
   };
 
+  const Address = ({ description, title }) => {
+    return (
+      <div style={styles.card}>
+       
+        <div style={styles.cardContent}>
+          <h4>{title}</h4>
+          <p>{description}</p>
+        </div>
+      </div>
+    );
+  };
+  
+  const styles = {
+    card: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      background: "white",
+      color: "black",
+      padding: "20px",
+      borderRadius: "12px",
+      marginBottom:"50px",
+      border:"1px solid #D9D9D9",
+      boxShadow: "20px 20px 20px rgba(0,0,0,0.25)"
+    },
+    cardContent: {
+      width: "100%",
+      textAlign: "left",
+      fontStyle:"italic",
+      fontSize:"13px"  
+     },
+  };
+  const cards = [
+    {
+      description: 'Manavakuyu/İzmir',
+      title: "Ev"
+    },
+    {
+      description: 'Manavakuyu/İzmir',
+      title: "İş"
+    },
+    {
+      description: 'Manavakuyu/İzmir',
+      title: "Ofis"
+    }
+  ];
+
   return (
-    <div>
-      <h1>Profilim</h1>
-      <p>Adı Soyadı: {adSoyad}</p>
-      <p>Telefon: {telefon}</p>
-      <p>E-posta: {eposta}</p>
-      <p>Şifre: {sifre}</p>
-      <button onClick={sifreDegistir}>Şifreyi Değiştir</button>
-      <h2>Kayıtlı Adreslerim</h2>
-      {/* Kullanıcının kayıtlı adreslerini burada listeleyebilirsiniz */}
+    <div style={{ margin: "100px" }}>
+      <h1  style={{ textAlign: "center", fontStyle:"italic" }}>Profilim</h1>
+      <div style={{ display: "block", justifyContent: "center",marginTop: "50px",textAlign:"center" }}>
+
+      <p className="profile-text">Adı Soyadı: {adSoyad}</p>
+      <hr className="profile-hr" />
+      <p className="profile-text">Telefon: {telefon}</p>
+      <hr className="profile-hr"  />
+      <p className="profile-text">E-posta: {eposta}</p>
+      <hr className="profile-hr" />
+      <div style={{ display:"flex", textAlign:"center", justifyContent:"center"}} >
+     <div> <p className="profile-text-password">Şifre: {sifre}</p></div>
+     <div> <button className="profile-password"  onClick={sifreDegistir}>Şifreyi Değiştir</button></div>
+      </div>
+      <hr className="profile-hr" />
+      <h2  style={{ textAlign: "center", fontStyle:"italic" }}>Kayıtlı Adreslerim</h2>
+     
+      <div  className="profile-card-area" >
+    <div className="card" style={{ border:"none"}}>
+      {cards.map((card) => (
+        <Address
+          key={card.title}
+          title={card.title}
+          description={card.description}
+        />
+      ))}
+    </div>
+  </div>
+    </div>
     </div>
   );
 };

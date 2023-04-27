@@ -5,15 +5,15 @@ import { FaCheck } from "react-icons/fa";
 
 const products = [
     
-  { id: 1, name: "Mon Jardin", price: 600, category: "Kategori 1", color: "Mor", size: "Boyut 1", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png"  },
-  { id: 2, name: "Mon Jardin", price: 200, category: "Kategori 2", color: "Mor", size: "Boyut 2", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 3, name: "Mon Jardin", price: 800, category: "Kategori 3", color: "Pembe", size: "Boyut 3", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 4, name: "Mon Jardin", price: 900, category: "Kategori 1", color: "Lila", size: "Boyut 3", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 5, name: "Mon Jardin", price: 800, category: "Kategori 2", color: "Mor", size: "Boyut 3", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 6, name: "Mon Jardin", price: 600, category: "Kategori 3", color: "Lila", size: "Boyut 3", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 7, name: "Mon Jardin", price: 700, category: "Kategori 1", color: "Pembe", size: "Boyut 1", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 8, name: "Mon Jardin", price: 1000, category: "Kategori 2", color: "Sarı", size: "Boyut 2", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
-  { id: 9, name: "Mon Jardin", price: 800, category: "Kategori 1", color: "Mor", size: "Boyut 3", image: "https://w7.pngwing.com/pngs/694/87/png-transparent-page-not-found-illustration-thumbnail.png" },
+  { id: 1, name: "Mon Jardin", price: 600, category: "Kategori 1", color: "Mor", size: "Boyut 1", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',  },
+  { id: 2, name: "Mon Jardin", price: 200, category: "Kategori 2", color: "Mor", size: "Boyut 2", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 3, name: "Mon Jardin", price: 800, category: "Kategori 3", color: "Pembe", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 4, name: "Mon Jardin", price: 900, category: "Kategori 1", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 5, name: "Mon Jardin", price: 800, category: "Kategori 2", color: "Mor", size: "Boyut 3", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',},
+  { id: 6, name: "Mon Jardin", price: 600, category: "Kategori 3", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 7, name: "Mon Jardin", price: 700, category: "Kategori 1", color: "Pembe", size: "Boyut 1", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 8, name: "Mon Jardin", price: 1000, category: "Kategori 2", color: "Sarı", size: "Boyut 2", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
+  { id: 9, name: "Mon Jardin", price: 800, category: "Kategori 1", color: "Mor", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
   // Diğer ürünler
 ];
 
@@ -33,6 +33,8 @@ const Liste = () => {
   const [categoryFilterOpen, setCategoryFilterOpen] = useState(false);
   const [priceFilter, setPriceFilter] = useState(""); // State for price filter
   const [showPriceOptions, setShowPriceOptions] = useState(false); // State for showing/hiding price options
+  const [showSizeOptions, setShowSizeOptions] = useState(false); // State for showing/hiding price options
+
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
 
   const handleSizeFilterChange = (event) => {
@@ -51,6 +53,10 @@ const Liste = () => {
     setShowPriceOptions(!showPriceOptions);
   };
 
+   // Function to toggle showing/hiding price options
+   const toggleSizeOptions = () => {
+    setShowSizeOptions(!showSizeOptions);
+  };
   // Price options array
   const priceOptions = [
     { label: "0 - 100", value: "0-100" },
@@ -106,8 +112,10 @@ const Liste = () => {
         <label className="kategori" htmlFor="categoryFilter">Kategori:</label>
       </div>
       {/* Options */}
+      
       {categoryFilterOpen && (
-        <select id="categoryFilter" value={categoryFilter} onChange={handleCategoryFilterChange}>
+        
+        <select id="categoryFilter" value={categoryFilter} onChange={handleCategoryFilterChange} >
           <option value="">Tümü</option>
           <option value="Kategori 1">Kategori 1</option>
           <option value="Kategori 2">Kategori 2</option>
@@ -121,7 +129,7 @@ const Liste = () => {
       <div className="renk1">
       <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={handleColorFilterToggle}>
         {/* Arrow icon */}
-        {showColorFilter ? <span>&#x25BC;</span> : <span>&#x25B6;</span>}
+        <span>&#x25BC;</span>
         <label className="renk" htmlFor="colorFilter" style={{ marginLeft: "4px" }}>Renk:</label>
       </div>
       {/* Color options */}
@@ -137,21 +145,12 @@ const Liste = () => {
       )}
     </div>
     <div className="fiyat1" style={{ position: "relative" }}>
-      <label className="fiyat" htmlFor="priceFilter">
-        Fiyat:
-        <span
-          className="arrow"
-          onClick={togglePriceOptions}
-          style={{
-            position: "absolute",
-            right: "0",
-            top: "50%",
-            transform: "translateY(-50%)",
-            cursor: "pointer"
-          }}
-        >
+    <span className="arrow" onClick={togglePriceOptions} >
           ▼
         </span>
+      <label className="fiyat" htmlFor="priceFilter">
+        Fiyat:
+        
       </label>
       {showPriceOptions && (
         <select
@@ -177,9 +176,12 @@ const Liste = () => {
     </div>
     <div className="boyut1" style={{ marginBottom: "10px" }}>
     <label className="boyut" htmlFor="sizeFilter">
-      Boyut: <FaCheck onClick={() => setIsOptionsVisible(!isOptionsVisible)} />
+    <span className="arrow"  onClick={toggleSizeOptions}  >
+          ▼
+        </span>
+      Boyut: 
     </label>
-    {isOptionsVisible && (
+    {showSizeOptions && (
       <select id="sizeFilter" value={sizeFilter} onChange={handleSizeFilterChange}>
         <option value="Boyut 1">Boyut 1</option>
         <option value="Boyut 2">Boyut 2</option>
@@ -191,18 +193,44 @@ const Liste = () => {
 </div>
 <div style={{ flex: "0 0 75%", padding: "10px" }}>
 
-<ul style={{display:"flex" }}>
-{filteredProducts.map((product) => (
-<li key={product.id}>
-<img src={product.image} alt={product.name} />
-<h3>{product.name}</h3>
-<p>Kategori: {product.category}</p>
-<p>Renk: {product.color}</p>
-<p>Fiyat: {product.price} TL</p>
-<p>Boyut: {product.size}</p>
-</li>
-))}
-</ul>
+<div className="row">
+  <div className="col-md-4">
+    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+      <li key={product.id} style={{ listStyle: "none" }}>
+      <img src={product.image} alt={product.name} width={300} height={350}/>
+      <h3 style={{fontStyle:"italic",  fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+    
+      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+     
+      </li>
+    ))}
+  
+  </div>
+  <div className="col-md-4">
+    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+      <li key={product.id} style={{ listStyle: "none" }}>
+      <img src={product.image} alt={product.name} width={300} height={350}/>
+      <h3 style={{fontStyle:"italic" , fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+     
+      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+     
+      </li>
+    ))}
+  
+  </div>
+  <div className="col-md-4">
+    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+      <li key={product.id} style={{ listStyle: "none" }}>
+      <img src={product.image} alt={product.name} width={300} height={350}/>
+      <h3 style={{fontStyle:"italic", fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+      
+      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+     
+      </li>
+    ))}
+  
+  </div>
+  </div>
 </div>
 </div>
 );
