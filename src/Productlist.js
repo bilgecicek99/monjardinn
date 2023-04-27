@@ -126,50 +126,58 @@ return (
     </div>
 
     <div>
-      <table>
-        <thead>
-          <tr>
-          <th onClick={() => handleSort('id')}>ID</th>
-          <th>Ürün Resmi</th>
-          <th onClick={() => handleSort('name')}>Ürün Adı</th>
-          <th onClick={() => handleSort('stockNo')}>Stok No</th>
-          <th onClick={() => handleSort('quantity')}>Stok Miktarı</th>
-          <th onClick={() => handleSort('price')}>Fiyat</th>
-          </tr>
-        </thead>
+    <table className='table table-light'>
+    <thead>
+      <tr>
         
-        <tbody>
-          {filteredProducts.map((product) => (
-            <tr key={product.id} onClick={() => handleProductClick(product.id)}>     
-              <td>{product.id}</td>
-              <td> <img src={product.image} alt={product.name} /></td>
-              <td>{product.name}</td>
-              <td>{product.stockNo}</td>
-              <td>{product.quantity}</td>
-              <td>{product.price}</td>
-            </tr>
-          ))}
-          {expandedProductId && (
+        <th style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}}>Ürün Resmi</th>
+        <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('stockNo')}>Stok No</th>
+        <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('name')}>Ürün Adı</th>
+        <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('quantity')}>Ürün Adedi</th>
+        <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Ürün Fiyatı</th>
+        <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Kategori</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredProducts.map((product) => (
+        <React.Fragment key={product.id}>
+          <tr onClick={() => handleProductClick(product.id)} style={{ borderBottom: "1px solid #ccc"}}>
+          
+            <td> <img src={product.image} alt={product.name} /></td>
+            <td style={{verticalAlign:"middle"}}>{product.stockNo}</td>
+            <td style={{verticalAlign:"middle"}}>{product.name}</td>
+           
+            <td style={{verticalAlign:"middle"}}>{product.quantity}</td>
+            <td style={{verticalAlign:"middle"}}>{product.price}</td>
+            <td style={{verticalAlign:"middle"}}>{product.price}</td> {/*kategori */}
+            <td style={{verticalAlign:"middle"}}> <img src="/images/openDetail.png" alt="" width={28} height={20} /></td>
+          
+          </tr>
+          {expandedProductId === product.id && (
             <tr>
               <td colSpan="6">
-                <div>
-                  <h3>{productList.find((p) => p.id === expandedProductId).name}</h3>
-                  <img
-                    src={productList.find((p) => p.id === expandedProductId).image}
-                    alt={productList.find((p) => p.id === expandedProductId).name}
-                  />
-                  <p>{productList.find((p) => p.id === expandedProductId).description}</p>
-                  <p>Fiyat: {productList.find((p) => p.id === expandedProductId).price}</p>
-                  <p>KDV Oranı: {productList.find((p) => p.id === expandedProductId).taxRate}%</p>
-                  <p>Stok Miktarı: {productList.find((p) => p.id === expandedProductId).quantity}</p>
-                  <p>Indirim Oranı: {productList.find((p) => p.id === expandedProductId).discount * 100}%</p>
-                  <p>Barkod: {productList.find((p) => p.id === expandedProductId).barcode}</p>
+                <div style={{display:"flex", justifyContent:"center"}}>
+        
+                  <div style={{display:"flex"}}>
+               <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p>Fiyatı</p> <p> {productList.find((p) => p.id === expandedProductId).price}</p></div>
+               <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p>KDV Oranı:</p> <p> {productList.find((p) => p.id === expandedProductId).taxRate}%</p></div>
+               <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p>Stok Miktarı: </p>  <p>{productList.find((p) => p.id === expandedProductId).quantity}</p></div>
+               <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p>İndirim Oranı:</p>  <p> {productList.find((p) => p.id === expandedProductId).discount * 100}%</p></div>
+               <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p>Barkod:</p>     <p> {productList.find((p) => p.id === expandedProductId).barcode}</p></div>
+                  </div>
                 </div>
+                <p style={{ fontStyle:"italic", fontFamily:"Times New Roman", display:"flex", justifyContent:"center"}}>{productList.find((p) => p.id === expandedProductId).description}</p>
+
               </td>
             </tr>
           )}
-        </tbody>
-      </table>
+          
+        </React.Fragment>
+      ))}
+       
+    </tbody>
+  
+  </table>
     </div>
 </div>
 )}

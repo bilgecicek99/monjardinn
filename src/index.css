@@ -4,42 +4,7 @@
 h1 {
   font-family: "Times New Roman", Times, serif;
 }
-.card {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  display: inline-block;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-
-.card img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.card h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.card .button {
-  display: inline-block;
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px;
-  text-decoration: none;
-}
-
+/*
 input[type="text"] {
   border: none;
   border-bottom: 1px solid #ccc;
@@ -49,6 +14,7 @@ input[type="text"] {
   height: 0px;
   box-sizing: border-box;
 }
+*/
 .btn-stock {
   background-color: green;
   color: white;
@@ -69,7 +35,7 @@ button {
 }
 .search-area{
   text-align: center;
-
+margin-top:100px;
   
 }
 button {
@@ -103,16 +69,20 @@ button:hover {
   display: flex;
   flex-direction: column;
   position: absolute;
- 
-  left: 20px; /* Örnek olarak sol tarafı 20px olarak ayarladık */
   background-color: white; /* Mor arka plan rengi */
-  padding: 20px;
   border-bottom: 1px solid #ccc;
   z-index: 100;
+  padding-right: 200px;
+  left: 0;
+  padding-bottom: 400px;
+  padding-top: 40px;
+
 }
 .menu-items-link{
   text-decoration: none;
   color:black;
+  margin-top:10px;
+  width: 100px;
 }
 .menu-items-link:hover{
   text-decoration: none;
@@ -397,12 +367,14 @@ tr:hover {
   object-fit: cover; /* Resimlerin kırpılarak sığdırılmasını sağlar */
 }
 
+/*
 .carousel-caption {
-  background-color: rgba(0, 0, 0, 0.5); /* Başlık ve açıklama için arka plan rengini ayarlayın */
-  padding: 10px; /* Başlık ve açıklama arka planının iç kenar boşluğunu ayarlayın */
-  bottom: 0; /* Başlığı ve açıklamayı sliderın altında hizalayın */
-  width: 100%; /* Başlık ve açıklamanın genişliğini slider ile aynı yapın */
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 10px; 
+  bottom: 0; 
+  width: 100%; 
 }
+*/
 
 .kategori{
   font-size: 16px;
@@ -466,4 +438,116 @@ tr:hover {
 
 .menu-items-icon{
   margin-right: 10px;
+}
+
+.input-action{
+  padding: 10px;
+  border: 1px solid #893694;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 420px;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+.button-action{
+  background-color: #893694;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  height: 40px;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  width: 150px;
+}
+.carousel-indicators [data-bs-target]{
+  background-color: gray !important;
+}
+
+.profile-text{
+  position: relative;
+  right: 200px;
+}
+.profile-text-password{
+  position: relative;
+  right: 140px;
+}
+.profile-hr{
+  width:30rem ;
+  text-align: center ;
+  justify-content: center;
+  margin:auto !important;
+  margin-bottom:20px !important;
+}
+.profile-card-area{
+  text-align:center;
+  width:50%;
+  margin:auto;
+  margin-top:30px;
+}
+.profile-password{
+  color: #893694;
+  text-decoration:none;
+  font-style:italic;
+  position:relative;
+  left:150px;
+  background:transparent;
+  height:auto
+}
+@media only screen and (max-width: 700px) {
+  .profile-text{
+    position: relative;
+    right: 0;
+    left:-40px
+  }
+  .profile-hr{
+    width:10rem;
+    text-align: center ;
+    justify-content: center;
+    margin:auto !important;
+    margin-bottom:20px !important;
+  }
+  .profile-text-password{
+    position: relative;
+    right: 0;
+    left:20px
+  }
+  .profile-card-area{
+    text-align:center;
+    width:100%;
+    margin:auto;
+    margin-top:30px;
+  }
+  .profile-password{
+    color: #893694 ;
+    text-decoration: none ;
+    font-style: italic;
+    position:relative;
+    left:30px;
+    background:transparent;
+    height:auto
+  }
+}
+
+.navbar-toggler{
+  width: 50px !important;
+  height: 50px !important;
+}
+
+
+.table-light{
+--bs-table-color: white !important;
+--bs-table-bg: white !important;
+--bs-table-border-color:  white !important;
+--bs-table-striped-bg: white !important;
+--bs-table-striped-color:  white !important;
+--bs-table-active-bg: white !important;
+--bs-table-active-color: white !important;
+--bs-table-hover-bg:  white !important;
+--bs-table-hover-color: white !important;
+color: black !important;
+border-color: var(--bs-table-border-color);
 }
