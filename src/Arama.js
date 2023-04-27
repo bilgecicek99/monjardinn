@@ -45,7 +45,10 @@ const Arama = () => {
   };
 
   return (
+    
     <>
+    <div style={{margin:"100px"}}>
+    
       <form onSubmit={search}>
         <div className="search-area">
           <input
@@ -96,6 +99,8 @@ const Arama = () => {
           ))}
         </ul>
       </div>
+      
+    </div>
     </>
   );
 };
