@@ -79,35 +79,46 @@ const Detay = (props) => {
         <img src={props.foto} alt={props.ad} style={{ width: "200px", marginRight: "16px" }} />
 
         <div>
-          {/* Ürün adı ve fiyatı */}
-          <h2>{props.ad}</h2>
-          <p>{props.fiyat} TL</p>
+        <div style={{display:"block"}}>
+         <div>  {/* Ürün adı ve fiyatı */}
+         <h2>{props.ad}</h2>
+         </div>
+         <div> <p>{props.fiyat} TL</p></div>
+         <div style={{display:"flex"}}>
 
-          {/* Sepete ekle butonu */}
-          <div>
-          <div>
-      <img
+      <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+      <img width={40} height={40}
         src="/images/fav.png"
         alt="Favori İkonu"
         onClick={handleAddToFavorites}
         style={{ cursor: "pointer" }}
       />
-      <button onClick={handleAddToFavorites} disabled={favorited}>
+      
         {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
+
+        
       </button>
+      <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+      <img width={40} height={40}
+        src="/images/menu-icon2.png"
+        alt="sepet"
+        onClick={handleAddToFavorites}
+        style={{ cursor: "pointer" }}
+      />
+      
+        {favorited ? "Sepete Eklendi" : "Sepete Ekle"}
+
+        
+      </button>
+         </div>
+        </div>
+      
     </div>
-    <img
-    src="/images/fav.png"
-    alt="Favori İkonu"
-    onClick={handleAddToFavorites}
-    style={{ cursor: "pointer" }}
-  />
-  <button onClick={handleAddToFavorites} disabled={favorited}>
-    {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
-  </button>
+  
         </div>
-        </div>
-      </div>
+        
+      
+     
 
       {/* Ürün detaylı açıklaması */}
       <p>{props.detay}</p>

@@ -19,7 +19,8 @@ const FavoriListesi = () => {
   }, []);
 
   return (
-    <div>
+
+    <div style={{margin:"100px"}}>
       <h1>Favori Ürünler</h1>
       <ul>
         {favoriUrunler.map((urun) => (

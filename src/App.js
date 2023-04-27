@@ -74,9 +74,9 @@ function App() {
        
         <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
           <Nav className="me-auto">
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon1.png" alt=""width={40}height={40}/></NavLink>
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon2.png" alt=""width={40}height={40}/></NavLink>
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon3.png" alt=""width={40}height={40}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon1.png" alt=""width={45}height={45}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon2.png" alt=""width={40}height={45}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon3.png" alt=""width={40}height={45}/></NavLink>
 
            
           </Nav>

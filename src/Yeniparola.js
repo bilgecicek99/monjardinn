@@ -24,22 +24,29 @@ const Yeniparola = () => {
   };
 
   return (
-    <div>
-      <h1>Yeni Parolanız Bir Mail Uzaklıkta</h1>
+    <div  style={{ margin: "100px" }}>
+      <h1 style={{ textAlign: "center", fontStyle:"italic" }}>Yeni Parolanız Bir Mail Uzaklıkta</h1>
+      <div style={{justifyContent: "center",marginTop: "50px",textAlign:"center"  }}>
+
       <input
         type="email"
         placeholder="E-posta adresiniz"
         value={email}
         onChange={handleEmailChange}
+        className="input-action"
       />
+      
       {mailGeldiMi ? (
-        <p>Mailiniz gelmedi mi?</p>
+        <p style={{ marginTop: "20px",fontStyle:"italic"}}>Mailiniz gelmedi mi?</p>
       ) : (
-        <p>Mailiniz geldi mi? Sayaç: {counter} saniye</p>
+        <p style={{ marginTop: "20px",fontStyle:"italic", display:"flex",justifyContent: "center"}}>Mailiniz geldi mi? <div style={{ color:"#893694" ,marginLeft:"10px"}}>{counter} saniye </div> </p>
       )}
-      <button onClick={handleGonderClick} disabled={mailGeldiMi}>
+         <div style={{ position:"relative", left:"130px"}}>
+      <button onClick={handleGonderClick} disabled={mailGeldiMi} className="button-action">
         Gönder
       </button>
+      </div>
+      </div>
     </div>
   );
 };
