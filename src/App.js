@@ -14,6 +14,8 @@ import Yeniparola from './Yeniparola';
 import Profil from './Profil';
 import Arama from './Arama';
 import Favori from './Favori';
+import Blog from './Blog';
+
 
 
 import { NavLink } from 'react-router-dom';
@@ -58,7 +60,8 @@ function App() {
             <NavLink className="menu-items-link" to='/Yeniparola'>Parola</NavLink>
             <NavLink className="menu-items-link" to='/Profil'>Profilim</NavLink>
             <NavLink className="menu-items-link" to='/Arama'>Arama</NavLink>
-            <NavLink className="menu-items-link" to='/Favori'>Favori</NavLink>         
+            <NavLink className="menu-items-link" to='/Favori'>Favori</NavLink>   
+            <NavLink className="menu-items-link" to='/Blog'>Blog Sayfası</NavLink>         
           </div>
         )}
       </nav>
@@ -95,6 +98,7 @@ function App() {
         <Route path="/Profil" element={<Profil/>} />
         <Route path="/Arama" element={<Arama/>} />
         <Route path="/Favori" element={<Favori/>} />
+        <Route path="/Blog" element={<Blog/>} />
 
 
           
