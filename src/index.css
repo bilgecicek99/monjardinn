@@ -614,8 +614,6 @@ nav li {
 color: black !important;
 border-color: var(--bs-table-border-color);
 }
-<<<<<<< HEAD
-=======
 
 select {
   appearance: none;
@@ -631,4 +629,3 @@ select {
   font-style: italic;
 }
 
->>>>>>> 9353a5e7a5f868aa0a9ac3bdb7a829e8ac81ec2d
