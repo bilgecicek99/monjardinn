@@ -58,12 +58,7 @@ const Liste = () => {
     setShowSizeOptions(!showSizeOptions);
   };
   // Price options array
-  const priceOptions = [
-    { label: "0 - 100", value: "0-100" },
-    { label: "100 - 200", value: "100-200" },
-    { label: "200 - 500", value: "200-500" },
-    { label: "500 ve üzeri", value: "500+" }
-  ];
+  
 
 
   // Function to handle toggling the options
@@ -101,138 +96,214 @@ const Liste = () => {
     );
   });
 
+  
+
   return (
     <div className="kategori1" style={{ display: "flex" }}>
     <div style={{ flex: "0 0 25%", padding: "10px" }}>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+        <label className="kategori" htmlFor="categoryFilter">Kategori</label>
         <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
           {/* Arrow icon */}
-          <span>&#x25BC;</span>
-        </div>
-        <label className="kategori" htmlFor="categoryFilter">Kategori:</label>
+          <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
+        </div>   
       </div>
-      {/* Options */}
-      
       {categoryFilterOpen && (
-        
-        <select id="categoryFilter" value={categoryFilter} onChange={handleCategoryFilterChange} >
-          <option value="">Tümü</option>
-          <option value="Kategori 1">Kategori 1</option>
-          <option value="Kategori 2">Kategori 2</option>
-          <option value="Kategori 3">Kategori 3</option>
-          {/* Diğer kategori seçenekleri */}
-        </select>
-      )}
-
- 
-  
-      <div className="renk1">
-      <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={handleColorFilterToggle}>
-        {/* Arrow icon */}
-        <span>&#x25BC;</span>
-        <label className="renk" htmlFor="colorFilter" style={{ marginLeft: "4px" }}>Renk:</label>
-      </div>
-      {/* Color options */}
-      {showColorFilter && (
-        <select id="colorFilter" value={colorFilter} onChange={handleColorFilterChange}>
-          <option value="">Tümü</option>
-          <option value="Mor">Mor</option>
-          <option value="Pembe">Pembe</option>
-          <option value="Lila">Lila</option>
-          <option value="Sarı">Sarı</option>
-          {/* Diğer renk seçenekleri */}
-        </select>
-      )}
-    </div>
-    <div className="fiyat1" style={{ position: "relative" }}>
-    <span className="arrow" onClick={togglePriceOptions} >
-          ▼
-        </span>
-      <label className="fiyat" htmlFor="priceFilter">
-        Fiyat:
-        
-      </label>
-      {showPriceOptions && (
-        <select
-          id="priceFilter"
-          value={priceFilter}
-          onChange={handlePriceFilterChange}
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: "0",
-            right: "0",
-            zIndex: "1"
-          }}
-        >
-          <option value="">Tümü</option>
-          {priceOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      )}
-    </div>
-    <div className="boyut1" style={{ marginBottom: "10px" }}>
-    <label className="boyut" htmlFor="sizeFilter">
-    <span className="arrow"  onClick={toggleSizeOptions}  >
-          ▼
-        </span>
-      Boyut: 
-    </label>
-    {showSizeOptions && (
-      <select id="sizeFilter" value={sizeFilter} onChange={handleSizeFilterChange}>
-        <option value="Boyut 1">Boyut 1</option>
-        <option value="Boyut 2">Boyut 2</option>
-        <option value="Boyut 3">Boyut 3</option>
-        {/* Diğer boyut seçenekleri */}
-      </select>
-    )}
-  </div>
-</div>
-<div style={{ flex: "0 0 75%", padding: "10px" }}>
-
-<div className="row">
-  <div className="col-md-4">
-    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-      <li key={product.id} style={{ listStyle: "none" }}>
-      <img src={product.image} alt={product.name} width={300} height={350}/>
-      <h3 style={{fontStyle:"italic",  fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-    
-      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-     
-      </li>
-    ))}
-  
-  </div>
-  <div className="col-md-4">
-    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-      <li key={product.id} style={{ listStyle: "none" }}>
-      <img src={product.image} alt={product.name} width={300} height={350}/>
-      <h3 style={{fontStyle:"italic" , fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-     
-      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-     
-      </li>
-    ))}
-  
-  </div>
-  <div className="col-md-4">
-    {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-      <li key={product.id} style={{ listStyle: "none" }}>
-      <img src={product.image} alt={product.name} width={300} height={350}/>
-      <h3 style={{fontStyle:"italic", fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+        <div style={{marginTop:"5px"}}>
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
+          Tümü
+        </label>
       
-      <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="kategori1" name="kategori1" value="Kategori 1" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
+          Kategori 1
+        </label>
+      
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="kategori2" name="kategori2" value="Kategori 2" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
+          Kategori 2
+        </label>
+      
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="kategori3" name="kategori3" value="Kategori 3" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
+          Kategori 3
+        </label>
+      </div>
+      
+      )}
+    <hr />
+    <div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+        <label className="kategori" htmlFor="colorFilter">Renk:</label>
+        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleColorFilterToggle}>
+          {/* Arrow icon */}
+          <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
+        </div>   
+      </div>
+      {showColorFilter && ( 
+      <div style={{marginTop:"5px"}}>
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="all" name="all" value="" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
+          Tümü
+        </label>
+      
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="Mor" name="Mor" value="Mor" onChange={handleColorFilterChange} style={{marginRight:"5px"}} />
+          Mor
+        </label>
+      
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="Pembe" name="Pembe" value="Pembe" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
+          Pembe
+        </label>
+      
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="Lila" name="Lila" value="Lila" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
+          Lila
+        </label>
+        
+
+        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="Sarı" name="Sarı" value="Sarı" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
+          Sarı
+        </label>
+        
+      </div>
+      )}
+    </div>
+    <hr />
+
+    <div>
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+        <label className="kategori" htmlFor="priceFilter">Fiyat</label>
+        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={togglePriceOptions}>
+          {/* Arrow icon */}
+          <span>{showPriceOptions ?  "\u25B2" :"\u25BC" }</span>
+        </div>   
+      </div>
+      
+
+      {showPriceOptions && (
+     <div style={{marginTop:"5px"}}>
+     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+       <input type="checkbox" id="all" name="all" value="" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+       Tümü
+     </label>
+   
+     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+       <input type="checkbox" id="0-100" name="0-100" value="0-100" onChange={handlePriceFilterChange} style={{marginRight:"5px"}} />
+       0-100
+     </label>
+   
+     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+       <input type="checkbox" id="100-200" name="100-200" value="100-200" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+       100-200
+     </label>
+   
+     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+       <input type="checkbox" id="200-500" name="200-500" value="200-500" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+       200-500
+     </label>
+
+     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+       <input type="checkbox" id="500+" name="500+" value="500+" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+       500+
+     </label>
+   </div>
+
+      )}
+    </div>
+
+
+    <hr />
+    <div >
+   
+    <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+        <label className="kategori" htmlFor="sizeFilter">Boyut</label>
+        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={toggleSizeOptions}>
+          {/* Arrow icon */}
+          <span>{showSizeOptions ?  "\u25B2" :"\u25BC" }</span>
+        </div>   
+      </div>
+
      
-      </li>
-    ))}
-  
+      
+    {showSizeOptions && (
+       <div style={{marginTop:"5px"}}>
+       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+         <input type="checkbox" id="Boyut 1" name="Boyut 1" value="Boyut 1" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
+         Boyut 1
+       </label>
+     
+       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+         <input type="checkbox" id="Boyut 2" name="Boyut 2" value="Boyut 2" onChange={handleSizeFilterChange} style={{marginRight:"5px"}} />
+         Boyut 2
+       </label>
+     
+       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+         <input type="checkbox" id="Boyut 3" name="Boyut 3" value="Boyut 3" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
+         Boyut 3
+       </label>
+   
+     </div>
+    )}
+    </div>
+    <hr />
+    </div>
+    <div style={{ flex: "0 0 75%", padding: "10px" }}>
+
+    <div className="row">
+      <div className="col-md-4">
+        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+          <li key={product.id} style={{ listStyle: "none" }}>
+          <img src={product.image} alt={product.name} width={300} height={350}/>
+          <h3 style={{fontStyle:"italic",  fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
+
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+        
+          </li>
+        ))}
+      
+      </div>
+      <div className="col-md-4">
+        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+          <li key={product.id} style={{ listStyle: "none" }}>
+          <img src={product.image} alt={product.name} width={300} height={350}/>
+          <h3 style={{fontStyle:"italic" , fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
+
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+        
+          </li>
+        ))}
+      
+      </div>
+      <div className="col-md-4">
+        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+          <li key={product.id} style={{ listStyle: "none" }}>
+          <img src={product.image} alt={product.name} width={300} height={350}/>
+          <h3 style={{fontStyle:"italic", fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
+
+          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
+        
+          </li>
+        ))}
+      
+      </div>
+      </div>
+    </div>
+    <hr />
   </div>
-  </div>
-</div>
-</div>
 );
 };
 

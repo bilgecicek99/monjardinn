@@ -377,9 +377,10 @@ tr:hover {
 */
 
 .kategori{
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Times New Roman", Times, serif;
   font-style: italic;
+  font-weight: 500;
 }
 .renk{
   font-size: 16px;
@@ -551,3 +552,18 @@ tr:hover {
 color: black !important;
 border-color: var(--bs-table-border-color);
 }
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23893694'%3E%3Cpath d='M8 12.5L2.5 7h11z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 1em);
+  background-position-y: center;
+  border: none;
+  padding-right: 1em;
+  width: 100%;
+  font-style: italic;
+}
+
