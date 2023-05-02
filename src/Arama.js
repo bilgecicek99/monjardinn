@@ -51,6 +51,7 @@ const Arama = () => {
   };
 
   return (
+    
     <>
      <div className="search-area">
       <form onSubmit={search}>

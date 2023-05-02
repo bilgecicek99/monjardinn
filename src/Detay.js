@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+
 
 const Detay = (props) => {
   // Ürünün detayları için state kullanımı
@@ -10,29 +13,36 @@ const Detay = (props) => {
   const [addedToCart, setAddedToCart] = useState(false);
   const [favorited, setFavorited] = useState(false);
 
-
   const recommendedProducts = [
     {
       id: 1,
-      name: "Ürün 1",
-      price: "800 ",
-      image: "https://png.pngtree.com/png-vector/20201128/ourlarge/pngtree-vase-png-image_2415411.jpg",
+      name: "Mon Jardin",
+      price: "800 TL",
+      image: "/images/sepetbirlikte.png",
     },
     {
       id: 2,
-      name: "Ürün 2",
-      price: "800 ",
-      image: "https://png.pngtree.com/png-vector/20201128/ourlarge/pngtree-vase-png-image_2415411.jpg",
+      name: "Mon Jardin",
+      price: "800 TL ",
+      image: "/images/sepetbirlikte.png",
     },
     {
       id: 3,
-      name: "Orkide",
-      price: "800 ",
-      image: "https://png.pngtree.com/png-vector/20201128/ourlarge/pngtree-vase-png-image_2415411.jpg",
+      name: "Mon Jardin",
+      price: "800 TL ",
+      image: "/images/sepetbirlikte.png",
     },
     // Diğer önerilen ürünler buraya eklenir
   ];
- 
+  
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
 
 
 
@@ -79,35 +89,46 @@ const Detay = (props) => {
         <img src={props.foto} alt={props.ad} style={{ width: "200px", marginRight: "16px" }} />
 
         <div>
-          {/* Ürün adı ve fiyatı */}
-          <h2>{props.ad}</h2>
-          <p>{props.fiyat} TL</p>
+        <div style={{display:"block"}}>
+         <div>  {/* Ürün adı ve fiyatı */}
+         <h2>{props.ad}</h2>
+         </div>
+         <div> <p>{props.fiyat} TL</p></div>
+         <div style={{display:"flex"}}>
 
-          {/* Sepete ekle butonu */}
-          <div>
-          <div>
-      <img
+      <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+      <img width={40} height={40}
         src="/images/fav.png"
         alt="Favori İkonu"
         onClick={handleAddToFavorites}
         style={{ cursor: "pointer" }}
       />
-      <button onClick={handleAddToFavorites} disabled={favorited}>
+      
         {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
+
+        
       </button>
+      <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+      <img width={40} height={40}
+        src="/images/menu-icon2.png"
+        alt="sepet"
+        onClick={handleAddToFavorites}
+        style={{ cursor: "pointer" }}
+      />
+      
+        {favorited ? "Sepete Eklendi" : "Sepete Ekle"}
+
+        
+      </button>
+         </div>
+        </div>
+      
     </div>
-    <img
-    src="/images/fav.png"
-    alt="Favori İkonu"
-    onClick={handleAddToFavorites}
-    style={{ cursor: "pointer" }}
-  />
-  <button onClick={handleAddToFavorites} disabled={favorited}>
-    {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
-  </button>
+  
         </div>
-        </div>
-      </div>
+        
+      
+     
 
       {/* Ürün detaylı açıklaması */}
       <p>{props.detay}</p>
@@ -132,17 +153,45 @@ const Detay = (props) => {
            </div>
            )}
            </div>
-           <h3>Birlikte İyi Gider</h3>
-           <div>
-             {recommendedProducts.map((product) => (
-               <div key={product.id}>
-                 <img src={product.image} alt={product.name} />
-                 <h4>{product.name}</h4>
-                 <p>Fiyat: {product.price} TL</p>
+           <div style={{marginTop: "80px"}}>
+      <h1>Birlikte iyi Gider </h1>
+      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 6
+        }
+      }, {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      }]}>
+      {recommendedProducts.map((product) => (
+            <div>
+            <li
+              key={product.id}
+              style={{
+                marginRight: "16px",
+                listStyleType: "none",
+                textAlign: "center"
+              }}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                width={"200"}
+                height={"200"}
+              />
+              <p>{product.name}</p>
+              <p>{product.price}</p>
+            </li>
             </div>
-            ))}
-         </div>
-          </div>
+          ))}
+      </Slide>
+      </div>
+  </div>
           );
         };
            
@@ -150,10 +199,10 @@ const UrunDetay = () => {
   // Örnek veriler
   const urun = {
     id: 1,
-    foto: "https://png.pngtree.com/png-vector/20201128/ourlarge/pngtree-vase-png-image_2415411.jpg",
+    foto: "/images/sepetbirlikte.png",
     ad: "Orkide",
     fiyat: "800.00 ",
-    detay: "Bu ürünün detaylı açıklaması burada yer alır.",
+    detay: "Açıklama",
   };
 
   return <Detay urunId={urun.id} foto={urun.foto} ad={urun.ad} fiyat={urun.fiyat} detay={urun.detay} />;

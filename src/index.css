@@ -440,6 +440,68 @@ tr:hover {
 .menu-items-icon{
   margin-right: 10px;
 }
+.detay-buton{
+ background-color: transparent;
+ 
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 10px;
+  margin-left: 10px;
+  
+  font-family: 'Times New Roman', Times, serif;
+}
+.nav-barblog{
+  background-color: #893694;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.blog-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blog-card {
+  width: calc(50% - 20px);
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.blog-card h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.blog-card p {
+  margin-bottom: 10px;
+}
+
+.blog-card a {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: purple;
+  color: white;
+  text-decoration: none;
+}
 
 .input-action{
   padding: 10px;
@@ -552,6 +614,8 @@ tr:hover {
 color: black !important;
 border-color: var(--bs-table-border-color);
 }
+<<<<<<< HEAD
+=======
 
 select {
   appearance: none;
@@ -567,3 +631,4 @@ select {
   font-style: italic;
 }
 
+>>>>>>> 9353a5e7a5f868aa0a9ac3bdb7a829e8ac81ec2d

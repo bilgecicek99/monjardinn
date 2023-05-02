@@ -14,6 +14,9 @@ import Yeniparola from './Yeniparola';
 import Profil from './Profil';
 import Arama from './Arama';
 import Favori from './Favori';
+import Blog from './Blog';
+import Adminarama from './Adminarama';
+import Adminstokkontrol from './Adminstokkontrol'
 
 
 import { NavLink } from 'react-router-dom';
@@ -58,7 +61,13 @@ function App() {
             <NavLink className="menu-items-link" to='/Yeniparola'>Parola</NavLink>
             <NavLink className="menu-items-link" to='/Profil'>Profilim</NavLink>
             <NavLink className="menu-items-link" to='/Arama'>Arama</NavLink>
-            <NavLink className="menu-items-link" to='/Favori'>Favori</NavLink>         
+            <NavLink className="menu-items-link" to='/Favori'>Favori</NavLink>   
+            <NavLink className="menu-items-link" to='/Blog'>Blog Sayfası</NavLink>
+            <NavLink className="menu-items-link" to='/Adminarama'>Admin Arama Sayfası</NavLink>
+            <NavLink className="menu-items-link" to='/Adminstokkontrol'>Admin Stok Kontrol Sayfası</NavLink>
+          
+            
+             
           </div>
         )}
       </nav>
@@ -71,9 +80,9 @@ function App() {
        
         <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
           <Nav className="me-auto">
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon1.png" alt=""width={45}height={45}/></NavLink>
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon2.png" alt=""width={40}height={45}/></NavLink>
-          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon3.png" alt=""width={40}height={45}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon1.png" alt=""width={40}height={40}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon2.png" alt=""width={40}height={40}/></NavLink>
+          <NavLink className="menu-items-icon" to='/Uyegiris'> <img src="/images/menu-icon3.png" alt=""width={40}height={40}/></NavLink>
 
            
           </Nav>
@@ -95,6 +104,13 @@ function App() {
         <Route path="/Profil" element={<Profil/>} />
         <Route path="/Arama" element={<Arama/>} />
         <Route path="/Favori" element={<Favori/>} />
+        <Route path="/Blog" element={<Blog/>} />
+        <Route path="/Adminarama" element={<Adminarama/>} />
+        <Route path="/Adminstokkontrol" element={<Adminstokkontrol/>} />
+        
+
+    
+
 
 
           
