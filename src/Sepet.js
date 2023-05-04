@@ -64,6 +64,7 @@ const Sepet = () => {
 
   return (
     <div  style={{ margin: "100px" }}>
+  
       
       <table className='table table-light'>
         <thead>
@@ -78,12 +79,12 @@ const Sepet = () => {
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              <td>
-                <td><img src={item.image} alt={item.name} width="50" height="50" /></td>
+              <td style={{fontStyle:"italic", fontWeight:"bold", verticalAlign:"middle", width:"80px"}}>
+                <td ><img src={item.image} alt={item.name} width="50" height="50" /></td>
               </td>
-              <td style={{verticalAlign:"middle"}}>{item.name}</td>
-              <td style={{verticalAlign:"middle"}}>{item.quantity}</td>
-              <td style={{verticalAlign:"middle"}}>{item.price}</td>
+              <td style={{fontStyle:"italic", fontWeight:"bold", verticalAlign:"middle", width:"150px"}}>{item.name}</td>
+              <td style={{fontStyle:"italic",verticalAlign:"middle", width:"150px"}}>{item.quantity}</td>
+              <td style={{fontStyle:"italic",  verticalAlign:"middle", width:"150px"}}>{item.price}</td>
               
               
               
