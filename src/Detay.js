@@ -8,10 +8,25 @@ const Detay = (props) => {
   //const [favorited, setFavorited] = useState(false);
  //const [addedToCart, setAddedToCart] = useState(false);
   const [isExistingAddress, setIsExistingAddress] = useState(true);
-  const [newAddress, setNewAddress] = useState("");
+  //const [newAddress, setNewAddress] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [addedToCart, setAddedToCart] = useState(false);
   const [favorited, setFavorited] = useState(false);
+
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+const handleSelectDistrict = (event) => {
+  setSelectedDistrict(event.target.value);
+};
+
+const [newAddress, setNewAddress] = useState("");
+const handleAddressChange = (event) => {
+  setNewAddress(event.target.value);
+};
+
+const [saveAddress, setSaveAddress] = useState(false);
+const handleSaveAddress = (event) => {
+  setSaveAddress(event.target.checked);
+};
 
   const recommendedProducts = [
     {
@@ -77,13 +92,10 @@ const Detay = (props) => {
     setIsExistingAddress(false);
   };
 
-  // Yeni adres girildiğinde
-  const handleAddressChange = (e) => {
-    setNewAddress(e.target.value);
-  };
 
   return (
     <div  style={{ margin: "100px" }}>
+    <div>
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* Ürün fotoğrafı */}
         <img src={props.foto} alt={props.ad} style={{ width: "200px", marginRight: "16px" }} />
@@ -134,26 +146,43 @@ const Detay = (props) => {
       <p>{props.detay}</p>
 
        {/* Adres seçim alanı */}
-       <div>
-       <h3>Adres Seçimi</h3>
-       <input type="radio" name="address" checked={isExistingAddress} onChange={handleExistingAddress} /> Kayıtlı Adres
-       {isExistingAddress && (
-         <select value={selectedAddress} onChange={handleSelectAddress}>
-           <option value="">Adres Seçiniz</option>
-           <option value="adres1">Adres 1</option>
-           <option value="adres2">Adres 2</option>
-           <option value="adres3">Adres 3</option>
-           {/* Diğer kayıtlı adresler buraya eklenir */}
-           </select>
-           )}
-           <input type="radio" name="address" checked={!isExistingAddress} onChange={handleNewAddress} /> Yeni Adres
-           {!isExistingAddress && (
-           <div>
-           <textarea value={newAddress} onChange={handleAddressChange} rows={3} />
-           </div>
-           )}
-           </div>
-           <div style={{marginTop: "80px"}}>
+<div>
+<h3>Adres Seçimi</h3>
+<input type="radio" name="address" checked={isExistingAddress} onChange={handleExistingAddress} /> Kayıtlı Adres
+{isExistingAddress && (
+  <select value={selectedAddress} onChange={handleSelectAddress}>
+    <option value="">Adres Seçiniz</option>
+    <option value="adres1">Adres 1</option>
+    <option value="adres2">Adres 2</option>
+    <option value="adres3">Adres 3</option>
+    {/* Diğer kayıtlı adresler buraya eklenir */}
+  </select>
+)}
+<input type="radio" name="address" checked={!isExistingAddress} onChange={handleNewAddress} /> Yeni Adres
+{!isExistingAddress && (
+  <div>
+    <select value={selectedDistrict} onChange={handleSelectDistrict}>
+      <option value="">İlçe Seçiniz</option>
+      <option value="district1">İlçe 1</option>
+      <option value="district2">İlçe 2</option>
+      <option value="district3">İlçe 3</option>
+      {/* Diğer ilçeler buraya eklenir */}
+    </select>
+    <div>
+      <textarea value={newAddress} onChange={handleAddressChange} rows={3} placeholder="Açık Adresinizi Girin" />
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" checked={saveAddress} onChange={handleSaveAddress} /> Adresi Kaydet
+      </label>
+    </div>
+  </div>
+)}
+</div>
+</div>
+<div style={{marginTop: "80px"}}>
+{/* Diğer alanlar buraya eklenebilir */}
+
       <h1>Birlikte iyi Gider </h1>
       <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
         breakpoint: 800,

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 
 const Navbar = () => {
+  
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // handle search term change here
+    
   };
 
   return (
     
-    <div style={{margin: "100px", marginBottom: 0}}>
+    <div style={{margin:"100px"}}>
     <div className="nav-barblog">
     <nav>
     
@@ -48,12 +50,15 @@ const BlogCard = ({ title, image, likes, caption }) => {
       <img src={image} alt={title} style={{ maxWidth: "100%", maxHeight: "60%", objectFit: "cover" }} />
      <h3 style={{ fontFamily: 'Times New Roman', fontWeight: 'bold' }}>{title}</h3>
      <p style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>{caption}</p>
-      <button onClick={handleLike} style={{backgroundColor: 'transparent', border: 'none'}}>
+     <hr/>
+     <div style={{float:"right"}}>
+      <button onClick={handleLike} style={{backgroundColor: 'transparent', border: 'none', width: "32px", height: "32px", marginRight:"20px"}}>
+    
       <img src={liked ? '/images/kalp.png' : '/images/kalp.png'} alt="Begen" style={{width: "32px", height: "32px"}} />
 
     </button>
-    <p>{liked ? likes + 1 : likes} </p>
-    
+    <span>{liked ? likes + 1 : likes} </span>
+    </div>
     </div>
   );
 };
@@ -98,7 +103,7 @@ const Blog = () => {
   ];
 
   return (
-    <div style={{ margin: "0 auto", maxWidth: "100%" }}>
+    <div style={{  }}>
     <div style={{margin:"100px"}}>
      
       <Navbar />

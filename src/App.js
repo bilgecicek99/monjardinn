@@ -17,6 +17,8 @@ import Favori from './Favori';
 import Blog from './Blog';
 import Adminarama from './Adminarama';
 import Adminstokkontrol from './Adminstokkontrol'
+import Kendinyarat from './Kendinyarat' 
+import Blogdetay from './Blogdetay';
 
 
 import { NavLink } from 'react-router-dom';
@@ -28,6 +30,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Stokeklecikar from './Stokeklecikar';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,6 +68,10 @@ function App() {
             <NavLink className="menu-items-link" to='/Blog'>Blog Sayfası</NavLink>
             <NavLink className="menu-items-link" to='/Adminarama'>Admin Arama Sayfası</NavLink>
             <NavLink className="menu-items-link" to='/Adminstokkontrol'>Admin Stok Kontrol Sayfası</NavLink>
+            <NavLink className="menu-items-link" to='/Kendinyarat'>Kendin Yarat</NavLink>
+            <NavLink className="menu-items-link" to='/Stokeklecikar'>Stok Ekle/Çıkar</NavLink>
+            <NavLink className="menu-items-link" to='/Blogdetay'>Blog Detay</NavLink>
+          
           
             
              
@@ -107,6 +114,9 @@ function App() {
         <Route path="/Blog" element={<Blog/>} />
         <Route path="/Adminarama" element={<Adminarama/>} />
         <Route path="/Adminstokkontrol" element={<Adminstokkontrol/>} />
+        <Route path="/Kendinyarat" element={<Kendinyarat/>} />
+        <Route path="/Stokeklecikar" element={<Stokeklecikar/>} />
+        <Route path="/Blogdetay" element={<Blogdetay/>} />
         
 
     
