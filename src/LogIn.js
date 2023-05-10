@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 
-const Uyegiris = () => {
+const LogIn = () => {
   // Define state variables using useState
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,4 +69,4 @@ const Uyegiris = () => {
   );
 };
 
-export default Uyegiris;
+export default LogIn;

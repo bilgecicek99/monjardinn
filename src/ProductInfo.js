@@ -3,7 +3,7 @@ import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
 
-const Detay = (props) => {
+const ProductInfo = (props) => {
   // Ürünün detayları için state kullanımı
   //const [favorited, setFavorited] = useState(false);
  //const [addedToCart, setAddedToCart] = useState(false);
@@ -239,7 +239,7 @@ const UrunDetay = () => {
     detay: "Açıklama",
   };
 
-  return <Detay urunId={urun.id} foto={urun.foto} ad={urun.ad} fiyat={urun.fiyat} detay={urun.detay} />;
+  return <ProductInfo urunId={urun.id} foto={urun.foto} ad={urun.ad} fiyat={urun.fiyat} detay={urun.detay} />;
 };
 
 export default UrunDetay;

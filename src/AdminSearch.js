@@ -6,7 +6,7 @@ import Admincard from './Admincard'; // Card bileşenini import edin
 
 
 
-const Adminarama= () => {
+const AdminSearch= () => {
   const data = [
     { id: 1, title: 'Kart 1', content: 'İçerik 1', image: '/images/kart1.png'},
     { id: 2, title: 'Kart 2', content: 'İçerik 2', image: '/images/kart2.png' },
@@ -36,6 +36,7 @@ const Adminarama= () => {
           type="text"
           name="searchTerm"
           placeholder="Arama yapmak için buraya yazın..."
+          className="admin-search-area"
         />
         <button1 type="submit">
           <img src="/images/search.png" alt="" width={"16"} height={"16"} />
@@ -50,4 +51,4 @@ const Adminarama= () => {
   );
 }
 
-export default Adminarama;
+export default AdminSearch;

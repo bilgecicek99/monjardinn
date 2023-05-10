@@ -126,7 +126,7 @@ return (
     </div>
 
     <div>
-    <table className='table table-light'>
+    <table className='table-light'>
     <thead>
       <tr>
         

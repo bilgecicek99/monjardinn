@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Urundetayadmin() {
+export default function EditProduct() {
     
   const [urun, setUrun] = useState({
     resimler: ["resim1.png"],

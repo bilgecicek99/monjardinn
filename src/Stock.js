@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Stokeklecikar() {
+function Stock() {
   const [products, setProducts] = useState([
     { id: 1, name: "Ürün 1", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
     { id: 2, name: "Ürün 2", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
@@ -64,5 +64,5 @@ function Stokeklecikar() {
   );
 }
 
-export default Stokeklecikar;
+export default Stock;
 

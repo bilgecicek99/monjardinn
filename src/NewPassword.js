@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Yeniparola = () => {
+const NewPassword = () => {
   const [email, setEmail] = useState(""); // State for email address
   const [mailGeldiMi, setMailGeldiMi] = useState(false); // State for tracking if mail is received
   const [counter, setCounter] = useState(60); // State for timer counter
@@ -51,4 +51,4 @@ const Yeniparola = () => {
   );
 };
 
-export default Yeniparola;
+export default NewPassword;

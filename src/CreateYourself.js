@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Kendinyarat() {
+function CreateYourself() {
   const [selectedPot, setSelectedPot] = useState(null);
   const [selectedFlower, setSelectedFlower] = useState(null);
   const [selectedHelperPlant, setSelectedHelperPlant] = useState(null);
@@ -224,4 +224,4 @@ function Kendinyarat() {
     </div>
   );
         }
-        export default Kendinyarat;
+        export default CreateYourself;

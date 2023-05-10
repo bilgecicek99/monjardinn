@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-const Arama = () => {
+const Search = () => {
   const [previousSearches, setPreviousSearches] = useState([]);
   const [recommendedProducts, setRecommendedProducts] = useState([
     {
@@ -148,4 +148,4 @@ const Arama = () => {
   );
 };
 
-export default Arama;
+export default Search;

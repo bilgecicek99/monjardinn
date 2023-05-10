@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Profil = () => {
+const Profile = () => {
   const [adSoyad, setAdSoyad] = useState(""); // Kullanıcının adı soyadı
   const [telefon, setTelefon] = useState(""); // Kullanıcının telefon numarası
   const [eposta, setEposta] = useState(""); // Kullanıcının e-posta adresi
@@ -117,4 +117,4 @@ const Profil = () => {
   );
 };
 
-export default Profil;
+export default Profile;
