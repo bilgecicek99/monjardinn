@@ -686,3 +686,12 @@ select {
   border:none;
   border-bottom:1px solid black;
 }
+.satinal-button{
+  width: 110px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #893694;
+  font-family: times new roman;
+  font-weight: bold;
+  font-style: italic;
+}

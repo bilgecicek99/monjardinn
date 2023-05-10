@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 const Address = ({ Image, title, description, price }) => (
-  <div className="card" style={{ margin: "20px", display: "flex" }}>
-  <div><img src={Image} alt={title} style={{ margin:"auto"}} /></div>
-   <div> <h2>{title}</h2>
-    <p>{description}</p>
-    <p>{price}</p>
+  <div className="card" style={{ margin: "20px", display: "flex", padding:"30px"}}>
+    <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      <img src={Image} alt={title} style={{ margin: "auto", marginLeft: "40px",  }} width={"150px"} height={200} />
+      <div style={{ marginRight: "550px" }}>
+        <h2 style={{fontFamily:"times new roman",fontWeight:"bold"}}>{title}</h2>
+        <p style={{fontFamily:"times new roman",fontStyle:"italic", fontSize:"20px", fontWeight:"lighter"}}>{description}</p>
+        </div>
+        <p style={{ fontFamily:"times new roman", fontWeight:"lighter",fontStyle:"italic", marginTop:"auto",fontSize:"20px"}}>{price}</p>
+
+    
     </div>
   </div>
 );
+
+
 
 const FavoriListesi = () => {
   const [favoriUrunler, setFavoriUrunler] = useState([]);
