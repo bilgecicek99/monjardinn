@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     
-    <div style={{margin:"100px"}}>
+    <div style={{margin:"0"}}>
     <div className="nav-barblog">
     <nav>
     

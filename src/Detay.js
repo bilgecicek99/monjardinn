@@ -146,21 +146,25 @@ const handleSaveAddress = (event) => {
       <p>{props.detay}</p>
 
        {/* Adres seçim alanı */}
-<div>
-<h3>Adres Seçimi</h3>
-<input type="radio" name="address" checked={isExistingAddress} onChange={handleExistingAddress} /> Kayıtlı Adres
+<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+<div><h3 style={{ marginBottom: "1rem" }}>Adres Seçimi</h3></div>
+<div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+<input type="radio" name="address" checked={isExistingAddress} onChange={handleExistingAddress} style={{ marginRight: "0.5rem" }} /> Kayıtlı Adres
 {isExistingAddress && (
-  <select value={selectedAddress} onChange={handleSelectAddress}>
+  <select value={selectedAddress} onChange={handleSelectAddress} style={{ marginLeft: "1rem" }}>
     <option value="">Adres Seçiniz</option>
     <option value="adres1">Adres 1</option>
     <option value="adres2">Adres 2</option>
     <option value="adres3">Adres 3</option>
     {/* Diğer kayıtlı adresler buraya eklenir */}
   </select>
+  
 )}
-<input type="radio" name="address" checked={!isExistingAddress} onChange={handleNewAddress} /> Yeni Adres
+</div>
+<div style={{ display: "flex", alignItems: "center" }}>
+<input type="radio" name="address" checked={!isExistingAddress} onChange={handleNewAddress} style={{ marginRight: "0.5rem" }} /> Yeni Adres
 {!isExistingAddress && (
-  <div>
+  <div style={{ marginLeft: "1rem" }}>
     <select value={selectedDistrict} onChange={handleSelectDistrict}>
       <option value="">İlçe Seçiniz</option>
       <option value="district1">İlçe 1</option>
@@ -169,15 +173,16 @@ const handleSaveAddress = (event) => {
       {/* Diğer ilçeler buraya eklenir */}
     </select>
     <div>
-      <textarea value={newAddress} onChange={handleAddressChange} rows={3} placeholder="Açık Adresinizi Girin" />
+      <textarea value={newAddress} onChange={handleAddressChange} rows={3} placeholder="Açık Adresinizi Girin" style={{ marginTop: "1rem", width: "100%" }} />
     </div>
     <div>
-      <label>
-        <input type="checkbox" checked={saveAddress} onChange={handleSaveAddress} /> Adresi Kaydet
+    <label style={{ marginTop: "1rem" }}>
+        <input type="checkbox" checked={saveAddress} onChange={handleSaveAddress} style={{ marginRight: "0.5rem" }} /> Adresi Kaydet
       </label>
     </div>
   </div>
 )}
+</div>
 </div>
 </div>
 <div style={{marginTop: "80px"}}>

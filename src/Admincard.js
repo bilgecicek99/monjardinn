@@ -26,21 +26,26 @@ function Admincard() {
       color: "#FFFFFF",
       padding: "40px",
       borderRadius: "12px",
-      marginBottom:"50px"
+      marginBottom: "50px",
+      height: "250px", // set a fixed height for the card
     },
     cardImageContainer: {
       width: "50%",
       textAlign: "center",
+      height: "100%", // set the height of the container to match the card's height
     },
     cardImage: {
-      width: "50%",
-      height: "auto",
+      width: "auto",
+      height: "100%", // set a fixed height for the image
     },
     cardContent: {
       width: "50%",
       textAlign: "center",
-      fontStyle:"italic"      },
+      fontStyle: "italic",
+      height: "100%", // set the height of the content to match the card's height
+    },
   };
+  
   const cards = [
     {
       imageUrl: process.env.PUBLIC_URL + '/images/saksıadmin.png',
@@ -91,6 +96,8 @@ function Admincard() {
         imageUrl={card.imageUrl}
         title={card.title}
         description={card.description}
+        width="400px"
+        height="300px"
       />
     ))}
   </div>
