@@ -36,6 +36,7 @@ const Adminarama= () => {
           type="text"
           name="searchTerm"
           placeholder="Arama yapmak için buraya yazın..."
+          className="admin-search-area"
         />
         <button1 type="submit">
           <img src="/images/search.png" alt="" width={"16"} height={"16"} />

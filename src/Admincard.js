@@ -33,8 +33,8 @@ function Admincard() {
       textAlign: "center",
     },
     cardImage: {
-      width: "50%",
-      height: "auto",
+      width: "110px",
+      height: "130px",
     },
     cardContent: {
       width: "50%",

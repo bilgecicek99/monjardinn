@@ -31,6 +31,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Stokeklecikar from './Stokeklecikar';
+import EditBlog from './EditBlog';
+import EditCategory from './EditCategory';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -118,6 +120,8 @@ function App() {
         <Route path="/Stokeklecikar" element={<Stokeklecikar/>} />
         <Route path="/Blogdetay" element={<Blogdetay/>} />
         
+        <Route path="/EditBlog" element={<EditBlog/>} />
+        <Route path="/EditCategory" element={<EditCategory/>} />
 
     
 
