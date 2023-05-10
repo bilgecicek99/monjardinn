@@ -59,48 +59,59 @@ const Sepet = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
   };
 
   return (
     <div  style={{ margin: "100px" }}>
   
       
-      <table className='table table-light'>
-        <thead>
-          <tr>
-          <th style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}}></th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() =>('name')}></th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('quantity')}></th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('price')}></th>
-          
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id}>
-              <td style={{fontStyle:"italic", fontWeight:"bold", verticalAlign:"middle", width:"80px"}}>
-                <td ><img src={item.image} alt={item.name} width="50" height="50" /></td>
-              </td>
-              <td style={{fontStyle:"italic", fontWeight:"bold", verticalAlign:"middle", width:"150px"}}>{item.name}</td>
-              <td style={{fontStyle:"italic",verticalAlign:"middle", width:"150px"}}>{item.quantity}</td>
-              <td style={{fontStyle:"italic",  verticalAlign:"middle", width:"150px"}}>{item.price}</td>
-              
-              
-              
-              
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td>Toplam Ürün Sayısı: {totalItems}</td>
-            <td>Toplam Tutar:</td>
-            <td>{totalPrice} TL</td>
-          </tr>
-        </tfoot>
-      </table>
+    <table className='table table-light'>
+  <thead>
+    <tr>
+      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}}></th>
+      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() =>('name')}></th>
+      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('quantity')}></th>
+      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('price')}></th>
+    </tr>
+  </thead>
+  <tbody>
+    {items.map((item) => (
+      <React.Fragment key={item.id}>
+        <tr>
+          <td style={{ width: "80px", verticalAlign: "middle" }}><img src={item.image} alt={item.name} width="50" height="50" /></td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>{item.name}</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.quantity}</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.price}</td>
+        </tr>
+        <tr>
+          <td colSpan="4" style={{ border: "none" }}>
+            <hr style={{ borderTop: "1px solid #ddd" }} />
+          </td>
+        </tr>
+      </React.Fragment>
+    ))}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td style={{fontWeight:"bold",fontStyle:"italic",fontFamily:"Times New Roman"}}>Toplam:</td>
+      <td></td>
+      <td>{totalItems} adet</td>
+      <td>{totalPrice} TL</td>
+    </tr>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+   
+      <td colSpan="4">
+        <button className='satinal-button'>Satın Al</button>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+  
       
       <div style={{marginTop: "80px"}}>
       <h1>Birlikte iyi Gider </h1>

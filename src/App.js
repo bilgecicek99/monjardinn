@@ -19,6 +19,8 @@ import Adminarama from './Adminarama';
 import Adminstokkontrol from './Adminstokkontrol'
 import Kendinyarat from './Kendinyarat' 
 import Blogdetay from './Blogdetay';
+import Blogduzenle from './Blogduzenle';
+import Urundetayadmin from './Urundetayadmin';
 
 
 import { NavLink } from 'react-router-dom';
@@ -71,6 +73,8 @@ function App() {
             <NavLink className="menu-items-link" to='/Kendinyarat'>Kendin Yarat</NavLink>
             <NavLink className="menu-items-link" to='/Stokeklecikar'>Stok Ekle/Çıkar</NavLink>
             <NavLink className="menu-items-link" to='/Blogdetay'>Blog Detay</NavLink>
+            <NavLink className="menu-items-link" to='/Blogduzenle'>Blog Duzenle</NavLink>
+            <NavLink className="menu-items-link" to='/Urundetayadmin'> Ürün Detay Düzenle</NavLink>
           
           
             
@@ -117,6 +121,8 @@ function App() {
         <Route path="/Kendinyarat" element={<Kendinyarat/>} />
         <Route path="/Stokeklecikar" element={<Stokeklecikar/>} />
         <Route path="/Blogdetay" element={<Blogdetay/>} />
+        <Route path="/Blogduzenle" element={<Blogduzenle/>} />
+        <Route path="/Urundetayadmin" element={<Urundetayadmin/>} />
         
 
     
