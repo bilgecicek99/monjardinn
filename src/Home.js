@@ -5,7 +5,7 @@ import Carousel1 from "./Carousel1";
 
 
 
-const Girisekran = () => {
+const Home = () => {
   const data = [
     { id: 1, title: 'Kart 1', content: 'İçerik 1', image: '/images/kart1.png'},
     { id: 2, title: 'Kart 2', content: 'İçerik 2', image: '/images/kart2.png' },
@@ -30,4 +30,4 @@ const Girisekran = () => {
   );
 }
 
-export default Girisekran;
+export default Home;

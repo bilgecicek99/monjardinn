@@ -21,7 +21,7 @@ const products = [
 
   
 
-const Liste = () => {
+const List = () => {
     
   //const [categoryFilter, setCategoryFilter] = useState("");
   //const [colorFilter, setColorFilter] = useState("");
@@ -307,4 +307,4 @@ const Liste = () => {
 );
 };
 
-export default Liste;
+export default List;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function ProductList() {
+export default function AdminProductList() {
   const [productList, setProductList] = useState([]);
   const [expandedProductId, setExpandedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 
-const Kayitol = () => {
+const SignUp = () => {
   const [adSoyad, setAdSoyad] = useState("");
   const [telefon, setTelefon] = useState("");
   const [eposta, setEposta] = useState("");
@@ -98,4 +98,4 @@ const Kayitol = () => {
   );
 };
 
-export default Kayitol;
+export default SignUp;

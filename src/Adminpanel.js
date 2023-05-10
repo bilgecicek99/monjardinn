@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 
-export default function Adminpanel() {
+export default function AdminPanel() {
 
 
 const products = [  

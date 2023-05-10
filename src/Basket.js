@@ -26,7 +26,7 @@ const recommendedProducts = [
 ];
 
 
-const Sepet = () => {
+const Basket = () => {
   const [items, setItems] = useState([
     {
       id: 1,
@@ -159,4 +159,4 @@ const Sepet = () => {
   );
 };
 
-export default Sepet;
+export default Basket;

@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 
 
-export default function Blogdetay() {
+export default function BlogDetail() {
   const [backButtonVisible, setBackButtonVisible] = useState(true);
   const navigate = useNavigate();
 
