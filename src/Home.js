@@ -1,9 +1,7 @@
 import React from "react";
 import Card from './Card'; // Card bileşenini import edin
 import Carousel1 from "./Carousel1";
-
-
-
+import WithNavbar from './WithNavbar'; 
 
 const Home = () => {
   const data = [
@@ -30,4 +28,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default WithNavbar(Home);

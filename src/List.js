@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
+import WithNavbar from './WithNavbar'; 
 
 
 
@@ -307,4 +308,4 @@ const List = () => {
 );
 };
 
-export default List;
+export default WithNavbar(List);

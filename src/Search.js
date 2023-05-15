@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import WithNavbar from './WithNavbar'; 
+
 const Search = () => {
   const [previousSearches, setPreviousSearches] = useState([]);
   const [recommendedProducts, setRecommendedProducts] = useState([
@@ -148,4 +150,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default WithNavbar(Search);

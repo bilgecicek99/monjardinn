@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import WithNavbar from './WithNavbar'; 
 
 const Navbar = () => {
   
@@ -130,4 +131,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default WithNavbar(Blog);

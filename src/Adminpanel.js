@@ -16,56 +16,42 @@ const products = [
   { id: 4, name: "Mon Jardin", stock: 900, category: "Aranjman 1", city: "Konak",  image: process.env.PUBLIC_URL + '/images/pembelale.jpg', }
 ];
 
-const lastProduct = [  
-  { id: 1, name: "Mon Jardin", stock: 600, category: "Aranjman", city: "Karşıyaka", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',  },
-];
+
 
   return (
     <>
       <div  style={{ margin: "100px", display:"flex" }}>
       <div style={{float:"left", width:"25%"}}>
       <Navbar  expand="lg" fixed="top"   >
-      <Container>
-   
-        
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-       
-      <Navbar.Collapse id="basic-navbar-nav" className="navbar-admin-left">
-          <Nav className="me-auto">
-          <nav>
-          <div className="menu-icon">
-              <FiMenu />
+        <Container>  
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="navbar-admin-left">
+            <Nav className="me-auto">
+            <nav>
+            <div className="menu-items-admin">
+            <div className="text-center">
+                <img src="/images/person.png" alt="" width={"45"} height={"45"} />
+                <p className='menu-items-admin-link'>Deniz Şenocak</p>   {/*  be'den gelcek*/}
+                <p className='menu-items-admin-link'>exapmle@gmail.com</p>  {/*  be'den gelcek*/} 
             </div>
-    
-          <div className="menu-items-admin">
-          <div className="text-center">
-              <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-              <p className='menu-items-admin-link'>Deniz Şenocak</p>   {/*  be'den gelcek*/}
-              <p className='menu-items-admin-link'>exapmle@gmail.com</p>  {/*  be'den gelcek*/} 
-          </div>
-            <NavLink className="menu-items-admin-link" to='/Adminarama' style={{fontStyle:"italic"}}>Admin Arama Sayfası</NavLink>
-            <hr/>
-            <NavLink className="menu-items-admin-link" to='/Adminstokkontrol' style={{fontStyle:"italic"}}>Stok Kontrol</NavLink>
-            <hr/>
-            <NavLink className="menu-items-admin-link" to='/Stokeklecikar' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
-            <hr/>
-            <NavLink className="menu-items-admin-link" to='/EditProduct' style={{fontStyle:"italic"}}>Ürün Detay Düzenleme</NavLink>  
-            <hr/> 
-            <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
-            <hr/> 
-            <NavLink className="menu-items-admin-link" to='/EditBlog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
-            <hr/> 
-            <NavLink className="menu-items-admin-link" to='/Blogdetay' style={{fontStyle:"italic"}}>Çıkış Yap</NavLink>   
-            <hr/>
-          </div>
-       
-      </nav>
-          </Nav>
-        </Navbar.Collapse>
-      
-       
-    
-      </Container>
+              <NavLink className="menu-items-admin-link" to='/AdminSearch' style={{fontStyle:"italic"}}>Admin Arama Sayfası</NavLink>
+              <hr/>
+              <NavLink className="menu-items-admin-link" to='/AdminProductList' style={{fontStyle:"italic"}}>Stok Kontrol</NavLink>
+              <hr/>
+              <NavLink className="menu-items-admin-link" to='/Stock' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
+              <hr/>
+              <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
+              <hr/> 
+              <NavLink className="menu-items-admin-link" to='/EditBlog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
+              <hr/> 
+              <NavLink className="menu-items-admin-link" to='/Blogdetay' style={{fontStyle:"italic"}}>Çıkış Yap</NavLink>   
+              <hr/>
+            </div>
+        
+        </nav>
+            </Nav>
+          </Navbar.Collapse> 
+        </Container>
       </Navbar>
       </div>
       <div style={{float:"right", width:"75%", color:"black",  fontFamily: 'Times New Roman'}}>

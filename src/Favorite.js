@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import WithNavbar from './WithNavbar'; 
 
 const Address = ({ Image, title, description, price }) => (
   <div className="card" style={{ margin: "20px", display: "flex", padding:"30px"}}>
@@ -116,4 +117,4 @@ const FavoriListesi = () => {
   );
 };
 
-export default FavoriListesi;
+export default WithNavbar(FavoriListesi);

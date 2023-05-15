@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
+import WithNavbar from './WithNavbar'; 
 
 
 const recommendedProducts = [
@@ -159,4 +160,4 @@ const Basket = () => {
   );
 };
 
-export default Basket;
+export default WithNavbar(Basket);
