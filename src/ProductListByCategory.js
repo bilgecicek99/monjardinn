@@ -1,97 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-export default function AdminProductList() {
-  const [productList, setProductList] = useState([]);
+export default function ProductListByCategory() {
+  //const { productList } = props.location.state;
+//console.log("productList",productList)
+
+const location = useLocation();
+const productList = location.state?.productList || []; // state verisini alın
+
+console.log("productList", productList);
+
   const [expandedProductId, setExpandedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(productList);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [previousSearches, setPreviousSearches] = useState([]);
-/*
-  useEffect(() => {
-    setProductList([
-      {
-        id: 1,
-        name: "Orkide",
-        image: "/images/orkide.png",
-        stockNo: "01",
-        quantity: 10,
-        price: 800.99,
-        taxRate: 18,
-        description: " Zarafetin sembolü olan orkide çiçeği narin ve güzel bir çiçektir",
-        discount: 0.1,
-        barcode: "123456789",
-      },
-      {
-        id: 2,
-        name: "Pembe Lale Buketi",
-        image: "/images/orkide.png",
-        stockNo: "02",
-        quantity: 20,
-        price: 2999.99,
-        taxRate: 18,
-        description: "Her lale renginin bir anlamı vardır",
-        discount: 0.15,
-        barcode: "234567890",
-      },
-      {
-        id: 3,
-        name: "Minimalist Lila Buketi",
-        image: "/images/orkide.png",
-        stockNo: "03",
-        quantity: 5,
-        price: 5999.99,
-        taxRate: 18,
-        description: "Canlı hoş doku",
-        discount: 0,
-        barcode: "345678901",
-      },
-      {
-        id: 4,
-        name: "Lilyum Buketi",
-        image: "/images/orkide.png",
-        stockNo: "04",
-        quantity: 15,
-        price: 899.99,
-        taxRate: 18,
-        description: "Lilyum çiçeği doğumu ve masumiyeti simgelemektedir.",
-        discount: 0.05,
-        barcode: "456789012",
-      },
-      {
-        id: 5,
-        name: "Kırçıllı Orkide Aranjamanı",
-        image: "/images/orkide.png",
-        stockNo: "05",
-        quantity: 25,
-        price: 99.99,
-        taxRate: 18,
-        description: "Yaz aylarında özellikle geceleri açık bir pencere önünde tutulması çiçeklenme oranını arttırır.",
-        discount: 0.2,
-        barcode: "567890123",
-      },
-    ]);
-  }, []);
-*/
-  const fetchProductList = async () => {
-    try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
-      const data = await response.json();
-      console.log("data",data.data)
-      const productData= data.data;
-      setProductList(productData);  
-      setFilteredProducts(productData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  console.log("filteredProducts", filteredProducts);
 
-  useEffect(() => {
-    fetchProductList();
-  }, []);
 
   const handleSearchTermChange = (event) => {
     const searchTerm = event.target.value;
@@ -168,9 +96,7 @@ export default function AdminProductList() {
 
 return (
   <div  style={{ margin: "50px" }}>
-   <h1  className='baslik'>Mon Jardin</h1>
-
-    <button onClick={handleGoBack} className='back-button'><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
+         <button onClick={handleGoBack} className='back-button'><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
     <div className="search-area">
           <form value={searchTerm} onChange={handleSearchTermChange} > 
@@ -188,7 +114,9 @@ return (
         </div>
       
     <div style={{marginTop:"50px"}}>
+      
       {productList && (
+   
       <table className='table table-light'>
       <thead>
         <tr>
@@ -203,9 +131,8 @@ return (
       </thead>
       <tbody>
         {filteredProducts.map((product) => (
-        
+       
           <React.Fragment key={product.id}>
-              {console.log("filte",product)}
             <tr onClick={() => handleProductClick(product.id)} style={{ borderBottom: "1px solid #ccc"}}>
             
               <td> <img src={product.fileResponseModel[0]?.fileUrl} alt={productList.name} width={128} height={128} /></td>

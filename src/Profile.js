@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import WithNavbar from './WithNavbar'; 
 
 const Profile = () => {
   const [adSoyad, setAdSoyad] = useState(""); // Kullanıcının adı soyadı
@@ -117,4 +118,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default WithNavbar(Profile);

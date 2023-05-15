@@ -1,7 +1,7 @@
 import React from "react";
   
 
-function Admincard() {
+function Admincard( { cards }) {
   const Cardx = ({ imageUrl, title }) => {
     return (
       <div style={styles.card}>
@@ -46,63 +46,37 @@ function Admincard() {
     },
   };
   
-  const cards = [
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksıadmin.png',
-      title: "Saksı"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksı.png',
-      title: "Kurutulmuş Çiçek"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/cicek.png',
-      title: "Çiçekler"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/aranjman.png',
-      title: "Aranjmanlar"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/buyukcicek.png',
-      title: "Büyük Bitki"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksı.png',
-      title: "Kendin Yap"
-    },
-  ];
   return (
   <div style={{padding:"100px"}}> 
    <div>
    <div className="row">
-<div className="col-md-6">
-  <div className="card" style={{display:"flex", border:"none"}}>
-    {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
-      <Cardx
-        key={card.title}
-        imageUrl={card.imageUrl}
-        title={card.title}
-       
-      />
-    ))}
+    <div className="col-md-6">
+      <div className="card" style={{display:"flex", border:"none"}}>
+        {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
+          <Cardx
+            key={card.title}
+            imageUrl={card.imageUrl}
+            title={card.title}
+          
+          />
+        ))}
+      </div>
+    </div>
+    <div className="col-md-6">
+      <div className="card"style={{display:"flex", border:"none"}}>
+        {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
+          <Cardx
+            key={card.title}
+            imageUrl={card.imageUrl}
+            title={card.title}
+            description={card.description}
+            width="400px"
+            height="300px"
+          />
+        ))}
+      </div>
+    </div>
   </div>
-</div>
-<div className="col-md-6">
-  <div className="card"style={{display:"flex", border:"none"}}>
-    {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
-      <Cardx
-        key={card.title}
-        imageUrl={card.imageUrl}
-        title={card.title}
-        description={card.description}
-        width="400px"
-        height="300px"
-      />
-    ))}
-  </div>
-</div>
-</div>
 
     
    

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import WithNavbar from './WithNavbar'; 
 
 function CreateYourself() {
   const [selectedPot, setSelectedPot] = useState(null);
@@ -224,4 +225,4 @@ function CreateYourself() {
     </div>
   );
         }
-        export default CreateYourself;
+export default WithNavbar(CreateYourself);
