@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function AdminProductList() {
+export default function AdminAllProductList() {
   const [productList, setProductList] = useState([]);
   const [expandedProductId, setExpandedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,72 +9,7 @@ export default function AdminProductList() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [previousSearches, setPreviousSearches] = useState([]);
-/*
-  useEffect(() => {
-    setProductList([
-      {
-        id: 1,
-        name: "Orkide",
-        image: "/images/orkide.png",
-        stockNo: "01",
-        quantity: 10,
-        price: 800.99,
-        taxRate: 18,
-        description: " Zarafetin sembolü olan orkide çiçeği narin ve güzel bir çiçektir",
-        discount: 0.1,
-        barcode: "123456789",
-      },
-      {
-        id: 2,
-        name: "Pembe Lale Buketi",
-        image: "/images/orkide.png",
-        stockNo: "02",
-        quantity: 20,
-        price: 2999.99,
-        taxRate: 18,
-        description: "Her lale renginin bir anlamı vardır",
-        discount: 0.15,
-        barcode: "234567890",
-      },
-      {
-        id: 3,
-        name: "Minimalist Lila Buketi",
-        image: "/images/orkide.png",
-        stockNo: "03",
-        quantity: 5,
-        price: 5999.99,
-        taxRate: 18,
-        description: "Canlı hoş doku",
-        discount: 0,
-        barcode: "345678901",
-      },
-      {
-        id: 4,
-        name: "Lilyum Buketi",
-        image: "/images/orkide.png",
-        stockNo: "04",
-        quantity: 15,
-        price: 899.99,
-        taxRate: 18,
-        description: "Lilyum çiçeği doğumu ve masumiyeti simgelemektedir.",
-        discount: 0.05,
-        barcode: "456789012",
-      },
-      {
-        id: 5,
-        name: "Kırçıllı Orkide Aranjamanı",
-        image: "/images/orkide.png",
-        stockNo: "05",
-        quantity: 25,
-        price: 99.99,
-        taxRate: 18,
-        description: "Yaz aylarında özellikle geceleri açık bir pencere önünde tutulması çiçeklenme oranını arttırır.",
-        discount: 0.2,
-        barcode: "567890123",
-      },
-    ]);
-  }, []);
-*/
+
   const fetchProductList = async () => {
     try {
 

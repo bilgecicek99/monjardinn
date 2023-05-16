@@ -19,6 +19,9 @@ import Favorite from './Favorite';
 import Blog from './Blog';
 import AdminSearch from './AdminSearch';
 import AdminProductList from './AdminProductList'
+import AdminAllProductList from './AdminAllProductList'
+import AdminAddProduct from './AdminAddProduct'
+
 import CreateYourself from './CreateYourself' 
 import Stock from './Stock';
 import BlogDetail from './BlogDetail';
@@ -50,6 +53,9 @@ function App() {
         <Route path="/Blog" element={<Blog/>} />
         <Route path="/AdminSearch" element={<AdminSearch/>} />
         <Route path="/AdminProductList" element={<AdminProductList/>} />
+        <Route path="/AdminAllProductList" element={<AdminAllProductList/>} />
+        <Route path="/AdminAddProduct" element={<AdminAddProduct/>} />
+
         <Route path="/CreateYourself" element={<CreateYourself/>} />
         <Route path="/Stock" element={<Stock/>} />
         <Route path="/BlogDetail" element={<BlogDetail/>} />

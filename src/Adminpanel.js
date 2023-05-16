@@ -34,18 +34,26 @@ const products = [
                 <p className='menu-items-admin-link'>Deniz Şenocak</p>   {/*  be'den gelcek*/}
                 <p className='menu-items-admin-link'>exapmle@gmail.com</p>  {/*  be'den gelcek*/} 
             </div>
-              <NavLink className="menu-items-admin-link" to='/AdminSearch' style={{fontStyle:"italic"}}>Admin Arama Sayfası</NavLink>
-              <hr/>
+             
               <NavLink className="menu-items-admin-link" to='/AdminProductList' style={{fontStyle:"italic"}}>Stok Kontrol</NavLink>
               <hr/>
-              <NavLink className="menu-items-admin-link" to='/Stock' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
+              <NavLink className="menu-items-admin-link" to='/AdminSearch' style={{fontStyle:"italic"}}>Arama</NavLink>
               <hr/>
-              <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
+              <NavLink className="menu-items-admin-link" to='/AdminAddProduct' style={{fontStyle:"italic"}}>Yeni Kalem Ekle</NavLink>
+              <hr/>
+             {/* 
+               <NavLink className="menu-items-admin-link" to='/AdminAllProductList' style={{fontStyle:"italic"}}>Tüm Ürünler</NavLink>
+               <hr/>
+             <NavLink className="menu-items-admin-link" to='/Stock' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
+              <hr/>
+               <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
               <hr/> 
               <NavLink className="menu-items-admin-link" to='/EditBlog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
               <hr/> 
               <NavLink className="menu-items-admin-link" to='/Blogdetay' style={{fontStyle:"italic"}}>Çıkış Yap</NavLink>   
               <hr/>
+  */}
+             
             </div>
         
         </nav>
@@ -80,8 +88,17 @@ const products = [
       </div>
 
       <div className='admin-middle-area' style={{display:"flex",marginTop:"30px"}}>
-        <div style={{  }}>Son Siparişler
-        {products.map((product) => (
+ 
+   
+     <div>  
+       <table>
+       <thead>
+        <tr>
+          <th colSpan={5} style={{background:"white", fontWeight:"400"}}>Son Siparişler</th>
+        </tr>
+      </thead>
+        <tbody>
+          {products.map((product) => (
         <React.Fragment key={product.id}>
           <tr style={{ border: "1px solid #ccc", color:"black",  fontStyle:"italic"}}>
           
@@ -93,8 +110,11 @@ const products = [
           </tr>
         </React.Fragment>
          ))}
-  
-        </div>
+          </tbody>
+        </table>
+       </div>
+ 
+       
         <div style={{marginLeft:"50px"}}>
         Son Eklenen Ürün
        
