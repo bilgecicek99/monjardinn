@@ -1,5 +1,4 @@
 import React, { useState , useEffect, useRef} from "react";
-import Admincard from './Admincard'; // Card bileşenini import edin
 import { useNavigate } from 'react-router-dom';
 import ProductListByCategory from "./ProductListByCategory";
 
@@ -10,6 +9,127 @@ const AdminSearch= () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
+
+function Admincard( { cards }) {
+  const navigate = useNavigate();
+  const [searchResultsCategory, setSearchResultsCategory] = useState([]);
+
+  const handleNavigate = (searchResultsCategory) => {
+    console.log("geld")
+    navigate('/ProductListByCategory', { state: { productList: searchResultsCategory } })
+  };
+  
+
+  
+  const Cardx = ({ imageUrl, title, id, data }) => {
+    
+    const categoriesFilter = (categoryId) => {
+      console.log("categoryId",categoryId)
+      //event.preventDefault();
+     // const categoryId = event.target.elements.categoryId.value; // Kategori kimliğini al
+      if (categoryId) {
+        const filteredProducts = productList.filter((product) => {
+          return product.categoryId === categoryId; // Kategori kimliğine göre filtreleme yap
+        });
+        setSearchResultsCategory(filteredProducts);
+        console.log("productList",productList)
+        console.log("searchResultsCategory",filteredProducts)
+       categoryId = "";
+       handleNavigate(filteredProducts);
+      }
+    };
+   
+    
+    return (
+      <div style={styles.card} onClick={() => {categoriesFilter(id);
+     
+       }}>
+        <div style={styles.cardContent}>
+          <h3>{title}</h3>
+        </div>
+        <div style={styles.cardImageContainer}>
+          <img style={styles.cardImage} src={imageUrl} alt={title} />
+        </div>
+      </div>
+    );
+  };
+  
+  const styles = {
+    card: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundImage: "url('/images/card-background.png')",
+      color: "#FFFFFF",
+      padding: "40px",
+      borderRadius: "12px",
+      marginBottom: "50px",
+      height: "250px", // set a fixed height for the card
+    },
+    cardImageContainer: {
+      width: "50%",
+      textAlign: "center",
+      height: "100%", // set the height of the container to match the card's height
+    },
+    cardImage: {
+      width: "auto",
+      height: "100%", // set a fixed height for the image
+    },
+    cardContent: {
+      width: "50%",
+      textAlign: "center",
+      fontStyle: "italic",
+      height: "100%", // set the height of the content to match the card's height
+    },
+  };
+  
+  return (
+  <div style={{padding:"100px"}}> 
+   <div>
+   <div className="row">
+    <div className="col-md-6">
+      <div className="card" style={{display:"flex", border:"none"}}>
+        {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
+          <Cardx
+            key={card.title}
+            imageUrl={card.imageUrl}
+            title={card.title}
+            width="400px"
+            height="300px"
+            id={card.id}
+            data={card.data}
+          />
+        ))}
+      </div>
+    </div>
+    <div className="col-md-6">
+      <div className="card"style={{display:"flex", border:"none"}}>
+        {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
+          <Cardx
+            key={card.title}
+            imageUrl={card.imageUrl}
+            title={card.title}
+            description={card.description}
+            width="400px"
+            height="300px"
+            id={card.id}
+            data={card.data}
+
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+
+    
+   
+    </div>
+    
+  </div>
+  );
+}
+
   const handleGoBack = () => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
@@ -18,7 +138,7 @@ const AdminSearch= () => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
   
-    console.log("sear", searchTerm);
+    //console.log("sear", searchTerm);
     navigate(`/ProductListByCategory/${searchTerm}`);
   };
 
@@ -26,16 +146,42 @@ const AdminSearch= () => {
     try {
 
       const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+      if (!response.ok) {
+        throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
+      }
       const data = await response.json();
-      console.log("cateogryyyyyyy",data.data)
+     
+    
       const categoryData= data.data;
-
+      console.log("cateogryyyyyyy",categoryData)
       setCategoryList(categoryData);  
       //setFilteredProducts(categoryData);
     } catch (error) {
       console.error(error);
+      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+
     }
   };
+  const fetchProductList = async () => {
+    try {
+
+      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      if (!response.ok) {
+        throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
+      }
+      const data = await response.json();
+     // console.log("data",data.data)
+      const productData= data.data;
+      setProductList(productData);  
+     // console.log("ADMİN SEARCH PRODUCUT",productData);
+      //setFilteredProducts(productData);
+    } catch (error) {
+      console.error(error);
+      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+
+    }
+  };
+ 
 
   useEffect(() => {
     fetchCategoryList();
@@ -69,24 +215,12 @@ const AdminSearch= () => {
     },
   ];
 
-  const fetchProductList = async () => {
-    try {
-
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
-      const data = await response.json();
-      console.log("data",data.data)
-      const productData= data.data;
-      setProductList(productData);  
-      console.log("ADMİN SEARCH PRODUCUT",productData);
-      //setFilteredProducts(productData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
- 
+  
 
 
   const [searchResults, setSearchResults] = useState([]);
+
+
   const searchInputRef = useRef(null);
   const myRef = useRef(null);
 
@@ -100,7 +234,7 @@ const AdminSearch= () => {
           property.toString().toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
-      console.log("ajaa",filteredProducts); // You can use the filteredProducts array as you like.
+     // console.log("ajaa",filteredProducts); // You can use the filteredProducts array as you like.
       setPreviousSearches([...previousSearches, searchTerm]);
       setSearchResults(filteredProducts);
       event.target.elements.searchTerm.value = "";
@@ -112,9 +246,28 @@ const AdminSearch= () => {
 
   const categories = categoryList.map((item) => ({
     title: item.name,
-    imageUrl: item.fileurl
+    imageUrl: item.fileurl,
+    id:item.id
   }));
   
+  
+
+  /*
+  const handleClickx = (event) => {
+    // İşlem yapmak istediğiniz kodu buraya ekleyin
+    console.log("Tıklanan kategori:");
+   // event.preventDefault();
+    const categoryId = event.target.elements.categoryId.value; // Kategori kimliğini al
+    if (categoryId) {
+      const filteredProducts = productList.filter((product) => {
+        return product.categoryId === categoryId; // Kategori kimliğine göre filtreleme yap
+      });
+      setSearchResultsCategory(filteredProducts);
+      console.log("searchResultsCategory",searchResultsCategory)
+      event.target.elements.categoryId.value = "";
+    }
+  };
+  */
   return (
     <div style={{ margin: "100px" }}>
        <h1  className='baslik'>Mon Jardin</h1>
@@ -133,9 +286,8 @@ const AdminSearch= () => {
             <button type="submit" className='search-button'>
             <img src="/images/search.png" alt="" width={32} height={32} />
           </button>
-       
           <Admincard  cards={categories} />
-          </form>
+       </form>
         </div>
        {searchResults.length > 0 && (
           navigate('/ProductListByCategory', { state: { productList: searchResults } })

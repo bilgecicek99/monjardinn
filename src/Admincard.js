@@ -1,11 +1,23 @@
 import React from "react";
-  
+import { useNavigate } from 'react-router-dom';
+
 
 function Admincard( { cards }) {
-  const Cardx = ({ imageUrl, title }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (data) => {
+    console.log("data",data)
+    navigate('/ProductListByCategory', { state: { productList: data } })
+  };
+  
+
+  
+  const Cardx = ({ imageUrl, title, id, data, click }) => {
+    const handleClick = () => {
+      handleNavigate(data);
+    };
     return (
-      <div style={styles.card}>
-       
+      <div style={styles.card} onClick={() => handleClick(click)}>
         <div style={styles.cardContent}>
           <h3>{title}</h3>
         </div>
@@ -57,7 +69,10 @@ function Admincard( { cards }) {
             key={card.title}
             imageUrl={card.imageUrl}
             title={card.title}
-          
+            width="400px"
+            height="300px"
+            id={card.id}
+            data={card.data}
           />
         ))}
       </div>
@@ -72,6 +87,9 @@ function Admincard( { cards }) {
             description={card.description}
             width="400px"
             height="300px"
+            id={card.id}
+            data={card.data}
+
           />
         ))}
       </div>

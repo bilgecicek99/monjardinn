@@ -9,7 +9,7 @@ export default function ProductListByCategory() {
 const location = useLocation();
 const productList = location.state?.productList || []; // state verisini alın
 
-console.log("productList", productList);
+console.log("productListxxxxxx", productList);
 
   const [expandedProductId, setExpandedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +18,7 @@ console.log("productList", productList);
   const [sortOrder, setSortOrder] = useState('asc');
   const [previousSearches, setPreviousSearches] = useState([]);
 
-  console.log("filteredProducts", filteredProducts);
+  //console.log("filteredProducts", filteredProducts);
 
 
   const handleSearchTermChange = (event) => {
@@ -91,7 +91,7 @@ console.log("productList", productList);
   const handleEditClick = (product) => {
     // Edit sayfasına yönlendirme işlemi
     navigate(`/EditProduct/${product.id}`, { state: { product } });
-    console.log("product.id",product.id)
+    //console.log("product.id",product.id)
   }
 
 return (
