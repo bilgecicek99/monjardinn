@@ -691,6 +691,42 @@ select {
   font-family: 'Times New Roman', Times, serif;
 }
 
+@media only screen and (max-width: 1200px) {
+  .admin-first-area-box{
+    width: 150% ;
+    font-size:14px;
+    padding:10px 40px;
+  }
+  .admin-first-area-box-icon{
+    width: 32px;
+    height: 32px;  
+  }
+  .admin-panel-left{
+    width: 100% !important;
+  }
+  .admin-panel-right{
+    width: 100% !important;
+  }
+  .admin-last-product-area{
+    margin-left:0px !important;
+  }
+  .cards-area{
+    padding:0px !important;
+  }
+  .admin-search-page{
+    margin:30px !important;
+  }
+  .admin-search-area{
+    width: 90% !important;
+  }
+  .add-product-area{
+    display: block !important;
+  }
+  .add-product-area-items{
+    margin-left: 0 !important;
+  }
+    
+} 
 .admin-search-area{
   width: 50%;
   border:none;
@@ -742,4 +778,51 @@ select {
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   border-radius: 5px;
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popup {
+  background-color: white;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: relative;
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+  color:black;
+  top:-20px
+}
+
+.input-wrapper {
+  margin-bottom: 10px;
+}
+
+.preview-image {
+  width: 200px;
+  margin-top: 10px;
+}
+
+
+.editIconContainer{
+  position: relative;
+  top: -100px;
+  left: 40px;
+  background-color: white;
+  padding:10px;
+  border-radius: 50% 0 50% 50%;
 }

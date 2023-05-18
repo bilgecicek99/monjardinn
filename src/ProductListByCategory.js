@@ -18,7 +18,6 @@ console.log("productListxxxxxx", productList);
   const [sortOrder, setSortOrder] = useState('asc');
   const [previousSearches, setPreviousSearches] = useState([]);
 
-  //console.log("filteredProducts", filteredProducts);
 
 
   const handleSearchTermChange = (event) => {
@@ -140,7 +139,7 @@ return (
               <td style={{verticalAlign:"middle"}}>{product.name}</td>
             
               <td style={{verticalAlign:"middle"}}>{product.stock}</td>
-              <td style={{verticalAlign:"middle"}}>{product.price}</td>
+              <td style={{verticalAlign:"middle"}}>{product.price}TL</td>
               <td style={{verticalAlign:"middle"}}>{product.categoryName}</td> 
               <td style={{verticalAlign:"middle"}}> 
                 <button  onClick={() => handleEditClick(product)} style={{height: "auto", width: "auto" , background: "transparent"}}>
@@ -155,13 +154,12 @@ return (
                 <td colSpan="6">
                   <div style={{display:"flex", justifyContent:"center"}}>
           
-                    <div style={{display:"flex"}}>
-                <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>Fiyatı:</p> <p> {productList.find((p) => p.id === expandedProductId).price}</p></div>
+                    
+                  <div style={{display:"flex"}}>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>KDV Oranı:</p> <p> {productList.find((p) => p.id === expandedProductId).tax}%</p></div>
-                <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}> Stok Miktarı: </p>  <p>{productList.find((p) => p.id === expandedProductId).stock}</p></div>
+                <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>Renk:</p> <p> {productList.find((p) => p.id === expandedProductId).color}</p></div>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>İndirim Oranı:</p>  <p> {productList.find((p) => p.id === expandedProductId).discountRate} %</p></div>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>İndirim Miktarı:</p>  <p> {productList.find((p) => p.id === expandedProductId).discountedAmount}</p></div>
-                <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>QR:</p>     <p> {productList.find((p) => p.id === expandedProductId).qr}</p></div>
                     </div>
                   </div>
                 

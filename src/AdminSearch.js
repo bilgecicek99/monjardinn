@@ -1,6 +1,6 @@
 import React, { useState , useEffect, useRef} from "react";
 import { useNavigate } from 'react-router-dom';
-import ProductListByCategory from "./ProductListByCategory";
+import './index.css';
 
 const AdminSearch= () => {
   const [productList, setProductList] = useState([]);
@@ -15,18 +15,12 @@ function Admincard( { cards }) {
   const [searchResultsCategory, setSearchResultsCategory] = useState([]);
 
   const handleNavigate = (searchResultsCategory) => {
-    console.log("geld")
     navigate('/ProductListByCategory', { state: { productList: searchResultsCategory } })
   };
   
-
-  
-  const Cardx = ({ imageUrl, title, id, data }) => {
+  const Cardx = ({ fileUrl, title, id }) => {
     
     const categoriesFilter = (categoryId) => {
-      console.log("categoryId",categoryId)
-      //event.preventDefault();
-     // const categoryId = event.target.elements.categoryId.value; // Kategori kimliğini al
       if (categoryId) {
         const filteredProducts = productList.filter((product) => {
           return product.categoryId === categoryId; // Kategori kimliğine göre filtreleme yap
@@ -38,8 +32,13 @@ function Admincard( { cards }) {
        handleNavigate(filteredProducts);
       }
     };
-   
-    
+    const isSmallScreen = window.innerWidth <= 768; // Örnek: 768px'den küçük ekranlar için
+
+const cardImageStyle = {
+  width: isSmallScreen ? "100%" : "auto",
+  height: isSmallScreen ? "auto" : "100%",
+};
+
     return (
       <div style={styles.card} onClick={() => {categoriesFilter(id);
      
@@ -48,7 +47,7 @@ function Admincard( { cards }) {
           <h3>{title}</h3>
         </div>
         <div style={styles.cardImageContainer}>
-          <img style={styles.cardImage} src={imageUrl} alt={title} />
+          <img style={cardImageStyle} src={fileUrl} alt={title} />
         </div>
       </div>
     );
@@ -82,10 +81,11 @@ function Admincard( { cards }) {
       fontStyle: "italic",
       height: "100%", // set the height of the content to match the card's height
     },
+    
   };
   
   return (
-  <div style={{padding:"100px"}}> 
+  <div style={{padding:"100px"}} className="cards-area"> 
    <div>
    <div className="row">
     <div className="col-md-6">
@@ -93,7 +93,7 @@ function Admincard( { cards }) {
         {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
           <Cardx
             key={card.title}
-            imageUrl={card.imageUrl}
+            fileUrl={card.fileUrl}
             title={card.title}
             width="400px"
             height="300px"
@@ -108,7 +108,7 @@ function Admincard( { cards }) {
         {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
           <Cardx
             key={card.title}
-            imageUrl={card.imageUrl}
+            fileUrl={card.fileUrl}
             title={card.title}
             description={card.description}
             width="400px"
@@ -158,7 +158,7 @@ function Admincard( { cards }) {
       //setFilteredProducts(categoryData);
     } catch (error) {
       console.error(error);
-      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      //alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
 
     }
   };
@@ -177,7 +177,7 @@ function Admincard( { cards }) {
       //setFilteredProducts(productData);
     } catch (error) {
       console.error(error);
-      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+    // alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
 
     }
   };
@@ -188,35 +188,6 @@ function Admincard( { cards }) {
     fetchProductList();
   }, []);
   
-  const cards = [
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksıadmin.png',
-      title: "Saksı"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksı.png',
-      title: "Kurutulmuş Çiçek"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/cicek.png',
-      title: "Çiçekler"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/aranjman.png',
-      title: "Aranjmanlar"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/buyukcicek.png',
-      title: "Büyük Bitki"
-    },
-    {
-      imageUrl: process.env.PUBLIC_URL + '/images/saksı.png',
-      title: "Kendin Yap"
-    },
-  ];
-
-  
-
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -246,7 +217,7 @@ function Admincard( { cards }) {
 
   const categories = categoryList.map((item) => ({
     title: item.name,
-    imageUrl: item.fileurl,
+    fileUrl: item.fileUrl,
     id:item.id
   }));
   
@@ -269,7 +240,7 @@ function Admincard( { cards }) {
   };
   */
   return (
-    <div style={{ margin: "100px" }}>
+    <div style={{ margin: "100px" }} className="admin-search-page">
        <h1  className='baslik'>Mon Jardin</h1>
 
       <button onClick={handleGoBack} className='back-button'><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
