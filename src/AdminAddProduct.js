@@ -1,5 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function AdminAddProduct() {
   const navigate = useNavigate();
@@ -8,7 +11,34 @@ export default function AdminAddProduct() {
   const [categories, setCategories] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBVljeCIm_rhZBx0522TXkNa4G4ufKoMLY",
+    authDomain: "monjardin-7cc13.firebaseapp.com",
+    projectId: "monjardin-7cc13",
+    storageBucket: "monjardin-7cc13.appspot.com",
+    messagingSenderId: "81286471664",
+    appId: "1:81286471664:web:51a5c1de2c61b4551b4735",
+    measurementId: "G-5BW4TRMJDR"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app); 
+
+  const storage = getStorage();
+
+  const handleImageUpload = async(event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let processedValue = value;
@@ -35,9 +65,7 @@ export default function AdminAddProduct() {
     }
   }
   
-
-
-    const fetchCategoryList = async () => {
+  const fetchCategoryList = async () => {
       try {
         const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
         if (!response.ok) {
@@ -55,39 +83,88 @@ export default function AdminAddProduct() {
        // alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
         //console.log(errorMessage);
       }
-    };
-
-  const handleKaydet = () => {
-   // console.log("productSDSFDDGJJ",product);
-    console.log("product",product);
-    const { fileResponses, labelProducts, productDiscountInfo, categoryName, ...newProduct } = product;
-    const updatedProduct = {
-      ...newProduct,
-      stock: 0
-    };
-    console.log("newww", updatedProduct);
-
-    fetch("https://api.monjardin.online/api/Product/CreateProduct", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(product),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-       
-        alert("Değişiklikler başarıyla kaydedilmiştir.")
-      
-        console.log(data)
-      })
-      .catch((error) => {
-        //console.error(error)
-        const errorMessage = handleFetchError(error);
-        //console.log(errorMessage);
-      });
   };
+
+  const handleKaydet = async(event) => {
+      event.preventDefault();
+      // Check if any required fields are empty
+      const requiredFields = ['name', 'tax', 'color', 'price', 'categoryId','discountRate','discountedAmount'];
+      const isEmptyField = requiredFields.some((field) => {
+        const value = product[field];
+        return value === undefined || value === null || value === "";
+      });
+        
+      if (isEmptyField) {
+        alert('Lütfen Tüm Alanları Doldurunuz.');
+      } else {
+
+      // Storage'de kaydedilecek referansı oluşturun
+      const storageRef = ref(storage, "images/" + selectedImage.name);
+      let downloadURL = ""; // Deği
+      try {
+        // Resmi Storage'e yükleyin
+        const snapshot = await uploadBytes(storageRef, selectedImage);
+    
+        // Resmin URL'sini alın
+        downloadURL = await getDownloadURL(snapshot.ref);
+        console.log("Resim başarıyla yüklendi. URL:", downloadURL);
+      } catch (error) {
+        console.error("Resim yükleme hatası:", error);
+      }
+
+      
+      const { fileResponses, labelProducts, productDiscountInfo, categoryName, ...newProduct } = product;
+      const updatedProduct = {
+        ...newProduct,
+        stock: 0
+      };
+      console.log("newww", updatedProduct);
+  
+      fetch("https://api.monjardin.online/api/Product/CreateProduct", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert("Değişiklikler başarıyla kaydedilmiştir.")
+          navigate('/AdminProductList');
+         
+
+          // Başka bir endpointe fetch isteği yapma
+          fetch("https://api.monjardin.online/api/ProductFile/CreateProductFile", {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+              'Content-Type': 'application/json',
+            },
+          
+            body: JSON.stringify({ productId: data.data, fileUrl: downloadURL }),
+          })
+            .then((response) => response.json())
+            .then((responseData) => {
+              // İsteğin sonucunu kullanma
+              console.log("foto gitti",responseData);
+            })
+            .catch((error) => {
+              // Hata durumunu işleme
+              console.error(error);
+            });
+        
+
+        })
+        .catch((error) => {
+          //console.error(error)
+          const errorMessage = handleFetchError(error);
+          //console.log(errorMessage);
+        });
+      }
+     // console.log("productSDSFDDGJJ",product);
+     
+    };
 
   useEffect(() => {
     fetchCategoryList();
@@ -96,30 +173,19 @@ export default function AdminAddProduct() {
   const handleGoBack = () => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
 
   return(
     <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>
        <h1  className='baslik'>Mon Jardin</h1>
-
-<button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
-
-        <>
+      <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
+      <>
         <div style={{display:"flex"}}>
             <div >
-            <input type="file" onChange={handleImageUpload} />
-      {previewImage && (
-        <img src={previewImage} alt="Preview" style={{ width: "200px" }} />
-      )}
+              <input type="file" onChange={handleImageUpload} />
+              {previewImage && (
+                <img src={previewImage} alt="Preview" style={{ width: "200px" }} />
+              )}
              </div>
             <div style={{ display:"block",marginLeft: "100px" }}>
             <div style={{paddingTop:"20px"}}> 
@@ -133,17 +199,19 @@ export default function AdminAddProduct() {
               />
               </div>
               <hr/>
-          
-              <div style={{paddingTop:"20px"}}>      
-                <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>KDV Oranı:</span>
+              <div style={{paddingTop:"20px"}}>
+              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>KDV Oranı:</span>
               <input
                 type="number"
                 name="tax"
-                value={product.tax}
+                value={product.tax >= 0 ? product.tax : ''}
+                min="0"
                 onChange={handleInputChange}
                 className="edit-input-area"
-              /></div>
-                <hr/>
+              />
+            </div>
+            <hr/>
+            
 
               <div style={{paddingTop:"20px"}}>
               <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Ürün Rengi:</span>
@@ -160,41 +228,46 @@ export default function AdminAddProduct() {
               
        
         
-              <div style={{paddingTop:"20px"}}> 
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Fiyat:</span>
+              <div style={{paddingTop:"20px"}}>
+              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Fiyat:</span>
               <input
                 type="number"
                 name="price"
-                value={product.price}
+                value={product.price >= 0 ? product.price : ''}
+                min="0"
                 onChange={handleInputChange}
                 className="edit-input-area"
               />
-               </div>
-               <hr/>
+            </div>
+            <hr/>
+            
 
-               <div style={{paddingTop:"20px"}}> 
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>İndirim Oranı:</span>
-              <input
-                type="number"
-                name="discountRate"
-                value={product.discountRate}
-                onChange={handleInputChange}
-                className="edit-input-area"
-              />
-               </div>
-               <hr/>
+            <div style={{paddingTop:"20px"}}>
+            <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>İndirim Oranı:</span>
+            <input
+              type="number"
+              name="discountRate"
+              value={product.discountRate >= 0 ? product.discountRate : ''}
+              min="0"
+              onChange={handleInputChange}
+              className="edit-input-area"
+            />
+          </div>
+          <hr/>
 
-               <div style={{paddingTop:"20px"}}> 
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>İndirim Miktarı:</span>
-              <input
-                type="number"
-                name="discountedAmount"
-                value={product.discountedAmount}
-                onChange={handleInputChange}
-                className="edit-input-area"
-              />
-               </div>
-               <hr/>
+            <div style={{paddingTop:"20px"}}>
+               <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>İndirim Miktarı:</span>
+               <input
+                 type="number"
+                 name="discountedAmount"
+                 value={product.discountedAmount >= 0 ? product.discountedAmount : ''}
+                 min="0"
+                 onChange={handleInputChange}
+                 className="edit-input-area"
+               />
+             </div>
+             <hr/>
+             
 
 
                <div style={{ paddingTop: "20px" }}>
@@ -239,7 +312,8 @@ export default function AdminAddProduct() {
          
         </>
     
-  </div>
+    
+    </div>
  
 
 

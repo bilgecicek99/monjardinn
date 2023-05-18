@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 
-export default function AdminPanel() {
+export default function Adminpanel() {
 
 
 const products = [  
@@ -21,7 +21,7 @@ const products = [
   return (
     <>
       <div  style={{ margin: "100px", display:"flex" }}>
-      <div style={{float:"left", width:"25%"}}>
+      <div style={{float:"left", width:"25%"}} className='admin-panel-left'>
       <Navbar  expand="lg" fixed="top"   >
         <Container>  
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -41,13 +41,14 @@ const products = [
               <hr/>
               <NavLink className="menu-items-admin-link" to='/AdminAddProduct' style={{fontStyle:"italic"}}>Yeni Kalem Ekle</NavLink>
               <hr/>
+              <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
+              <hr/> 
              {/* 
                <NavLink className="menu-items-admin-link" to='/AdminAllProductList' style={{fontStyle:"italic"}}>Tüm Ürünler</NavLink>
                <hr/>
              <NavLink className="menu-items-admin-link" to='/Stock' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
               <hr/>
-               <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
-              <hr/> 
+              
               <NavLink className="menu-items-admin-link" to='/EditBlog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
               <hr/> 
               <NavLink className="menu-items-admin-link" to='/Blogdetay' style={{fontStyle:"italic"}}>Çıkış Yap</NavLink>   
@@ -62,24 +63,24 @@ const products = [
         </Container>
       </Navbar>
       </div>
-      <div style={{float:"right", width:"75%", color:"black",  fontFamily: 'Times New Roman'}}>
+      <div style={{float:"right", width:"75%", color:"black",  fontFamily: 'Times New Roman'}} className='admin-panel-right'>
       <div className='admin-first-area' style={{display:"flex", marginTop:"30px"}}>
         <div className='admin-first-area-box' style={{background:"#96C671", display:"flex"}}>
-        <div> <img src="/images/shop-box.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} /></div> 
+        <div> <img src="/images/shop-box.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div> 
         <div style={{display:"block"}}>
           <p>Son Siparişler</p> 
           <p style={{fontStyle:"normal"}}> 46   Sipariş</p>
         </div>
         </div>
         <div className='admin-first-area-box' style={{background:"#78ABBB", display:"flex"}}>
-         <div> <img src="/images/comment.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}}/></div>
+         <div> <img src="/images/comment.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div>
          <div style={{display:"block"}}>
             <p>Son Yorumlar</p>
             <p style={{fontStyle:"normal"}}>5  {/*  be'den gelcek*/} Yorum</p>  
           </div>
         </div>
         <div className='admin-first-area-box' style={{background:"#955EA9", display:"flex"}}>          
-         <div> <img src="/images/users.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} /></div>
+         <div> <img src="/images/users.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div>
          <div style={{display:"block"}}>
             <p> Son Kayıtlar</p>
             <p style={{fontStyle:"normal"}}>10  {/*  be'den gelcek*/} Kayıt</p> 
@@ -87,10 +88,8 @@ const products = [
         </div>
       </div>
 
-      <div className='admin-middle-area' style={{display:"flex",marginTop:"30px"}}>
- 
-   
-     <div>  
+      <div className='admin-middle-area' style={{display:"flex",marginTop:"30px"}}> 
+       <div>  
        <table>
        <thead>
         <tr>
@@ -113,9 +112,8 @@ const products = [
           </tbody>
         </table>
        </div>
- 
-       
-        <div style={{marginLeft:"50px"}}>
+   
+        <div style={{marginLeft:"50px", marginTop:"15px"}} className='admin-last-product-area'>
         Son Eklenen Ürün
        
         <div style={{border:"1px solid #ccc", padding:"20px", textAlign:"center", fontStyle:"italic",fontFamily:"Times New Roman"}}>
@@ -158,7 +156,7 @@ const products = [
       <div className='admin-end-area' style={{marginTop:"30px"}}>
         <div>
         Son Blog Yazısı
-        <div style={{display:"flex", padding:"20px 20px 0px", border:"1px solid #ccc",}}>
+        <div style={{display:"flex", padding:"20px 20px 0px", border:"1px solid #ccc",width:"100%"}}>
           <div>
             <img src={process.env.PUBLIC_URL + '/images/pembelale.jpg'} alt="j" width={250} height={250} style={{marginBottom:"10px"}}/>
             <p> Blog Başlığı</p> 

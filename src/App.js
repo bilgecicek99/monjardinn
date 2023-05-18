@@ -4,7 +4,7 @@ import './index.css';
 
 
 
-import AdminPanel from './AdminPanel';
+import Adminpanel from './Adminpanel';
 import ProductList from './ProductList';
 import Home from './Home';
 import List from './List';
@@ -39,7 +39,7 @@ function App() {
     <Router> 
       <Routes>
         <Route path="/" exact element={<Home />} />
-        <Route path="/AdminPanel" element={<AdminPanel />} />
+        <Route path="/Adminpanel" element={<Adminpanel />} />
         <Route path="/ProductList" element={<ProductList/>} />
         <Route path="/List" element={<List/>} />
         <Route path="/ProductInfo" element={<ProductInfo/>} />
