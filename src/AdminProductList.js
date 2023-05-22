@@ -128,10 +128,12 @@ export default function AdminProductList() {
     }
   };
  
-  const sortedProducts = filteredProducts.sort((a, b) => {
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
     const keyA = sortColumn ? a[sortColumn] : null;
     const keyB = sortColumn ? b[sortColumn] : null;
+  
     if (keyA === null || keyB === null) return 0;
+  
     if (sortOrder === 'asc') {
       if (typeof keyA === 'string' && typeof keyB === 'string') {
         return keyA.localeCompare(keyB);

@@ -66,18 +66,25 @@ export default function EditProduct() {
     };
 
   const handleKaydet =async () => {
-    const storageRef = ref(storage, "images/" + selectedImage.name);
-    let downloadURL = ""; // Deği
-    try {
-      // Resmi Storage'e yükleyin
-      const snapshot = await uploadBytes(storageRef, selectedImage);
-  
-      // Resmin URL'sini alın
-      downloadURL = await getDownloadURL(snapshot.ref);
-      console.log("Resim başarıyla yüklendi. URL:", downloadURL);
-    } catch (error) {
-      console.error("Resim yükleme hatası:", error);
+    let downloadURL = "";
+    if (selectedImage) {
+      const storageRef = ref(storage, "images/" + selectedImage.name);
+       // Deği
+      try {
+        // Resmi Storage'e yükleyin
+        const snapshot = await uploadBytes(storageRef, selectedImage);
+    
+        // Resmin URL'sini alın
+        downloadURL = await getDownloadURL(snapshot.ref);
+        console.log("Resim başarıyla yüklendi. URL:", downloadURL);
+      } catch (error) {
+        console.error("Resim yükleme hatası:", error);
     }
+  } 
+  else {
+
+    console.log("selectedImage boş veya tanımsız.");
+  }
 
      
 
@@ -99,6 +106,7 @@ export default function EditProduct() {
         navigate('/AdminProductList');
         alert("Değişiklikler başarıyla kaydedilmiştir.")
         console.log(data);
+        if (selectedImage) {
         fetch("https://api.monjardin.online/api/ProductFile/CreateProductFile", {
           method: "POST",
           headers: {
@@ -117,11 +125,15 @@ export default function EditProduct() {
             // Hata durumunu işleme
             console.error(error);
           });
+        }
+        else{
+          console.log("Yeni foto yok")
+        }
       })
       .catch((error) => {
         //console.error(error)
         const errorMessage = handleFetchError(error);
-        //console.log(errorMessage);
+        console.log(errorMessage);
       });
   };
 
@@ -215,6 +227,18 @@ export default function EditProduct() {
 )}
             <div style={{ display:"block",marginLeft: "100px" }} className="add-product-area-items">
             
+            <div style={{paddingTop:"20px"}}> 
+              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Ürün Adı:</span>
+              <input
+                type="text"
+                name="name"
+                value={product.name}
+                onChange={handleInputChange}
+                className="edit-input-area"
+              />
+              </div>
+              <hr/>
+        
               <div style={{paddingTop:"20px"}}>      
                 <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>KDV Oranı:</span>
               <input
@@ -236,21 +260,7 @@ export default function EditProduct() {
                 className="edit-input-area"
               /></div>
               <hr/>
-          
-           
-              <div style={{paddingTop:"20px"}}> 
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Ürün Adı:</span>
-              <input
-                type="text"
-                name="name"
-                value={product.name}
-                onChange={handleInputChange}
-                className="edit-input-area"
-              />
-              </div>
-              <hr/>
-        
-             
+               
         
               <div style={{paddingTop:"20px"}}> 
               <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Fiyat:</span>
