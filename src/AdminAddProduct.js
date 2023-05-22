@@ -98,9 +98,11 @@ export default function AdminAddProduct() {
         alert('Lütfen Tüm Alanları Doldurunuz.');
       } else {
 
+        let downloadURL = "";
+      if (selectedImage) {
+
       // Storage'de kaydedilecek referansı oluşturun
       const storageRef = ref(storage, "images/" + selectedImage.name);
-      let downloadURL = ""; // Deği
       try {
         // Resmi Storage'e yükleyin
         const snapshot = await uploadBytes(storageRef, selectedImage);
@@ -112,7 +114,11 @@ export default function AdminAddProduct() {
         console.error("Resim yükleme hatası:", error);
       }
 
-      
+     } 
+     else {
+        console.log("selectedImage boş veya tanımsız.");
+      }
+    
       const { fileResponses, labelProducts, productDiscountInfo, categoryName, ...newProduct } = product;
       const updatedProduct = {
         ...newProduct,
