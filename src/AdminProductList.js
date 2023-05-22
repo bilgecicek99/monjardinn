@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 export default function AdminProductList() {
   const [productList, setProductList] = useState([]);
@@ -76,8 +77,6 @@ export default function AdminProductList() {
   }, []);
 */
 
-
-/*testtssttststsjjuuhuhuhuhuhuts*/
   const fetchProductList = async () => {
     try {
 
@@ -124,16 +123,14 @@ export default function AdminProductList() {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
       setSortColumn(column);
-      setSortOrder('asc');
+      setSortOrder('desc');
     }
-  };
- 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+  }; 
+
+  const sortedProducts = filteredProducts.sort((a, b) => {
     const keyA = sortColumn ? a[sortColumn] : null;
     const keyB = sortColumn ? b[sortColumn] : null;
-  
     if (keyA === null || keyB === null) return 0;
-  
     if (sortOrder === 'asc') {
       if (typeof keyA === 'string' && typeof keyB === 'string') {
         return keyA.localeCompare(keyB);
@@ -199,11 +196,16 @@ return (
         <tr>
           
           <th style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}}></th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('id')}>Ürün Id</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('name')}>Ürün Adı</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('stock')}>Ürün Adedi</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Ürün Fiyatı</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('categoryName')}>Kategori</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('id')}> Ürün Id{' '}
+  {sortColumn === 'id' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('name')}>Ürün Adı{' '}
+  {sortColumn === 'name' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('stock')}>Ürün Adedi{' '}
+  {sortColumn === 'stock' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Ürün Fiyatı{' '}
+  {sortColumn === 'price' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('categoryName')}>Kategori{' '}
+  {sortColumn === 'categoryName' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
         </tr>
       </thead>
       <tbody>
