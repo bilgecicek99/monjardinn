@@ -61,7 +61,7 @@ function EditCategory() {
       
       const handleEditClick = () => {
         setIsEditing(true);
-        console.log("item",fileUrl,name,id);
+        console.log("item",fileUrl);
 
       };
     
@@ -70,34 +70,51 @@ function EditCategory() {
       };
     
       const handleSaveClick =async (event) => {
-        event.preventDefault();
-      
-        const storageRef = ref(storage, "images/" + selectedImage.name);
-        let downloadURL = ""; // Deği
-        try {
-          // Resmi Storage'e yükleyin
-          const snapshot = await uploadBytes(storageRef, selectedImage);
-      
-          // Resmin URL'sini alın
-          downloadURL = await getDownloadURL(snapshot.ref);
-          console.log("Resim başarıyla yüklendi. URL:", downloadURL);
-        } catch (error) {
-          console.error("Resim yükleme hatası:", error);
-        }
-
+    
+        let updatedProduct = "";    
+        if(previewImage){
+          let downloadURL = "";     
+         
+          if (selectedImage) {  
+          const storageRef = ref(storage, "images/" + selectedImage.name);    
+          try {
+            // Resmi Storage'e yükleyin
+            const snapshot = await uploadBytes(storageRef, selectedImage);
         
-        const updatedProduct = {
-          ...product,
-          name: editedName,
-          id: id,
-          parentId: null,
-          fileurl:downloadURL
-        };
-        console.log("pro",updatedProduct);
-       
-
+            // Resmin URL'sini alın
+            downloadURL = await getDownloadURL(snapshot.ref);
+            console.log("Resim başarıyla yüklendi. URL:", downloadURL);
+          } catch (error) {
+            console.error("Resim yükleme hatası:", error);
+          }
+          } 
+          else {
+        
+            console.log("selectedImage boş veya tanımsız.");
+          }
+      
+          
+          updatedProduct = {
+            ...product,
+            name: editedName,
+            id: id,
+            parentId: null,
+            fileurl:downloadURL
+          };
+          console.log("pro",updatedProduct);
+         
+        }
+        else{
+         updatedProduct = {
+            ...product,
+            name: editedName,
+            id: id,
+            parentId: null,
+            fileurl:fileUrl
+          };
+          console.log("pro",updatedProduct);
+        }
         setIsEditing(false);
-
 
         fetch("https://api.monjardin.online/api/Category/UpdateCategory", {
       method: "PUT",
@@ -155,7 +172,7 @@ function EditCategory() {
            <img src={previewImage} alt="Preview" style={{ width: "100px" }} />
           )}
           <div style={styles.editButtons}>
-            <button onClick={handleSaveClick}className="save-button" style={{float:"right"}} >Kaydet</button>
+            <button onClick={handleSaveClick}  className="save-button" style={{float:"right"}} >Kaydet</button>
             
           </div>
         </div>
@@ -272,9 +289,12 @@ return (
   
 
   const handleSave = async(event) => {
-    event.preventDefault();
+    let downloadURL = "";
+    if (selectedImage) {
+    
+   // event.preventDefault();
     const storageRef = ref(storage, "images/" + selectedImage.name);
-    let downloadURL = ""; // Deği
+   
     try {
       // Resmi Storage'e yükleyin
       const snapshot = await uploadBytes(storageRef, selectedImage);
@@ -285,6 +305,11 @@ return (
     } catch (error) {
       console.error("Resim yükleme hatası:", error);
     }
+  } 
+  else {
+
+    console.log("selectedImage boş veya tanımsız.");
+  }
 
 
 
