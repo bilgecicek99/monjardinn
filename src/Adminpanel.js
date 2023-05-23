@@ -5,6 +5,10 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
+import {
+  getUser,
+  getToken
+} from "./service/AuthService";
 
 export default function Adminpanel() {
 
@@ -16,7 +20,8 @@ const products = [
   { id: 4, name: "Mon Jardin", stock: 900, category: "Aranjman 1", city: "Konak",  image: process.env.PUBLIC_URL + '/images/pembelale.jpg', }
 ];
 
-
+const token = getToken();
+console.log("token",token);
 
   return (
     <>
