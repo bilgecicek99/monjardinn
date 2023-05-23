@@ -2,7 +2,10 @@ import React, { useState,useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+import {
+  getUser,
+  getToken
+} from "./service/AuthService";
 export default function EditProduct() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,21 +85,14 @@ export default function EditProduct() {
     }
   } 
   else {
-
     console.log("selectedImage boş veya tanımsız.");
   }
-
-     
-
-   
-   // console.log("productSDSFDDGJJ",product);
-    const { fileResponses,labelProducts,productDiscountInfo,categoryName, ...newProduct } = product;
-    console.log("product son",product)
-   // console.log("newww",newProduct);
-    fetch("https://api.monjardin.online/api/Product/UpdateProduct", {
+  const { fileResponses,labelProducts,productDiscountInfo,categoryName, ...newProduct } = product;
+  const token = getToken();
+  fetch("https://api.monjardin.online/api/Product/UpdateProduct", {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+        "Authorization":  `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(product),

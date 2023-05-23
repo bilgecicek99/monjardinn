@@ -1,8 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Redirect } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './index.css';
 
-
+import {
+  getUser,
+  getToken,
+  setUserSession,
+  resetUserSession,
+} from "./service/AuthService";
 
 import Adminpanel from './Adminpanel';
 import ProductList from './ProductList';
@@ -33,7 +38,8 @@ import ProductListByCategory from './ProductListByCategory';
 
 function App() {
   
-
+  const token = getToken();
+ 
   return (
     
     <Router> 
