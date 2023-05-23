@@ -7,11 +7,20 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import {resetUserSession,getToken,getUserInfo} from "./service/AuthService";
+import { useNavigate } from 'react-router-dom';
 
 function Navbars() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
-
+  const navigate = useNavigate();
+ const token=getToken();
+ const user=getUserInfo();
+ console.log("user",user);
+  const logoutHandler = () => {
+    resetUserSession();
+    navigate("/");
+  };
   return (
     <Navbar expand="lg" fixed="top">
       <Container>
@@ -24,11 +33,15 @@ function Navbars() {
             </div>
             {menuOpen && (
               <div className="menu-items" onClick={() => setMenuOpen(false)}>
-                <div className="text-center">
-                  <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-                  <p className='menu-items-admin-link'>Deniz Şenocak</p>
-                  <p className='menu-items-admin-link'>exapmle@gmail.com</p>
-                </div>
+                
+               {user && (
+  <div className="text-center">
+    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
+    <p className='menu-items-admin-link'>{user.firstName}</p>
+    <p className='menu-items-admin-link'>{user.email}</p>
+  </div>
+)}
+
                 <div className="menu-items-container">
                   <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>
                   <hr />
@@ -56,7 +69,7 @@ function Navbars() {
         </Navbar.Collapse>
 
         <Navbar.Brand style={{ margin: "auto" }}>
-          <NavLink className="logo-link" to='/Home'><h1 className='baslik'>Mon Jardin</h1></NavLink>
+          <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
         </Navbar.Brand>
 
         <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
@@ -82,6 +95,11 @@ function Navbars() {
             >
               <img src={activeMenu === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
             </NavLink>
+            {token ? 
+             <button className='save-button' value="Logout" onClick={logoutHandler}>
+          Çıkış Yap   
+          </button>  : "" }
+          
           </Nav>
         </Navbar.Collapse>
       </Container>

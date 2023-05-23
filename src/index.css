@@ -542,18 +542,16 @@ nav li {
 }
 
 .profile-text{
-  position: relative;
-  right: 200px;
+  text-align: left;
 }
 .profile-text-password{
-  position: relative;
-  right: 140px;
+  
+ text-align: left;
 }
 .profile-hr{
   width:30rem ;
   text-align: center ;
   justify-content: center;
-  margin:auto !important;
   margin-bottom:20px !important;
 }
 .profile-card-area{
@@ -572,23 +570,14 @@ nav li {
   height:auto
 }
 @media only screen and (max-width: 700px) {
-  .profile-text{
-    position: relative;
-    right: 0;
-    left:-40px
-  }
+ 
   .profile-hr{
     width:10rem;
     text-align: center ;
     justify-content: center;
-    margin:auto !important;
     margin-bottom:20px !important;
   }
-  .profile-text-password{
-    position: relative;
-    right: 0;
-    left:20px
-  }
+ 
   .profile-card-area{
     text-align:center;
     width:100%;

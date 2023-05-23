@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-import { getToken, setUserSession } from "./service/AuthService";
-import {getUser} from "./service/AuthService";
+import { getToken, setUserSession,setUserDetail } from "./service/AuthService";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
@@ -48,13 +47,13 @@ const handleLoginFormSubmit = () => {
   })
   .then((data) => {
     console.log("data", data.message);
-    console.log("data", data.data.user);
     console.log("data", data.data.token);
 
-    setUserSession(data.data.token);
-   let x= getToken();
-   console.log("x",x);
-  
+    setUserSession(data.data.token,email);
+    const updatedUser = {
+      email: email,
+    }
+    setUserDetail(updatedUser);
     setErrorMessage(data.message);
     navigate('/');
   })
@@ -65,19 +64,19 @@ const handleLoginFormSubmit = () => {
   
   
 };
-
+let storedToken =getToken();
 useEffect(() => {
-  const storedToken = getToken();
+  
   if (storedToken) {
     setUserSession(storedToken);
+    //setUserDetail(updatedUser);
     navigate('/');
   }
 }, []);
-const user=getUser();
 
 return (
   <div style={{ margin: "100px" }}>
-  {user === null ?  
+  {storedToken === null ?  
     <>
     <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Hoşgeldiniz</h1>
     <form onSubmit={handleSubmit}>
@@ -101,7 +100,7 @@ return (
             />
     </div>
     <div>
-    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginRight: "290px" }} to='/Yeniparola'>Parolamı Unuttum</NavLink>
+    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginRight: "290px" }} to='/newpassword'>Parolamı Unuttum</NavLink>
     </div>
     {errorMessage && <p className="message">{errorMessage}</p>}
     <div style={{ position: "relative", left: "130px" }}>
@@ -114,7 +113,7 @@ return (
     <hr style={{ width: "20rem" }} />
     </div>
     <p style={{ textAlign: "center", fontStyle: "italic", fontWeight: "300" }}>Hesabın yok mu?
-    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginLeft: "20px" }} to='/Kayitol'>Kayıt Ol</NavLink>
+    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginLeft: "20px" }} to='/signup'>Kayıt Ol</NavLink>
     </p>
     </form>
     </>
