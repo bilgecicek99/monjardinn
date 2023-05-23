@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import {
   getUser,
-  getToken
+  getToken,resetUserSession
 } from "./service/AuthService";
 
 export default function Adminpanel() {
@@ -20,8 +20,56 @@ const products = [
   { id: 4, name: "Mon Jardin", stock: 900, category: "Aranjman 1", city: "Konak",  image: process.env.PUBLIC_URL + '/images/pembelale.jpg', }
 ];
 
+const [lastProduct, setLastProduct] = useState([]);
+const [lastBlog, setLastBlog] = useState([]);
+
+const navigate = useNavigate();
+
+const logoutHandler = () => {
+  resetUserSession();
+  navigate("/");
+};
+
 const token = getToken();
 console.log("token",token);
+
+const fetchLastProduct = async () => {
+  try {
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer  ${token}`
+      }
+    };
+    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastProduct`,requestOptions);
+    const data = await response.json();
+    console.log("data",data.data)
+    const productData= data.data;
+    setLastProduct(productData);  
+  } catch (error) {
+    console.error(error);
+  }
+};
+const fetchLastBlog = async () => {
+  try {
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastBlog`,requestOptions);
+    const data = await response.json();
+    console.log("data",data.data)
+    const blog= data.data;
+    setLastBlog(blog);  
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(() => {
+  fetchLastProduct();
+  fetchLastBlog();
+}, []);
 
   return (
     <>
@@ -48,6 +96,10 @@ console.log("token",token);
               <hr/>
               <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
               <hr/> 
+              {token ? 
+             <button className='save-button' value="Logout" onClick={logoutHandler}>
+          Çıkış Yap   
+          </button>  : "" }
              {/* 
                <NavLink className="menu-items-admin-link" to='/AdminAllProductList' style={{fontStyle:"italic"}}>Tüm Ürünler</NavLink>
                <hr/>
@@ -122,56 +174,66 @@ console.log("token",token);
         Son Eklenen Ürün
        
         <div style={{border:"1px solid #ccc", padding:"20px", textAlign:"center", fontStyle:"italic",fontFamily:"Times New Roman"}}>
-       
-        <img src={process.env.PUBLIC_URL + '/images/pembelale.jpg'} alt="j" width={100} height={100} style={{marginBottom:"10px"}}/>
+        {lastProduct && lastProduct.fileResponses && lastProduct.fileResponses.length > 0 && (
+  <img src={lastProduct.fileResponses[0].fileUrl} alt={lastProduct.name} width={128} height={128} />
+)}
+
+
         <div style={{display:"flex"}}>
         <div>
-        <p> Stok No</p> 
-        <p style={{fontWeight:"bold"}}> 0001</p>
+        <p> Stok </p> 
+        <p style={{fontWeight:"bold"}}> {lastProduct && lastProduct.id}</p>
         <p> KDV Oranı</p>
-        <p style={{fontWeight:"bold"}}> %18</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.tax}</p>
         <p> Ürünün Rengi</p>
-        <p style={{fontWeight:"bold"}}> Kırmızı</p>
+        <p style={{fontWeight:"bold"}}>  { lastProduct && lastProduct.color}</p>
         </div>
 
         <div>
         <p> Ürünün Adı</p> 
-        <p style={{fontWeight:"bold"}}> Orkide</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.name}</p>
         <p> Ürünün Adedi</p> 
-        <p style={{fontWeight:"bold"}}> 15 Adet</p>
-        <p > Saksı</p> 
-        <p style={{fontWeight:"bold"}}> Evet</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.stock} Adet</p>
+        <p > Kategori </p> 
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.categoryName}</p>
         </div>
 
         <div>
-        <p> Ürünün Barkodu</p> 
-        <p style={{fontWeight:"bold"}}> 0000000</p>
+        <p> İndirim Oranı</p> 
+        <p style={{fontWeight:"bold"}}> {lastProduct && lastProduct.discountRate}  </p>
         <p> Ürünün Fiyatı</p> 
-        <p style={{fontWeight:"bold"}}> 800 TL</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.price} TL</p>
         </div>
         </div>
         <div>
         <p> Ürünün Açıklaması</p> 
-        <p style={{fontWeight:"bold"}}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.description}</p>
         </div>
         </div>
         </div>
       </div>
 
-      <div className='admin-end-area' style={{marginTop:"30px"}}>
-        <div>
-        Son Blog Yazısı
-        <div style={{display:"flex", padding:"20px 20px 0px", border:"1px solid #ccc",width:"100%"}}>
-          <div>
-            <img src={process.env.PUBLIC_URL + '/images/pembelale.jpg'} alt="j" width={250} height={250} style={{marginBottom:"10px"}}/>
-            <p> Blog Başlığı</p> 
-          </div>
-          <div style={{paddingLeft:"30px"}} >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </div>
-        </div>
+      <div className='admin-end-area' style={{ marginTop: "30px" }}>
+  <div>
+    Son Blog Yazısı
+    <div style={{ display: "flex", padding: "20px", border: "1px solid #ccc", width: "100%" }}>
+      <div>
+        <img src={process.env.PUBLIC_URL + '/images/pembelale.jpg'} alt="j" width={250} height={250} style={{ marginBottom: "10px" }} />
+      </div>
+      <div style={{ marginLeft: "20px", overflow: "hidden" }}>
+        <p style={{ fontWeight: "bold", wordWrap: "break-word" }}>{lastBlog && lastBlog.title}</p>
+        <div style={{ maxHeight: "150px", overflowY: "auto" }}>
+          <p>{lastBlog && lastBlog.description}</p>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
       </div>
       </div>
     </>

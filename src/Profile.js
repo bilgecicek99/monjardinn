@@ -1,26 +1,60 @@
 import React, { useState, useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
+import {getEmail, getToken, setUserDetail} from "./service/AuthService";
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const [adSoyad, setAdSoyad] = useState(""); // Kullanıcının adı soyadı
-  const [telefon, setTelefon] = useState(""); // Kullanıcının telefon numarası
-  const [eposta, setEposta] = useState(""); // Kullanıcının e-posta adresi
-  const [sifre, setSifre] = useState(""); // Kullanıcının şifresi
+ 
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    dateOfBirth: '',
+    password:''
+  });
 
-  // Kullanıcının adı soyadı, telefon numarası, e-posta adresi ve şifresi gibi verileri burada fetch veya başka bir yöntemle getirebilirsiniz
+  const navigate = useNavigate();
+
   useEffect(() => {
+    let email= getEmail();
+    console.log("x",email);
+    let token= getToken();
+    console.log("token",token);
+    if (!token) {
+      // Token yok, login sayfasına yönlendirme yapabilirsiniz
+      navigate('/login'); // Gerekli yönlendirme adresini buraya yazın
+      return;
+    }
+  
     // Örnek bir API çağrısı ile kullanıcının profil verilerini getirme
     const fetchProfilVerileri = async () => {
       try {
         // API çağrısını gerçekleştirme
-        const response = await fetch("API_URL");
-        const data = await response.json();
-
-        // Kullanıcının profil verilerini state'e set etme
-        setAdSoyad(data.adSoyad);
-        setTelefon(data.telefon);
-        setEposta(data.eposta);
-        setSifre(data.sifre);
+        const requestOptions = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+        
+       await fetch(`https://api.monjardin.online/api/User/UserProfile/${email}`,requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          const { firstname, lastName, phoneNumber, email, dateOfBirth } = data.data;
+          const updatedUser = {
+            firstName: firstname,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            email: email,
+            dateOfBirth: dateOfBirth
+          }
+          setUser(updatedUser);
+          setUserDetail(updatedUser);
+        })
+        .catch(error => {
+          // Hata durumunda burada hata işleme yapabilirsiniz
+          console.error(error);
+        });
       } catch (error) {
         console.error("Profil verileri getirilirken hata oluştu: ", error);
       }
@@ -28,6 +62,7 @@ const Profile = () => {
 
     fetchProfilVerileri();
   }, []);
+
 
   // Şifre değiştirme işlemini gerçekleştiren fonksiyon
   const sifreDegistir = () => {
@@ -88,18 +123,23 @@ const Profile = () => {
     <div style={{ margin: "100px" }}>
       <h1  style={{ textAlign: "center", fontStyle:"italic" }}>Profilim</h1>
       <div style={{ display: "block", justifyContent: "center",marginTop: "50px",textAlign:"center" }}>
-
-      <p className="profile-text">Adı Soyadı: {adSoyad}</p>
+    <div className="profile-card-area">
+      <p className="profile-text">Adı: {user.firstName}</p>
       <hr className="profile-hr" />
-      <p className="profile-text">Telefon: {telefon}</p>
+      <p className="profile-text">Soyadı: {user.lastName}</p>
+      <hr className="profile-hr" />
+      <p className="profile-text">Telefon: {user.phone}</p>
       <hr className="profile-hr"  />
-      <p className="profile-text">E-posta: {eposta}</p>
+      <p className="profile-text">E-posta: {user.email}</p>
       <hr className="profile-hr" />
-      <div style={{ display:"flex", textAlign:"center", justifyContent:"center"}} >
-     <div> <p className="profile-text-password">Şifre: {sifre}</p></div>
+      <p className="profile-text">Doğum Tarihi {user.birthday}</p>
+      <hr className="profile-hr" />
+      <div style={{ display:"flex", textAlign:"center"}} >
+     <div> <p className="profile-text">Şifre: {user.password}</p></div>
      <div> <button className="profile-password"  onClick={sifreDegistir}>Şifreyi Değiştir</button></div>
       </div>
       <hr className="profile-hr" />
+      </div>
       <h2  style={{ textAlign: "center", fontStyle:"italic" }}>Kayıtlı Adreslerim</h2>
      
       <div  className="profile-card-area" >

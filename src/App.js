@@ -39,37 +39,38 @@ import ProductListByCategory from './ProductListByCategory';
 function App() {
   
   const token = getToken();
+ console.log("token",token);
  
   return (
     
     <Router> 
       <Routes>
         <Route path="/" exact element={<Home />} />
-        <Route path="/Adminpanel" element={<Adminpanel />} />
-        <Route path="/ProductList" element={<ProductList/>} />
-        <Route path="/List" element={<List/>} />
-        <Route path="/ProductInfo" element={<ProductInfo/>} />
-        <Route path="/Basket" element={<Basket/>} />
-        <Route path="/LogIn" element={<LogIn/>} />
-        <Route path="/SignUp" element={<SignUp/>} />
-        <Route path="/NewPassword" element={<NewPassword/>} />
-        <Route path="/Profile" element={<Profile/>} />
-        <Route path="/Search" element={<Search/>} />
-        <Route path="/Favorite" element={<Favorite/>} />
-        <Route path="/Blog" element={<Blog/>} />
-        <Route path="/AdminSearch" element={<AdminSearch/>} />
-        <Route path="/AdminProductList" element={<AdminProductList/>} />
-        <Route path="/AdminAllProductList" element={<AdminAllProductList/>} />
-        <Route path="/AdminAddProduct" element={<AdminAddProduct/>} />
+        <Route path="/adminpanel" element={<Adminpanel />} />
+        <Route path="/productlist" element={<ProductList/>} />
+        <Route path="/list" element={<List/>} />
+        <Route path="/productinfo" element={<ProductInfo/>} />
+        <Route path="/basket" element={<Basket/>} />
+        <Route path="/login" element={<LogIn/>} />
+        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/newpassword" element={<NewPassword/>} />
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/search" element={<Search/>} />
+        <Route path="/favorite" element={<Favorite/>} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/adminSearch" element={<AdminSearch/>} />
+        <Route path="/adminproductlist" element={<AdminProductList/>} />
+        <Route path="/adminallproductlist" element={<AdminAllProductList/>} />
+        <Route path="/adminaddproduct" element={<AdminAddProduct/>} />
 
-        <Route path="/CreateYourself" element={<CreateYourself/>} />
-        <Route path="/Stock" element={<Stock/>} />
-        <Route path="/BlogDetail" element={<BlogDetail/>} />
-        <Route path="/EditProduct" element={<EditProduct/>} />
-        <Route path="/EditBlog" element={<EditBlog/>} />
-        <Route path="/EditCategory" element={<EditCategory/>} /> 
-        <Route path="/EditProduct/:product" element={<EditProduct />} />
-        <Route path="/ProductListByCategory"  element={<ProductListByCategory />} />
+        <Route path="/createyourself" element={<CreateYourself/>} />
+        <Route path="/stock" element={<Stock/>} />
+        <Route path="/blogdetail" element={<BlogDetail/>} />
+        <Route path="/editproduct" element={<EditProduct/>} />
+        <Route path="/editblog" element={<EditBlog/>} />
+        <Route path="/editcategory" element={<EditCategory/>} /> 
+        <Route path="/editproduct/:product" element={<EditProduct />} />
+        <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
       </Routes>
     </Router>
