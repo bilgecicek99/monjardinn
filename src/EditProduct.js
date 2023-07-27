@@ -50,7 +50,7 @@ export default function EditProduct() {
 
     const fetchCategoryList = async () => {
       try {
-        const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+        const response = await fetch(`http://64.227.114.199/api/Category/GetMainCategories`);
         if (!response.ok) {
           throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
         }
@@ -89,7 +89,7 @@ export default function EditProduct() {
   }
   const { fileResponses,labelProducts,productDiscountInfo,categoryName, ...newProduct } = product;
   const token = getToken();
-  fetch("https://api.monjardin.online/api/Product/UpdateProduct", {
+  fetch("http://64.227.114.199/api/Product/UpdateProduct", {
       method: "PUT",
       headers: {
         "Authorization":  `Bearer ${token}`,
@@ -103,7 +103,7 @@ export default function EditProduct() {
         alert("Değişiklikler başarıyla kaydedilmiştir.")
         console.log(data);
         if (selectedImage) {
-        fetch("https://api.monjardin.online/api/ProductFile/CreateProductFile", {
+        fetch("http://64.227.114.199/api/ProductFile/CreateProductFile", {
           method: "POST",
           headers: {
             "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
@@ -136,7 +136,7 @@ export default function EditProduct() {
   const handleDelete = async (id) => {
    // console.log("product id", id);
   
-    fetch(`https://api.monjardin.online/api/Product/DeleteProduct/${id}`, {
+    fetch(`http://64.227.114.199/api/Product/DeleteProduct/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
@@ -157,7 +157,7 @@ export default function EditProduct() {
   const fetchProduct = async (id) => {
     try {
      // console.log("id", id)
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetProductDetailByProductId/${id}`);
+      const response = await fetch(`http://64.227.114.199/api/Product/GetProductDetailByProductId/${id}`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }

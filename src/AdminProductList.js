@@ -80,7 +80,7 @@ export default function AdminProductList() {
   const fetchProductList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      const response = await fetch(`http://64.227.114.199/api/Product/GetAllProducts`);
       const data = await response.json();
       console.log("data",data.data)
       const productData= data.data;

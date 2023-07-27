@@ -40,7 +40,7 @@ const fetchLastProduct = async () => {
         Authorization: `Bearer  ${token}`
       }
     };
-    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastProduct`,requestOptions);
+    const response = await fetch(`http://64.227.114.199/api/Dashboard/LastProduct`,requestOptions);
     const data = await response.json();
     console.log("data",data.data)
     const productData= data.data;
@@ -56,7 +56,7 @@ const fetchLastBlog = async () => {
         Authorization: `Bearer ${token}`
       }
     };
-    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastBlog`,requestOptions);
+    const response = await fetch(`http://64.227.114.199/api/Dashboard/LastBlog`,requestOptions);
     const data = await response.json();
     console.log("data",data.data)
     const blog= data.data;

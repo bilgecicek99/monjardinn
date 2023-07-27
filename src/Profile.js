@@ -37,7 +37,7 @@ const Profile = () => {
           }
         };
         
-       await fetch(`https://api.monjardin.online/api/User/UserProfile/${email}`,requestOptions)
+       await fetch(`http://64.227.114.199/api/User/UserProfile/${email}`,requestOptions)
         .then(response => response.json())
         .then(data => {
           const { firstname, lastName, phoneNumber, email, dateOfBirth } = data.data;

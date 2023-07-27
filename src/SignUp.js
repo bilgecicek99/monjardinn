@@ -49,7 +49,7 @@ const SignUp = () => {
     }
 
     console.log("requestBody",requestBody);
-    fetch("https://api.monjardin.online/api/auth/register", {
+    fetch("http://64.227.114.199/api/auth/register", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

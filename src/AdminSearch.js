@@ -145,7 +145,7 @@ const cardImageStyle = {
   const fetchCategoryList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+      const response = await fetch(`http://64.227.114.199/api/Category/GetMainCategories`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }
@@ -165,7 +165,7 @@ const cardImageStyle = {
   const fetchProductList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      const response = await fetch(`http://64.227.114.199/api/Product/GetAllProducts`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }

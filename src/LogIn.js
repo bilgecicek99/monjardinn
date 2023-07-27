@@ -26,7 +26,7 @@ const handleSubmit = (e) => {
 
 const handleLoginFormSubmit = () => {
  
-  fetch("https://api.monjardin.online/api/auth/login", {
+  fetch("http://64.227.114.199/api/auth/login", {
   method: "POST",
   headers: {
     'Content-Type': 'application/json',
