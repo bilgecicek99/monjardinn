@@ -18,9 +18,9 @@ const Profile = () => {
 
   useEffect(() => {
     let email= getEmail();
-    console.log("x",email);
+    //console.log("x",email);
     let token= getToken();
-    console.log("token",token);
+    //console.log("token",token);
     if (!token) {
       // Token yok, login sayfasına yönlendirme yapabilirsiniz
       navigate('/login'); // Gerekli yönlendirme adresini buraya yazın
@@ -128,11 +128,11 @@ const Profile = () => {
       <hr className="profile-hr" />
       <p className="profile-text">Soyadı: {user.lastName}</p>
       <hr className="profile-hr" />
-      <p className="profile-text">Telefon: {user.phone}</p>
+      <p className="profile-text">Telefon: {user.phoneNumber}</p>
       <hr className="profile-hr"  />
       <p className="profile-text">E-posta: {user.email}</p>
       <hr className="profile-hr" />
-      <p className="profile-text">Doğum Tarihi {user.birthday}</p>
+      <p className="profile-text">Doğum Tarihi: {user.dateOfBirth?.toString()?.split('T')[0]}</p>
       <hr className="profile-hr" />
       <div style={{ display:"flex", textAlign:"center"}} >
      <div> <p className="profile-text">Şifre: {user.password}</p></div>
