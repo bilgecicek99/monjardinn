@@ -46,10 +46,10 @@ const handleLoginFormSubmit = () => {
     });
   })
   .then((data) => {
-    console.log("data", data.message);
-    console.log("data", data.data.token);
+    //console.log("data", data);
+    //console.log("data", data.token);
 
-    setUserSession(data.data.token,email);
+    setUserSession(data.token,email);
     const updatedUser = {
       email: email,
     }
