@@ -1,6 +1,7 @@
 import React, { useState , useEffect, useRef} from "react";
 import { useNavigate } from 'react-router-dom';
-import './index.css';
+import '../index.css';
+import { baseUrl } from '../config/Constants';
 
 const AdminSearch= () => {
   const [productList, setProductList] = useState([]);
@@ -145,7 +146,7 @@ const cardImageStyle = {
   const fetchCategoryList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+      const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }
@@ -165,7 +166,7 @@ const cardImageStyle = {
   const fetchProductList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      const response = await fetch(baseUrl+`api/Product/GetAllProducts`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }

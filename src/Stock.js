@@ -1,20 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { getUser,getToken,resetUserSession,getUserInfo } from "./service/AuthService";
+import { baseUrl } from './config/Constants';
 
 function Stock() {
- /* const [products, setProducts] = useState([
-    { id: 1, name: "Ürün 1", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 2, name: "Ürün 2", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 3, name: "Ürün 3", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 4, name: "Ürün 3", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 5, name: "Ürün 3", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 6, name: "Ürün 3", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-    { id: 7, name: "Ürün 3", image: "/images/orkide.png", stockCode: "000001", stockCount: 15 },
-  ]);
-  */
-
   const [productList, setProductList] = useState([]);
 
+  const token = getToken();
 
 
   const handleIncreaseStock = (id) => {
@@ -47,10 +39,10 @@ function Stock() {
     const { fileResponses,labelProducts,productDiscountInfo,categoryName, ...newProduct } = product;
     console.log("newww",newProduct);
     // console.log("product",product);
-    fetch("https://api.monjardin.online/api/Product/UpdateProduct", {
+    fetch(baseUrl+"api/Product/UpdateProduct", {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(product),
@@ -62,7 +54,7 @@ function Stock() {
 
   const fetchProductList = async () => {
     try {
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      const response = await fetch(baseUrl+`api/Product/GetAllProducts`);
       const data = await response.json();
       console.log("data",data.data)
       const productData= data.data;

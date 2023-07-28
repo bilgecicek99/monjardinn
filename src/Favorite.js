@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
+import { baseUrl } from './config/Constants';
 
 const Address = ({ Image, title, description, price }) => (
   <div className="card" style={{ margin: "20px", display: "flex", padding:"30px"}}>
@@ -25,7 +26,7 @@ const FavoriListesi = () => {
     // API'den favori ürünleri al ve setFavoriUrunler ile durumu güncelle
     const fetchFavoriUrunler = async () => {
       try {
-        const response = await fetch("https://api.example.com/favori-urunler");
+        const response = await fetch(baseUrl+"api.example.com/favori-urunler");
         const data = await response.json();
         setFavoriUrunler(data);
       } catch (error) {

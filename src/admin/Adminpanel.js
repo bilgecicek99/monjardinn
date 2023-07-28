@@ -4,15 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
-import { FiMenu } from 'react-icons/fi';
 import {
   getUser,
-  getToken,resetUserSession
-} from "./service/AuthService";
+  getToken,resetUserSession,getUserInfo
+} from "../service/AuthService";
+import { baseUrl } from '../config/Constants';
+
 
 export default function Adminpanel() {
-
-
 const products = [  
   { id: 1, name: "Mon Jardin", stock: 600, category: "Aranjman", city: "Karşıyaka", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',  },
   { id: 2, name: "Mon Jardin", stock: 200, category: "Aranjman 2", city: "Çiğli",  image:  process.env.PUBLIC_URL + '/images/pembelale.jpg', },
@@ -22,6 +21,9 @@ const products = [
 
 const [lastProduct, setLastProduct] = useState([]);
 const [lastBlog, setLastBlog] = useState([]);
+const [totalUserComments, setTotalUserComments] = useState("");
+const [totalUserRecords, setTotalUserRecords] = useState("");
+
 
 const navigate = useNavigate();
 
@@ -31,45 +33,97 @@ const logoutHandler = () => {
 };
 
 const token = getToken();
-console.log("token",token);
-
-const fetchLastProduct = async () => {
-  try {
-    const requestOptions = {
-      headers: {
-        Authorization: `Bearer  ${token}`
-      }
-    };
-    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastProduct`,requestOptions);
-    const data = await response.json();
-    console.log("data",data.data)
-    const productData= data.data;
-    setLastProduct(productData);  
-  } catch (error) {
-    console.error(error);
-  }
-};
-const fetchLastBlog = async () => {
-  try {
-    const requestOptions = {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-    const response = await fetch(`https://api.monjardin.online/api/Dashboard/LastBlog`,requestOptions);
-    const data = await response.json();
-    console.log("data",data.data)
-    const blog= data.data;
-    setLastBlog(blog);  
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 useEffect(() => {
+ console.log("tokennn", token);
+
+  const fetchLastProduct = async () => {
+    try {
+      console.log("token",token)
+      // İstek yapma kodu
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(baseUrl+`api/Dashboard/LastProduct`, requestOptions);
+      
+      // Başarılı yanıtın kontrolü
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data", data.data);
+        const productData = data.data;
+        setLastProduct(productData);
+      } else {
+        throw new Error("Sunucudan geçersiz bir yanıt alındı.");
+      }
+    } catch (error) {
+      console.error("fetchLastProduct hatası:", error);
+    }
+  };
+   
+  const fetchLastBlog = async () => {
+    try {
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(baseUrl+ `api/Dashboard/LastBlog`, requestOptions);
+      const data = await response.json();
+      console.log("data", data.data);
+      const blog = data.data;
+      setLastBlog(blog);
+    } catch (error) {
+      console.error("fetchLastBlog hatası:", error);
+      // Hata durumunda yapılacak işlemler
+    }
+  };
+
+  const fetchTotalUserComments = async () => {
+    try {
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(baseUrl+`api/Dashboard/TotalUserComments`, requestOptions);
+      const data = await response.json();
+      console.log("dataaaaaa", data);
+      const totalUserCommentsCount = data.data;
+      setTotalUserComments(totalUserCommentsCount);
+    } catch (error) {
+      console.error("totalUserComments hatası:", error);
+      // Hata durumunda yapılacak işlemler
+    }
+  };
+
+
+  const fetchTotalUserRecords = async () => {
+    try {
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await fetch(baseUrl+`api/Dashboard/TotalUserRecords`, requestOptions);
+      const data = await response.json();
+      console.log("dataaaaaa", data);
+      const totalUserRecordsCount = data.data;
+      setTotalUserRecords(totalUserRecordsCount);
+    } catch (error) {
+      console.error("totalUserRecordsCount hatası:", error);
+      // Hata durumunda yapılacak işlemler
+    }
+  };
+
+  fetchTotalUserRecords();
   fetchLastProduct();
   fetchLastBlog();
+  fetchTotalUserComments();
 }, []);
+
+const user=getUserInfo();
+console.log("user",user);
 
   return (
     <>
@@ -82,12 +136,13 @@ useEffect(() => {
             <Nav className="me-auto">
             <nav>
             <div className="menu-items-admin">
-            <div className="text-center">
-                <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-                <p className='menu-items-admin-link'>Deniz Şenocak</p>   {/*  be'den gelcek*/}
-                <p className='menu-items-admin-link'>exapmle@gmail.com</p>  {/*  be'den gelcek*/} 
-            </div>
-             
+            {user && (
+  <div className="text-center">
+    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
+    <p className='menu-items-admin-link'>{user.firstName}</p>
+    <p className='menu-items-admin-link'>{user.email}</p>
+  </div>
+)}
               <NavLink className="menu-items-admin-link" to='/AdminProductList' style={{fontStyle:"italic"}}>Stok Kontrol</NavLink>
               <hr/>
               <NavLink className="menu-items-admin-link" to='/AdminSearch' style={{fontStyle:"italic"}}>Arama</NavLink>
@@ -96,20 +151,18 @@ useEffect(() => {
               <hr/>
               <NavLink className="menu-items-admin-link" to='/EditCategory' style={{fontStyle:"italic"}}>Kategori Düzenleme</NavLink>  
               <hr/> 
-              {token ? 
-             <button className='save-button' value="Logout" onClick={logoutHandler}>
-          Çıkış Yap   
-          </button>  : "" }
+              <NavLink className="menu-items-admin-link" to='/adminallblog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
+              <hr/> 
+              {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
+
              {/* 
                <NavLink className="menu-items-admin-link" to='/AdminAllProductList' style={{fontStyle:"italic"}}>Tüm Ürünler</NavLink>
                <hr/>
              <NavLink className="menu-items-admin-link" to='/Stock' style={{fontStyle:"italic"}}>Stok Ekle/Çıkar</NavLink>
               <hr/>
               
-              <NavLink className="menu-items-admin-link" to='/EditBlog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
-              <hr/> 
-              <NavLink className="menu-items-admin-link" to='/Blogdetay' style={{fontStyle:"italic"}}>Çıkış Yap</NavLink>   
-              <hr/>
+             
+             
   */}
              
             </div>
@@ -126,21 +179,21 @@ useEffect(() => {
         <div> <img src="/images/shop-box.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div> 
         <div style={{display:"block"}}>
           <p>Son Siparişler</p> 
-          <p style={{fontStyle:"normal"}}> 46   Sipariş</p>
+          <p style={{fontStyle:"normal"}}> 46  {/*  be'den gelcek*/}  Sipariş</p>
         </div>
         </div>
         <div className='admin-first-area-box' style={{background:"#78ABBB", display:"flex"}}>
          <div> <img src="/images/comment.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div>
          <div style={{display:"block"}}>
             <p>Son Yorumlar</p>
-            <p style={{fontStyle:"normal"}}>5  {/*  be'den gelcek*/} Yorum</p>  
+            <p style={{fontStyle:"normal"}}>{totalUserComments && totalUserComments}  Yorum</p>  
           </div>
         </div>
         <div className='admin-first-area-box' style={{background:"#955EA9", display:"flex"}}>          
          <div> <img src="/images/users.png" alt="" width={"64"} height={"64"} style={{marginRight:"20px"}} className='admin-first-area-box-icon'/></div>
          <div style={{display:"block"}}>
             <p> Son Kayıtlar</p>
-            <p style={{fontStyle:"normal"}}>10  {/*  be'den gelcek*/} Kayıt</p> 
+            <p style={{fontStyle:"normal"}}>{totalUserRecords && totalUserRecords} Kayıt</p> 
           </div> 
         </div>
       </div>
@@ -175,39 +228,39 @@ useEffect(() => {
        
         <div style={{border:"1px solid #ccc", padding:"20px", textAlign:"center", fontStyle:"italic",fontFamily:"Times New Roman"}}>
         {lastProduct && lastProduct.fileResponses && lastProduct.fileResponses.length > 0 && (
-  <img src={lastProduct.fileResponses[0].fileUrl} alt={lastProduct.name} width={128} height={128} />
-)}
+          <img src={lastProduct.fileResponses[0].fileUrl} alt={lastProduct.name} width={128} height={128} />
+        )}
 
 
         <div style={{display:"flex"}}>
         <div>
         <p> Stok </p> 
-        <p style={{fontWeight:"bold"}}> {lastProduct && lastProduct.id}</p>
+        <p style={{fontWeight:"bold"}}> { lastProduct.id}</p>
         <p> KDV Oranı</p>
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.tax}</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct.tax}</p>
         <p> Ürünün Rengi</p>
-        <p style={{fontWeight:"bold"}}>  { lastProduct && lastProduct.color}</p>
+        <p style={{fontWeight:"bold"}}>  { lastProduct.color}</p>
         </div>
 
         <div>
         <p> Ürünün Adı</p> 
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.name}</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct.name}</p>
         <p> Ürünün Adedi</p> 
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.stock} Adet</p>
+        <p style={{fontWeight:"bold"}}>  { lastProduct.stock} Adet</p>
         <p > Kategori </p> 
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.categoryName}</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct.categoryName}</p>
         </div>
 
         <div>
         <p> İndirim Oranı</p> 
-        <p style={{fontWeight:"bold"}}> {lastProduct && lastProduct.discountRate}  </p>
+        <p style={{fontWeight:"bold"}}> { lastProduct.discountRate}  </p>
         <p> Ürünün Fiyatı</p> 
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.price} TL</p>
+        <p style={{fontWeight:"bold"}}>  { lastProduct.price} TL</p>
         </div>
         </div>
         <div>
         <p> Ürünün Açıklaması</p> 
-        <p style={{fontWeight:"bold"}}>  {lastProduct && lastProduct.description}</p>
+        <p style={{fontWeight:"bold"}}>  {lastProduct.description}</p>
         </div>
         </div>
         </div>

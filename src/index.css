@@ -519,7 +519,7 @@ nav li {
   border: 1px solid #893694;
   border-radius: 5px;
   font-size: 16px;
-  width: 420px;
+  width: 360px;
   box-sizing: border-box;
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
@@ -549,7 +549,7 @@ nav li {
  text-align: left;
 }
 .profile-hr{
-  width:30rem ;
+ 
   text-align: center ;
   justify-content: center;
   margin-bottom:20px !important;
@@ -564,8 +564,8 @@ nav li {
   color: #893694;
   text-decoration:none;
   font-style:italic;
-  position:relative;
-  left:150px;
+ 
+
   background:transparent;
   height:auto
 }
@@ -588,8 +588,7 @@ nav li {
     color: #893694 ;
     text-decoration: none ;
     font-style: italic;
-    position:relative;
-    left:30px;
+   
     background:transparent;
     height:auto
   }

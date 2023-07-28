@@ -38,9 +38,8 @@ module.exports = {
       sessionStorage.setItem("email", email);
       sessionStorage.setItem("token", token);
     },
-    setUserDetail: function (userInfo) {
+    setUserInfo: function (userInfo) {
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-     
     },
     resetUserSession: function () {
      //sessionStorage.removeItem("user");

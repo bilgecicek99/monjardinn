@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
+import { baseUrl } from '../config/Constants';
 
 export default function AdminAddProduct() {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function AdminAddProduct() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const token = getToken();
   const firebaseConfig = {
     apiKey: "AIzaSyBVljeCIm_rhZBx0522TXkNa4G4ufKoMLY",
     authDomain: "monjardin-7cc13.firebaseapp.com",
@@ -67,47 +69,44 @@ export default function AdminAddProduct() {
   
   const fetchCategoryList = async () => {
       try {
-        const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+        const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
         if (!response.ok) {
           throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
         }
         const data = await response.json();
-       // console.log("cateogryyyyyyy",data.data)
+      
         const categoryData= data.data;
-       // console.log("category",categoryData);
+     
         setCategories(categoryData);
-        //setFilteredProducts(categoryData);
+       
       } catch (error) {
-       // console.error(error);
+     
         const errorMessage = handleFetchError(error);
-       // alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
-        //console.log(errorMessage);
+      
       }
   };
 
   const handleKaydet = async(event) => {
       event.preventDefault();
       // Check if any required fields are empty
-      const requiredFields = ['name', 'tax', 'color', 'price', 'categoryId','discountRate','discountedAmount'];
+      const requiredFields = ['name', 'tax', 'color', 'price', 'categoryId','discountRate','discountedAmount','description'];
       const isEmptyField = requiredFields.some((field) => {
         const value = product[field];
         return value === undefined || value === null || value === "";
       });
-        
+         
       if (isEmptyField) {
+     
         alert('Lütfen Tüm Alanları Doldurunuz.');
       } else {
 
         let downloadURL = "";
       if (selectedImage) {
-
-      // Storage'de kaydedilecek referansı oluşturun
       const storageRef = ref(storage, "images/" + selectedImage.name);
       try {
-        // Resmi Storage'e yükleyin
+       
         const snapshot = await uploadBytes(storageRef, selectedImage);
-    
-        // Resmin URL'sini alın
+  
         downloadURL = await getDownloadURL(snapshot.ref);
         console.log("Resim başarıyla yüklendi. URL:", downloadURL);
       } catch (error) {
@@ -126,49 +125,58 @@ export default function AdminAddProduct() {
       };
       console.log("newww", updatedProduct);
   
-      fetch("https://api.monjardin.online/api/Product/CreateProduct", {
+      fetch(baseUrl+"api/Product/CreateProduct", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(product),
       })
-        .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+         
+          throw new Error("İç Sunucu Hatası");
+        
+        }
+        return response.json();
+      })
         .then((data) => {
+          console.log("dd",data);
+
           alert("Değişiklikler başarıyla kaydedilmiştir.")
           navigate('/AdminProductList');
          
 
-          // Başka bir endpointe fetch isteği yapma
-          fetch("https://api.monjardin.online/api/ProductFile/CreateProductFile", {
+        
+          fetch(baseUrl+"api/ProductFile/CreateProductFile", {
             method: "POST",
             headers: {
-              "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
           
             body: JSON.stringify({ productId: data.data, fileUrl: downloadURL }),
           })
+          
             .then((response) => response.json())
             .then((responseData) => {
-              // İsteğin sonucunu kullanma
+          
               console.log("foto gitti",responseData);
             })
             .catch((error) => {
-              // Hata durumunu işleme
+            
               console.error(error);
             });
         
 
         })
-        .catch((error) => {
-          //console.error(error)
-          const errorMessage = handleFetchError(error);
-          //console.log(errorMessage);
+        .catch((error) => { 
+          alert("Lütfen daha sonra tekrar deneyiniz.");
+          throw error; // Hata 
+       
         });
       }
-     // console.log("productSDSFDDGJJ",product);
      
     };
 
@@ -298,10 +306,7 @@ export default function AdminAddProduct() {
             </select>
 
            </div>
-          
-        
-         
-           
+                
           </div>
           </div>
             <div style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Açıklaması:</div>
