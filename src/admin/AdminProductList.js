@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { baseUrl } from '../config/Constants';
 
-export default function AdminAllProductList() {
+export default function AdminProductList() {
   const [productList, setProductList] = useState([]);
   const [expandedProductId, setExpandedProductId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,11 +11,77 @@ export default function AdminAllProductList() {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [previousSearches, setPreviousSearches] = useState([]);
+/*
+  useEffect(() => {
+    setProductList([
+      {
+        id: 1,
+        name: "Orkide",
+        image: "/images/orkide.png",
+        stockNo: "01",
+        quantity: 10,
+        price: 800.99,
+        taxRate: 18,
+        description: " Zarafetin sembolü olan orkide çiçeği narin ve güzel bir çiçektir",
+        discount: 0.1,
+        barcode: "123456789",
+      },
+      {
+        id: 2,
+        name: "Pembe Lale Buketi",
+        image: "/images/orkide.png",
+        stockNo: "02",
+        quantity: 20,
+        price: 2999.99,
+        taxRate: 18,
+        description: "Her lale renginin bir anlamı vardır",
+        discount: 0.15,
+        barcode: "234567890",
+      },
+      {
+        id: 3,
+        name: "Minimalist Lila Buketi",
+        image: "/images/orkide.png",
+        stockNo: "03",
+        quantity: 5,
+        price: 5999.99,
+        taxRate: 18,
+        description: "Canlı hoş doku",
+        discount: 0,
+        barcode: "345678901",
+      },
+      {
+        id: 4,
+        name: "Lilyum Buketi",
+        image: "/images/orkide.png",
+        stockNo: "04",
+        quantity: 15,
+        price: 899.99,
+        taxRate: 18,
+        description: "Lilyum çiçeği doğumu ve masumiyeti simgelemektedir.",
+        discount: 0.05,
+        barcode: "456789012",
+      },
+      {
+        id: 5,
+        name: "Kırçıllı Orkide Aranjamanı",
+        image: "/images/orkide.png",
+        stockNo: "05",
+        quantity: 25,
+        price: 99.99,
+        taxRate: 18,
+        description: "Yaz aylarında özellikle geceleri açık bir pencere önünde tutulması çiçeklenme oranını arttırır.",
+        discount: 0.2,
+        barcode: "567890123",
+      },
+    ]);
+  }, []);
+*/
 
   const fetchProductList = async () => {
     try {
 
-      const response = await fetch(`https://api.monjardin.online/api/Product/GetAllProducts`);
+      const response = await fetch(baseUrl+`api/Product/GetAllProducts`);
       const data = await response.json();
       console.log("data",data.data)
       const productData= data.data;
@@ -56,28 +124,36 @@ export default function AdminAllProductList() {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
       setSortColumn(column);
-      setSortOrder('asc');
+      setSortOrder('desc');
     }
-  };
- 
-  const sortedProducts = filteredProducts.sort((a, b) => {
-    const keyA = sortColumn ? a[sortColumn] : null;
-    const keyB = sortColumn ? b[sortColumn] : null;
-    if (keyA === null || keyB === null) return 0;
-    if (sortOrder === 'asc') {
-      if (typeof keyA === 'string' && typeof keyB === 'string') {
-        return keyA.localeCompare(keyB);
+  }; 
+
+  let sortedProducts;
+
+  if (!Array.isArray(filteredProducts) || filteredProducts.length === 0) {
+    console.error("filteredProducts dizisi boş veya geçerli bir dizi değil!");
+    // Boş veya geçersiz bir dizide bir hata mesajı bastırma veya diğer işlemleri gerçekleştirme
+  }else {
+    sortedProducts = filteredProducts.sort((a, b) => {
+      const keyA = sortColumn ? a[sortColumn] : null;
+      const keyB = sortColumn ? b[sortColumn] : null;
+      if (keyA === null || keyB === null) return 0;
+      if (sortOrder === 'asc') {
+        if (typeof keyA === 'string' && typeof keyB === 'string') {
+          return keyA.localeCompare(keyB);
+        } else {
+          return keyA - keyB;
+        }
       } else {
-        return keyA - keyB;
+        if (typeof keyA === 'string' && typeof keyB === 'string') {
+          return keyB.localeCompare(keyA);
+        } else {
+          return keyB - keyA;
+        }
       }
-    } else {
-      if (typeof keyA === 'string' && typeof keyB === 'string') {
-        return keyB.localeCompare(keyA);
-      } else {
-        return keyB - keyA;
-      }
-    }
-  });
+    });
+  }
+  
   
   const navigate = useNavigate();
 
@@ -129,18 +205,23 @@ return (
         <tr>
           
           <th style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}}></th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('id')}>Ürün Id</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('name')}>Ürün Adı</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('stock')}>Ürün Adedi</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Ürün Fiyatı</th>
-          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('categoryName')}>Kategori</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('id')}> Ürün Id{' '}
+  {sortColumn === 'id' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('name')}>Ürün Adı{' '}
+  {sortColumn === 'name' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('stock')}>Ürün Adedi{' '}
+  {sortColumn === 'stock' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('price')}>Ürün Fiyatı{' '}
+  {sortColumn === 'price' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
+          <th  style={{color:"#893694", fontStyle:"italic", fontSize:"18px",fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => handleSort('categoryName')}>Kategori{' '}
+  {sortColumn === 'categoryName' && sortOrder === 'desc' ? <UpOutlined /> : <DownOutlined />}</th>
         </tr>
       </thead>
       <tbody>
         {filteredProducts.map((product) => (
         
           <React.Fragment key={product.id}>
-              {console.log("filte",product)}
+          
             <tr onClick={() => handleProductClick(product.id)} style={{ borderBottom: "1px solid #ccc"}}>
             
               <td> <img src={product.fileResponseModel[0]?.fileUrl} alt={productList.name} width={128} height={128} /></td>
@@ -148,7 +229,7 @@ return (
               <td style={{verticalAlign:"middle"}}>{product.name}</td>
             
               <td style={{verticalAlign:"middle"}}>{product.stock}</td>
-              <td style={{verticalAlign:"middle"}}>{product.price}</td>
+              <td style={{verticalAlign:"middle"}}>{product.price}TL</td>
               <td style={{verticalAlign:"middle"}}>{product.categoryName}</td> 
               <td style={{verticalAlign:"middle"}}> 
                 <button  onClick={() => handleEditClick(product)} style={{height: "auto", width: "auto" , background: "transparent"}}>
@@ -165,6 +246,7 @@ return (
           
                     <div style={{display:"flex"}}>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>KDV Oranı:</p> <p> {productList.find((p) => p.id === expandedProductId).tax}%</p></div>
+                <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>Renk:</p> <p> {productList.find((p) => p.id === expandedProductId).color}</p></div>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>İndirim Oranı:</p>  <p> {productList.find((p) => p.id === expandedProductId).discountRate} %</p></div>
                 <div style={{display:"block", fontStyle:"italic", fontFamily:"Times New Roman", marginRight:"50px"}}> <p style={{fontWeight:"bold", textDecoration:"underline"}}>İndirim Miktarı:</p>  <p> {productList.find((p) => p.id === expandedProductId).discountedAmount}</p></div>
                     </div>

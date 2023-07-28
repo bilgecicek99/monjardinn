@@ -9,32 +9,43 @@ import {
   resetUserSession,
 } from "./service/AuthService";
 
-import Adminpanel from './Adminpanel';
+//admin
+import AdminSearch from './admin/AdminSearch';
+import Adminpanel from './admin/Adminpanel';
+import AdminProductList from './admin/AdminProductList'
+import AdminAllProductList from './admin/AdminAllProductList'
+import AdminAddProduct from './admin/AdminAddProduct'
+import AdminAllBlog from './admin/AdminAllBlog';
+import EditProduct from './admin/EditProduct';
+import EditBlog from './admin/EditBlog';
+import EditCategory from './admin/EditCategory';
+import AdminpanelWrapper from './admin/AdminpanelWrapper';
+
+
+//user
+import AddUserAddress from './user/AddUserAddress';
+import LogIn from './user/LogIn';
+import SignUp from './user/SignUp';
+import NewPassword from './user/NewPassword';
+import ForgotPassword from './user/ForgotPassword';
+import Profile from './user/Profile';
+import EditUserAddress from './user/EditUserAddress';
+
+
 import ProductList from './ProductList';
 import Home from './Home';
 import List from './List';
 import ProductInfo from './ProductInfo';
 import Basket from './Basket';
-import LogIn from './LogIn';
-import SignUp from './SignUp';
-import NewPassword from './NewPassword';
-import Profile from './Profile';
 import Search from './Search';
 import Favorite from './Favorite';
 import Blog from './Blog';
-import AdminSearch from './AdminSearch';
-import AdminProductList from './AdminProductList'
-import AdminAllProductList from './AdminAllProductList'
-import AdminAddProduct from './AdminAddProduct'
-
 import CreateYourself from './CreateYourself' 
 import Stock from './Stock';
 import BlogDetail from './BlogDetail';
-import EditProduct from './EditProduct';
-import EditBlog from './EditBlog';
-import EditCategory from './EditCategory';
 import Navbars from './Navbars';
 import ProductListByCategory from './ProductListByCategory';
+
 
 function App() {
   
@@ -46,7 +57,8 @@ function App() {
     <Router> 
       <Routes>
         <Route path="/" exact element={<Home />} />
-        <Route path="/adminpanel" element={<Adminpanel />} />
+        <Route path="/adminpanel" element={<AdminpanelWrapper />} />
+    
         <Route path="/productlist" element={<ProductList/>} />
         <Route path="/list" element={<List/>} />
         <Route path="/productinfo" element={<ProductInfo/>} />
@@ -54,6 +66,8 @@ function App() {
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/newpassword" element={<NewPassword/>} />
+        <Route path="/forgotpassword" element={<ForgotPassword/>} />
+
         <Route path="/profile" element={<Profile/>} />
         <Route path="/search" element={<Search/>} />
         <Route path="/favorite" element={<Favorite/>} />
@@ -62,14 +76,19 @@ function App() {
         <Route path="/adminproductlist" element={<AdminProductList/>} />
         <Route path="/adminallproductlist" element={<AdminAllProductList/>} />
         <Route path="/adminaddproduct" element={<AdminAddProduct/>} />
+        <Route path="/adminallblog" element={<AdminAllBlog/>} />
+
 
         <Route path="/createyourself" element={<CreateYourself/>} />
         <Route path="/stock" element={<Stock/>} />
         <Route path="/blogdetail" element={<BlogDetail/>} />
         <Route path="/editproduct" element={<EditProduct/>} />
-        <Route path="/editblog" element={<EditBlog/>} />
+        <Route path="/editblog/:blog" element={<EditBlog/>} />
         <Route path="/editcategory" element={<EditCategory/>} /> 
         <Route path="/editproduct/:product" element={<EditProduct />} />
+        <Route path="/addaddress" element={<AddUserAddress />} />
+        <Route path="/editaddres/:id" element={<EditUserAddress />} />
+
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
       </Routes>
@@ -79,3 +98,4 @@ function App() {
 
 export default App;
 
+ /*   <Route path="/adminpanel" element={<Adminpanel />} />*/

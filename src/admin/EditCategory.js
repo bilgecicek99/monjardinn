@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 //import Admincard from './Admincard';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
+import { baseUrl } from '../config/Constants';
 
 function EditCategory() {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ function EditCategory() {
   const [savedCategory, setSavedCategory] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const token = getToken();
 
 
   const firebaseConfig = {
@@ -31,7 +34,7 @@ function EditCategory() {
    
   const fetchCategoryList = async () => {
     try {
-      const response = await fetch(`https://api.monjardin.online/api/Category/GetMainCategories`);
+      const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
       if (!response.ok) {
         throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }
@@ -53,10 +56,10 @@ function EditCategory() {
     const Cardx = ({ fileUrl, name, id, data, click }) => {
       const [isEditing, setIsEditing] = useState(false);
       const [editedName, setEditedName] = useState(name);
-      const [previewImage, setPreviewImage] = useState(null);
+      const [previewImageEdit, setPreviewImageEdit] = useState(null);
       const [selectedFile, setSelectedFile] = useState(null);
       const [product, setProduct] = useState("");
-      const [selectedImage, setSelectedImage] = useState(null);
+      const [selectedImageEdit, setSelectedImageEdit] = useState(null);
    
       
       const handleEditClick = () => {
@@ -72,14 +75,14 @@ function EditCategory() {
       const handleSaveClick =async (event) => {
     
         let updatedProduct = "";    
-        if(previewImage){
+        if(previewImageEdit){
           let downloadURL = "";     
          
-          if (selectedImage) {  
-          const storageRef = ref(storage, "images/" + selectedImage.name);    
+          if (selectedImageEdit) {  
+          const storageRef = ref(storage, "images/" + selectedImageEdit.name);    
           try {
             // Resmi Storage'e yükleyin
-            const snapshot = await uploadBytes(storageRef, selectedImage);
+            const snapshot = await uploadBytes(storageRef, selectedImageEdit);
         
             // Resmin URL'sini alın
             downloadURL = await getDownloadURL(snapshot.ref);
@@ -116,10 +119,10 @@ function EditCategory() {
         }
         setIsEditing(false);
 
-        fetch("https://api.monjardin.online/api/Category/UpdateCategory", {
+        fetch(baseUrl+"api/Category/UpdateCategory", {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedProduct),
@@ -144,11 +147,11 @@ function EditCategory() {
       };
       const handleImageUpload = async(event) => {
         const file = event.target.files[0];
-        setSelectedImage(file);
+        setSelectedImageEdit(file);
       
         const reader = new FileReader();
         reader.onload = () => {
-          setPreviewImage(reader.result);
+          setPreviewImageEdit(reader.result);
         };
         reader.readAsDataURL(file);
       };
@@ -168,8 +171,8 @@ function EditCategory() {
             onChange={handleNameChange}
           />
           <input type="file" onChange={handleImageUpload} />
-          {previewImage && (
-           <img src={previewImage} alt="Preview" style={{ width: "100px" }} />
+          {previewImageEdit && (
+           <img src={previewImageEdit} alt="Preview" style={{ width: "100px" }} />
           )}
           <div style={styles.editButtons}>
             <button onClick={handleSaveClick}  className="save-button" style={{float:"right"}} >Kaydet</button>
@@ -276,81 +279,80 @@ return (
   } 
 
  
-  const handleImageUpload = async(event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
+    console.log("file", file);
   
     const reader = new FileReader();
     reader.onload = () => {
       setPreviewImage(reader.result);
     };
+
     reader.readAsDataURL(file);
   };
   
 
   const handleSave = async(event) => {
+    event.preventDefault(); 
     let downloadURL = "";
     if (selectedImage) {
-    
-   // event.preventDefault();
-    const storageRef = ref(storage, "images/" + selectedImage.name);
-   
-    try {
-      // Resmi Storage'e yükleyin
-      const snapshot = await uploadBytes(storageRef, selectedImage);
+      const storageRef = ref(storage, "images/" + selectedImage.name);
   
-      // Resmin URL'sini alın
-      downloadURL = await getDownloadURL(snapshot.ref);
-      console.log("Resim başarıyla yüklendi. URL:", downloadURL);
-    } catch (error) {
-      console.error("Resim yükleme hatası:", error);
+      try {
+        const snapshot = await uploadBytes(storageRef, selectedImage);
+        downloadURL = await getDownloadURL(snapshot.ref);
+        console.log("Resim başarıyla yüklendi. URL:", downloadURL);
+      } catch (error) {
+        console.error("Resim yükleme hatası:", error);
+      }
+    } 
+    else {
+
+      console.log("selectedImage boş veya tanımsız.");
     }
-  } 
-  else {
-
-    console.log("selectedImage boş veya tanımsız.");
-  }
 
 
 
-    const category = {
-      fileurl: downloadURL,
-      name: title,
-      parentId: null
-    };
+      const category = {
+        fileurl: downloadURL,
+        name: title,
+        parentId: null
+      };
 
+      setIsOpen(false);
+
+      fetch(baseUrl+'api/Category/CreateCategory', {
+        method: 'POST',
+        body: JSON.stringify(category),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(savedCategory => {
+        setSavedCategory(savedCategory);
+
+        
+
+      //  fetchCategoryList(); // Kategori listesini güncellemek için yeniden verileri çekin
+        console.log("günce", categoryList)
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      });
+  };
+
+  const onClose = () => {
     setIsOpen(false);
+  };
 
-    fetch('https://api.monjardin.online/api/Category/CreateCategory', {
-      method: 'POST',
-      body: JSON.stringify(category),
-      headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(savedCategory => {
-      setSavedCategory(savedCategory);
-
-      
-
-      fetchCategoryList(); // Kategori listesini güncellemek için yeniden verileri çekin
-      console.log("günce", categoryList)
-    })
-    .catch(error => {
-      console.error(error);
-      alert('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
-    });
-};
-const onClose = () => {
-  setIsOpen(false);
-};
-
- 
-const handleGoBack = () => {
-  navigate(-1); // Bir önceki sayfaya yönlendirir
-};
+  
+  const handleGoBack = () => {
+    navigate(-1); // Bir önceki sayfaya yönlendirir
+  };
 
 return (
   <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>

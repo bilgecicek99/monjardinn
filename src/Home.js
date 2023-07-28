@@ -1,28 +1,122 @@
-import React from "react";
-import Card from './Card'; // Card bileşenini import edin
 import Carousel1 from "./Carousel1";
 import WithNavbar from './WithNavbar'; 
+import { baseUrl } from './config/Constants';
+import React, { useEffect, useState } from "react";
 
 const Home = () => {
-  const data = [
-    { id: 1, title: 'Kart 1', content: 'İçerik 1', image: '/images/kart1.png'},
-    { id: 2, title: 'Kart 2', content: 'İçerik 2', image: '/images/kart2.png' },
-    { id: 3, title: 'Kart 3', content: 'İçerik 3', image: '/images/kart3.png' },
-    { id: 4, title: 'Kart 4', content: 'İçerik 4', image: '/images/kart4.png' },
-    { id: 5, title: 'Kart 5', content: 'İçerik 5', image: '/images/kart5.png' },
-    { id: 6, title: 'Kart 6', content: 'İçerik 6', image: '/images/kart6.png' },
-    // Diğer kartlar buraya eklenebilir
-  ];
+  const [categoryList, setCategoryList] = useState([]);
 
-  // İlk 12 kartı alın
-  const cardList = data.slice(0, 12).map((item) => (
-    <Card key={item.id} title={item.title} image={item.image} content={item.content} />
-  ));
+  const fetchCategoryList = async () => {
+    try {
+      const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
+      if (!response.ok) {
+        throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
+      }
+      const data = await response.json();
+      const categoryData = data.data;
+      setCategoryList(categoryData);
+    } catch (error) {
+      console.error(error);
+      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+    }
+  };
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
+
+
+  function HomeCard( { cards }) {
+  
+    const Cardx = ({ fileUrl, name, id, data, click }) => {
+      return (
+        <div key={id} style={styles.card}>
+          <div style={styles.cardContent}>
+            <h3>{name}</h3>
+          </div>
+          <div style={styles.cardImageContainer}>
+            <img style={styles.cardImage} src={fileUrl} alt={name} />
+          </div>          
+        </div>
+      );
+};
+    
+const styles = {
+      card: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundImage: "url('/images/card-background.png')",
+        color: "#FFFFFF",
+        padding: "40px",
+        borderRadius: "12px",
+        marginBottom: "50px",
+        height: "250px", // set a fixed height for the card
+      },
+      cardImageContainer: {
+        width: "50%",
+        textAlign: "center",
+        height: "100%", // set the height of the container to match the card's height
+      },
+      cardImage: {
+        width: "100%",
+        height: "100%", // set a fixed height for the image
+      },
+      cardContent: {
+        width: "50%",
+        textAlign: "center",
+        fontStyle: "italic",
+        height: "100%", // set the height of the content to match the card's height
+      },
+};
+    
+return (
+    <div style={{padding:"100px"}}> 
+    <div>
+    <div className="row">
+      <div className="col-md-6">
+        <div className="card" style={{display:"flex", border:"none"}}>
+          {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
+            <Cardx
+              key={card.id}
+              fileUrl={card.fileUrl}
+              name={card.name}
+              width="400px"
+              height="300px"
+              id={card.id}
+              data={card.data}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="col-md-6">
+        <div className="card"style={{display:"flex", border:"none"}}>
+          {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
+            <Cardx
+              key={card.id}
+              fileUrl={card.fileUrl}
+              name={card.name}
+              description={card.description}
+              width="400px"
+              height="300px"
+              id={card.id}
+              data={card.data}
+
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    );
+  } 
+
 
   return (
-    <div style={{ margin: "100px" }}>
+    <div style={{ marginTop: "100px" }}>
         <Carousel1/>
-        <Card />
+        <HomeCard cards={categoryList} />
       </div>
    
   );

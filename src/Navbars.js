@@ -61,7 +61,7 @@ function Navbars() {
                   <hr />
                   <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
                   <hr />
-                  <NavLink className="menu-items-link" to='/Blog'>Çıkış Yap</NavLink>
+               {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
                 </div>
               </div>
             )}
@@ -88,6 +88,7 @@ function Navbars() {
             >
               <img src={activeMenu === '/Basket' ? "/images/selectedbasket.png" : "/images/menu-icon2.png"} alt="" width={40} height={40} />
             </NavLink>
+            {token ? 
             <NavLink
               className={`menu-items-icon ${activeMenu === '/Profile' ? 'active' : ''}`}
               to='/Profile'
@@ -95,10 +96,16 @@ function Navbars() {
             >
               <img src={activeMenu === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
             </NavLink>
-            {token ? 
-             <button className='save-button' value="Logout" onClick={logoutHandler}>
-          Çıkış Yap   
-          </button>  : "" }
+            : 
+            <NavLink
+              className={`menu-items-icon ${activeMenu === '/Profile' ? 'active' : ''}`}
+              to='/login'
+              onClick={() => setActiveMenu('/Profile')}
+            >
+              <img src={activeMenu === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
+            </NavLink>
+            }
+          
           
           </Nav>
         </Navbar.Collapse>

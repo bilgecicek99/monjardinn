@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-import { getToken, setUserSession,setUserDetail } from "./service/AuthService";
+import { getToken, setUserSession,setUserInfo } from "../service/AuthService";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { baseUrl } from '../config/Constants';
 
 const LogIn = () => {
 const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const handleSubmit = (e) => {
 
 const handleLoginFormSubmit = () => {
  
-  fetch("https://api.monjardin.online/api/auth/login", {
+  fetch(baseUrl+"api/auth/login", {
   method: "POST",
   headers: {
     'Content-Type': 'application/json',
@@ -46,16 +47,31 @@ const handleLoginFormSubmit = () => {
     });
   })
   .then((data) => {
-    console.log("data", data.message);
-    console.log("data", data.data.token);
+    console.log("dataaa", data.claims);
+    //console.log("data", data.data.token);
 
-    setUserSession(data.data.token,email);
+    setUserSession(data.token,email);
     const updatedUser = {
       email: email,
+      userId:data.userId
     }
-    setUserDetail(updatedUser);
+    console.log("updatedUser",updatedUser)
+    setUserInfo(updatedUser);
     setErrorMessage(data.message);
-    navigate('/');
+    if (data.claims.includes('admin')) {
+      // Admin paneline yönlendirme işlemini gerçekleştirin
+      console.log("Yönlendirme: Admin Paneli");
+       navigate('/adminpanel');
+    } else if (data.claims.includes('user')) {
+      // Kullanıcı sayfasına yönlendirme işlemini gerçekleştirin
+      console.log("Yönlendirme: Kullanıcı Sayfası");
+      navigate('/');
+    } else {
+      // Herhangi bir yönlendirme yapılacaksa anasayfaya yönlendirme işlemini gerçekleştirin
+      console.log("Yönlendirme: Anasayfa");
+      navigate('/');
+    }
+   
   })
   .catch((error) => {
     setErrorMessage(error.message);
@@ -64,21 +80,14 @@ const handleLoginFormSubmit = () => {
   
   
 };
-let storedToken =getToken();
-useEffect(() => {
-  
-  if (storedToken) {
-    setUserSession(storedToken);
-    //setUserDetail(updatedUser);
-    navigate('/');
-  }
-}, []);
+
+
 
 return (
-  <div style={{ margin: "100px" }}>
-  {storedToken === null ?  
+  <div style={{ marginTop: "100px" }}>
     <>
     <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Hoşgeldiniz</h1>
+
     <form onSubmit={handleSubmit}>
     <div style={{ display: "block", justifyContent: "center", marginTop: "50px", textAlign: "center" }}>
     <div>
@@ -100,11 +109,11 @@ return (
             />
     </div>
     <div>
-    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginRight: "290px" }} to='/newpassword'>Parolamı Unuttum</NavLink>
+    <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic" }} to='/forgotpassword'>Parolamı Unuttum</NavLink>
     </div>
     {errorMessage && <p className="message">{errorMessage}</p>}
-    <div style={{ position: "relative", left: "130px" }}>
-    <button type="submit" onClick={handleLoginFormSubmit} className="button-action">Gönder</button>
+    <div style={{ marginTop:"20px"}}>
+    <button type="submit" onClick={handleLoginFormSubmit} className="save-button">Gönder</button>
     </div>
     </div>
     <div style={{ textAlign: "center", display: "flex", justifyContent: "center", marginTop: "50px", marginBottom: "50px" }}>
@@ -117,8 +126,6 @@ return (
     </p>
     </form>
     </>
-  : 
-  ''}
  
   </div>
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { getToken, setUserSession,setUserDetail } from "./service/AuthService";
+import { getToken, setUserSession, setUserInfo } from "../service/AuthService";
+import { baseUrl } from '../config/Constants';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -49,7 +50,7 @@ const SignUp = () => {
     }
 
     console.log("requestBody",requestBody);
-    fetch("https://api.monjardin.online/api/auth/register", {
+    fetch(baseUrl+"api/auth/register", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ const SignUp = () => {
           firstName: firstName,
           email: email,
         }
-        setUserDetail(updatedUser);
+        setUserInfo(updatedUser);
         navigate('/login');
         console.log("dataaa",data);
       })
@@ -84,7 +85,7 @@ const SignUp = () => {
   };
 
   return (
-    <div  style={{ margin: "100px" }}>
+    <div  style={{ marginTop: "100px" }}>
       <h1 style={{ textAlign: "center", fontStyle:"italic" }}>
         Sizi de Aramızda Görmekten Mutlu Oluruz
       </h1>
@@ -97,7 +98,7 @@ const SignUp = () => {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             className="input-action"
-            style={{ width: "200px"}}
+            style={{ width: "170px"}}
           />
           </div>
           <div>
@@ -107,7 +108,7 @@ const SignUp = () => {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="input-action"
-            style={{ width: "200px"}}
+            style={{ width: "170px"}}
           />
           </div>
         </div>
@@ -157,7 +158,7 @@ const SignUp = () => {
           className="input-action"
         />
         </div>
-        <div style={{ marginTop: "20px", position:"relative", left:"130px"}}>
+        <div style={{ marginTop: "20px"}}>
         <button type="submit" className="button-action">Gönder</button>
         </div>
 

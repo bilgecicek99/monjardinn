@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
+import { baseUrl } from '../config/Constants';
 
 
 function Admincard( { cards }) {
@@ -13,7 +15,8 @@ function Admincard( { cards }) {
       const [selectedFile, setSelectedFile] = useState(null);
       const [product, setProduct] = useState("");
       const [selectedImage, setSelectedImage] = useState(null);
-   
+      const token = getToken();
+
 
       const firebaseConfig = {
         apiKey: "AIzaSyBVljeCIm_rhZBx0522TXkNa4G4ufKoMLY",
@@ -71,10 +74,10 @@ function Admincard( { cards }) {
         setIsEditing(false);
 
 
-        fetch("https://api.monjardin.online/api/Category/UpdateCategory", {
+        fetch(baseUrl+"api/Category/UpdateCategory", {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJlbWFpbCI6ImhpbGFsYmFzdGFuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJIaWxhbCBCYcWfdGFuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2ODM4OTY2NjMsImV4cCI6MTY4NjA1NjY2MywiaXNzIjoiTW9uSmFyZGluIiwiYXVkIjoiYXBpLm1vbmphcmRpbi5vbmxpbmUifQ.S7mNeJP5KuqRwzPBqCD7N87oZExLjgn0hvgFqWFK-iNCeXlVDcS7uLV1jAxxEcM84i4XcEHBWbAqKBPaG39y1w",
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedProduct),
