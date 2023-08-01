@@ -357,10 +357,10 @@ const Profile = () => {
           key={card.userAddressId}
           id={card.userAddressId}
           title={card.addressTitle}
-          description={card.adress}
-          corporate={card.corporate}
-          district={card.district}
-          quarter={card.quarter}
+          description={card.address}
+          corporate={card.corporate ? 'Kurumsal' : 'Bireysel'}
+          district={card.districtName}
+          quarter={card.quarterName}
         />
       ))}
     </div>
