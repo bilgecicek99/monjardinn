@@ -39,7 +39,7 @@ const Profile = () => {
   }; 
   const navigate = useNavigate();
   let userInfo= getUserInfo();
-  let userID= userInfo.userId;
+  let userID= userInfo?.userId;
   let email= getEmail();
   let token= getToken();
    const fetchUserAddress = async () => {
@@ -226,17 +226,27 @@ const Profile = () => {
 
   
     return (
-      <div style={styles.card}>
-        <div style={styles.cardContent}>
-          <h4>{title}</h4>
-          <p>description: {description}</p>
-          <p>quarter: {quarter}</p>
-          <p>corporate: {corporate}</p>
-          <p>district: {district}</p>
-          <button onClick={handleDelete} className="save-button">Sil</button>
-          <button o onClick={() => handleEdit(id)} className="save-button">Düzenle</button>
 
+      <div style={styles.card}>
+      <div style={{ ...styles.cardContent, padding: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <h4>{title}</h4>
+            <p style={{color:"#6F6D6D", fontSize:"18px",fontStyle:"italic" }}>{quarter} - {district}/İzmir</p>
+          </div>
+          <div style={{ display: "flex", marginTop: "-20px" }}>
+
+            <a style={{ margin: "0 20px",cursor: "pointer" }} onClick={() => handleEdit(id)}>
+              <img src={"/images/addressedit.png"} alt="" width={18} height={18} />
+            </a>
+
+            <a style={{ margin: "0 3px",cursor: "pointer" }} onClick={handleDelete}>
+              <img src={"/images/delete.png"} alt="" width={13} height={13} />
+            </a>  
+
+          </div>
         </div>
+      </div>
       </div>
     );
   };
@@ -250,7 +260,7 @@ const Profile = () => {
       alignItems: "center",
       background: "white",
       color: "black",
-      padding: "20px",
+      //padding: "20px",
       borderRadius: "12px",
       marginBottom:"50px",
       border:"1px solid #D9D9D9",
@@ -346,10 +356,17 @@ const Profile = () => {
 
       <hr className="profile-hr" />
       </div>
-      <h2  style={{ textAlign: "center", fontStyle:"italic" }}>Kayıtlı Adreslerim</h2>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0" }}>
+        <h2 style={{ textAlign: "left", fontStyle: "italic", margin: 0 }}>Kayıtlı Adreslerim</h2>
+        <a
+          style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer"
+        }}
+          onClick={() => handleAddAddress()}
+        >
+          Adres Ekle
+        </a>
+      </div>
       {errorAddressMessage && <p className="message">{errorAddressMessage}</p>}
-
-     <button className="save-button" onClick={() => handleAddAddress()}>Adres Ekle</button>
       <div  className="profile-card-area" >
     <div className="card" style={{ border:"none"}}>
       {userAddress.map((card) => (
@@ -357,8 +374,6 @@ const Profile = () => {
           key={card.userAddressId}
           id={card.userAddressId}
           title={card.addressTitle}
-          description={card.address}
-          corporate={card.corporate ? 'Kurumsal' : 'Bireysel'}
           district={card.districtName}
           quarter={card.quarterName}
         />
