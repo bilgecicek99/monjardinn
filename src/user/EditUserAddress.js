@@ -10,6 +10,7 @@ const EditUserAddress = () => {
  const id = location.state && location.state.id ? location.state.id : {};
 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [oldCorparateValue,setOldCorparateValue] = useState(Boolean);
 
    const [address, setAddress] = useState({
     country:"Türkiye",
@@ -80,7 +81,7 @@ const EditUserAddress = () => {
         .then((data) => {
           setErrorMessage(data.message);
           if(address.corporate)
-          {
+          { 
             const requestBody = {
               userId: userInfo.userId,
               taxIdentificationNumber: address?.taxIdentificationNumber,
@@ -88,7 +89,7 @@ const EditUserAddress = () => {
               companyName: address.companyName,
               userAddressId: address.userAddressId,
               email: address.email,
-              id: address?.corparateResponseModel?.corparateAddressId
+              id: address.corparateResponseModel?.corparateAddressId
             };
             const requestOptions = {
               method: 'PUT',
@@ -98,21 +99,40 @@ const EditUserAddress = () => {
               },
               body: JSON.stringify(requestBody)
             };
-            fetch(baseUrl+`api/CorparateAddress/UpdateCorparateAddress`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            setErrorMessage(data.message);
-              alert("Değişiklikler başarıyla kaydedilmiştir.")
-              navigate("/profile")
-          })
-          .catch(error => {
-            console.error(error);
-            setErrorMessage(error.message);
-          });
+            if(oldCorparateValue)
+            {             
+              fetch(baseUrl+`api/CorparateAddress/UpdateCorparateAddress`, requestOptions)
+              .then(response => response.json())
+              .then(data => {
+                setErrorMessage(data.message);
+                  alert("Değişiklikler başarıyla kaydedilmiştir.")
+                  navigate("/profile")
+              })
+              .catch(error => {
+                console.error(error);
+                setErrorMessage(error.message);
+              });
+            }
+            else{
+              requestOptions.method = 'POST';
+              fetch(baseUrl+`api/CorparateAddress/CreateCorparateAddress`, requestOptions)
+              .then(response => response.json())
+              .then(data => {
+                setErrorMessage(data.message);
+                  alert("Değişiklikler başarıyla kaydedilmiştir.")
+                  navigate("/profile")
+              })
+              .catch(error => {
+                console.error(error);
+                setErrorMessage(error.message);
+              });
+            }   
           }
         })
         .catch((error) => {
           setErrorMessage(error.message);
+        }).finally(()=>{
+          navigate("/profile")
         });
     };
 
@@ -146,6 +166,7 @@ const EditUserAddress = () => {
               taxIdentificationNumber: data.data?.corparateResponseModel?.taxIdentificationNumber,
             };
             setAddress(updatedAddress);
+            setOldCorparateValue(data.data.corporate);
             
             setSelectedDistrict(updatedAddress.districtId);
 
