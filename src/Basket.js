@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import WithNavbar from './WithNavbar'; 
+import { baseUrl } from './config/Constants';
+import { getToken } from "./service/AuthService";
 
 
 const recommendedProducts = [
@@ -28,32 +30,12 @@ const recommendedProducts = [
 
 
 const Basket = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Orkide",
-      image: "/images/sepeturun.png",
-      quantity: "1 adet",
-      price: "800 TL",
-    },
-    {
-      id: 2,
-      name: "Orkide",
-      image: "/images/sepeturun.png",
-      quantity: "1 adet",
-      price: "800 TL",
-    },
-    {
-      id: 3,
-      name: "Orkide",
-      image: "/images/sepeturun.png",
-      quantity: "1 adet",
-      price: "800 TL",
-    },
-  ]); // Sepetteki ürünlerin listesi
 
-  const [totalItems, setTotalItems] = useState(3); // Toplam ürün sayısı
-  const [totalPrice, setTotalPrice] = useState(2400); // Toplam tutar
+  const [items, setItems] = useState([]);
+
+  const [totalItems, setTotalItems] = useState(); 
+  const [totalPrice, setTotalPrice] = useState();
+  let token = getToken();
 
   const settings = {
     dots: true,
@@ -62,6 +44,41 @@ const Basket = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
+
+  const fetchBaskets = async (id) => {
+    try {
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+       await fetch(baseUrl+`api/Basket/BasketOfUser`,requestOptions)
+       .then(response => response.json())
+       .then(data => {  
+        setItems(data.data)
+        setTotalItems(data.data.length)
+        console.log(data.data);        
+       })
+       .catch(error => {
+         console.error(error);
+         //setErrorMessage(error.message);
+       });      
+  }
+  catch (error) {
+    //setErrorMessage(error);
+    console.error(error)
+  }
+
+};
+
+useEffect(() => {
+  const fetchData = async () => {
+    await fetchBaskets(); 
+  };
+  fetchData();
+}, []);
+
 
   return (
     <div  style={{ margin: "100px" }}>
@@ -80,10 +97,10 @@ const Basket = () => {
     {items.map((item) => (
       <React.Fragment key={item.id}>
         <tr>
-          <td style={{ width: "80px", verticalAlign: "middle" }}><img src={item.image} alt={item.name} width="50" height="50" /></td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>{item.name}</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.quantity}</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.price}</td>
+          <td style={{ width: "80px", verticalAlign: "middle" }}><img src={item?.productDetailResponse?.fileResponses?.[0].fileUrl} alt={item.name} width="50" height="50" /></td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>{item?.productDetailResponse?.name}</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.total}</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.productDetailResponse.price}</td>
         </tr>
         <tr>
           <td colSpan="4" style={{ border: "none" }}>

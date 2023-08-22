@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './index.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -46,16 +46,6 @@ function Navbars() {
                   <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>
                   <hr />
                   <NavLink className="menu-items-link" to='/Search'>Arama</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Saksı</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Kurutulmuş Çicek</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Çicekler</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Aranjmanlar</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Büyük Bitkiler</NavLink>
                   <hr />
                   <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
                   <hr />

@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import React, { useState,useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
-
-
-
-const products = [
-    
-  { id: 1, name: "Mon Jardin", price: 600, category: "Kategori 1", color: "Mor", size: "Boyut 1", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',  },
-  { id: 2, name: "Mon Jardin", price: 200, category: "Kategori 2", color: "Mor", size: "Boyut 2", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 3, name: "Mon Jardin", price: 800, category: "Kategori 3", color: "Pembe", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 4, name: "Mon Jardin", price: 900, category: "Kategori 1", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 5, name: "Mon Jardin", price: 800, category: "Kategori 2", color: "Mor", size: "Boyut 3", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',},
-  { id: 6, name: "Mon Jardin", price: 600, category: "Kategori 3", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 7, name: "Mon Jardin", price: 700, category: "Kategori 1", color: "Pembe", size: "Boyut 1", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 8, name: "Mon Jardin", price: 1000, category: "Kategori 2", color: "Sarı", size: "Boyut 2", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 9, name: "Mon Jardin", price: 800, category: "Kategori 1", color: "Mor", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  // Diğer ürünler
-];
-
-
-
-  
+import { baseUrl } from './config/Constants';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const List = () => {
     
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filteredProduct,setFilteredProduct]= useState([]);
+  const { categoryId } = useParams();
+
   //const [categoryFilter, setCategoryFilter] = useState("");
   //const [colorFilter, setColorFilter] = useState("");
   //const [priceFilter, setPriceFilter] = useState("");
@@ -81,22 +68,78 @@ const List = () => {
     setColorFilter(event.target.value);
   };
 
-  
-
-
-  
-
-  
-
-  const filteredProducts = products.filter((product) => {
+  let filteredProducts = products.filter((product) => {
     return (
-      (categoryFilter === "" || product.category === categoryFilter) &&
+      (categoryFilter === "" || product.categoryId === parseInt(categoryFilter)) &&
       (colorFilter === "" || product.color === colorFilter) &&
       (priceFilter === "" || product.price <= parseInt(priceFilter)) &&
       (sizeFilter === "" || product.size === sizeFilter)
     );
   });
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (categoryId) {
+          await fetchProducts(categoryId);
+        } else {
+          await fetchProducts();
+        }
+        await fetchCategories();
+      } catch (error) {
+        console.error('Bilinmeyen bir hata gerçekleşti:', error);
+      }
+    };
+    fetchData();
+  }, [categoryId]);
+  
+  const fetchProducts = async (categoryId = null) => {
+    try {
+      await fetch(baseUrl + 'api/Product/GetAllProducts')
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.data) {
+            const allProducts = data.data;
+            
+            if (categoryId) {
+              filteredProducts = allProducts.filter(product => product.categoryId === parseInt(categoryId));
+              setProducts(filteredProducts);
+              setFilteredProduct(filteredProduct);
+            } else {
+              setProducts(allProducts);
+            }
+          } else {
+            console.error('Ürünler alınamadı.');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error('Ürünler getirilirken hata ile karşılaşıldı: ', error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      await fetch(baseUrl + 'api/Category/GetMainCategories')
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.data) {
+            setCategories(data.data);
+          } 
+          else {
+            console.error('Kategoriler alınamadı.');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error('Kategoriler getirilirken hata ile karşılaşıldı: ', error);
+    }
+  };
   
 
   return (
@@ -111,26 +154,18 @@ const List = () => {
       </div>
       {categoryFilterOpen && (
         <div style={{marginTop:"5px"}}>
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Tümü
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori1" name="kategori1" value="Kategori 1" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
-          Kategori 1
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori2" name="kategori2" value="Kategori 2" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Kategori 2
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori3" name="kategori3" value="Kategori 3" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Kategori 3
-        </label>
-      </div>
+          <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+            <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
+            Tümü
+          </label>
+              
+          {categories.map((category) => (
+            <label key={category.id} style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+              <input type="checkbox" id={`kategori${category.id}`} name={`kategori${category.id}`} value={category.id} onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
+              {category.name}
+            </label>
+          ))}
+        </div>
       
       )}
     <hr />
@@ -164,7 +199,6 @@ const List = () => {
           Lila
         </label>
         
-
         <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
           <input type="checkbox" id="Sarı" name="Sarı" value="Sarı" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
           Sarı
@@ -255,53 +289,28 @@ const List = () => {
     </div>
     <div style={{ flex: "0 0 75%", padding: "10px" }}>
 
-    <div className="row">
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
+    <div className="container">
+  <div className="row">
+    {Array.from({ length: Math.ceil(filteredProducts.length / 3) }).map((_, rowIndex) => (
+      <div key={rowIndex} className="col-md-4" >
+        { 
+         filteredProducts.slice(rowIndex * 3, (rowIndex + 1) * 3).map((product) => (
           <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic",  fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
+            <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+              <img style={{ borderRadius:"15px" }} src = { product?.fileResponseModel[0]?.fileUrl ?? process.env.PUBLIC_URL + '/images/defaultflower.png' } alt={product.name} width={300} height={350} />
+              <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.size}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.price} TL</p>
+            </Link>
           </li>
-        ))}
-      
+        ))  
+      }
       </div>
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-          <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic" , fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
-          </li>
-        ))}
-      
-      </div>
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-          <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic", fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
-          </li>
-        ))}
-      
-      </div>
-      </div>
+    ))}
+  </div>
+</div>
     </div>
     <hr />
   </div>
