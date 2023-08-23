@@ -146,7 +146,7 @@ const List = () => {
     <div className="kategori1" style={{ display: "flex" }}>
     <div style={{ flex: "0 0 25%", padding: "10px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
-        <label className="kategori" htmlFor="categoryFilter">Kategori</label>
+      <label className="kategori" htmlFor="categoryFilter">Kategori</label>
         <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
           {/* Arrow icon */}
           <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
@@ -253,39 +253,7 @@ const List = () => {
 
 
     <hr />
-    <div >
-   
-    <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
-        <label className="kategori" htmlFor="sizeFilter">Boyut</label>
-        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={toggleSizeOptions}>
-          {/* Arrow icon */}
-          <span>{showSizeOptions ?  "\u25B2" :"\u25BC" }</span>
-        </div>   
-      </div>
-
-     
-      
-    {showSizeOptions && (
-       <div style={{marginTop:"5px"}}>
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 1" name="Boyut 1" value="Boyut 1" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
-         Boyut 1
-       </label>
-     
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 2" name="Boyut 2" value="Boyut 2" onChange={handleSizeFilterChange} style={{marginRight:"5px"}} />
-         Boyut 2
-       </label>
-     
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 3" name="Boyut 3" value="Boyut 3" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
-         Boyut 3
-       </label>
-   
-     </div>
-    )}
-    </div>
-    <hr />
+    
     </div>
     <div style={{ flex: "0 0 75%", padding: "10px" }}>
 
