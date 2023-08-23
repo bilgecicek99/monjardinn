@@ -3,7 +3,7 @@ import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import WithNavbar from './WithNavbar'; 
 import { baseUrl } from './config/Constants';
-import { getToken } from "./service/AuthService";
+import { getToken, getUserInfo } from "./service/AuthService";
 
 
 const recommendedProducts = [
@@ -37,6 +37,19 @@ const Basket = () => {
   const [totalPrice, setTotalPrice] = useState();
   let token = getToken();
 
+  const [openDetailsId, setOpenDetailsId] = useState(null);
+
+  let userInfo= getUserInfo();
+  let userID= userInfo?.userId;
+
+  const toggleDetails = (itemId) => {
+    if (openDetailsId === itemId) {
+      setOpenDetailsId(null);
+    } else {
+      setOpenDetailsId(itemId);
+    }
+  };
+
   const settings = {
     dots: true,
     infinite: true,
@@ -56,13 +69,25 @@ const Basket = () => {
        await fetch(baseUrl+`api/Basket/BasketOfUser`,requestOptions)
        .then(response => response.json())
        .then(data => {  
-        setItems(data.data)
-        setTotalItems(data.data.length)
+        if(data.success)
+        {
+          setItems(data.data)
+          setTotalItems(data.data.length)
+          const totalPrice = data.data.reduce((total, item) => {
+            const itemPrice = item.productDetailResponse.price;
+            const itemTotal = item.total;
+            return total + itemPrice * itemTotal;
+          }, 0);
+          
+          setTotalPrice(totalPrice);
+        }
+        else{
+          alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+        }
         console.log(data.data);        
        })
        .catch(error => {
-         console.error(error);
-         //setErrorMessage(error.message);
+         alert(error.message);
        });      
   }
   catch (error) {
@@ -79,6 +104,83 @@ useEffect(() => {
   fetchData();
 }, []);
 
+const handleDelete = async(id) => {
+  try {  
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      method: 'DELETE',
+    };
+    
+   await fetch(baseUrl+`api/Basket/DeleteBasket?id=${id}`,requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      if(data.success)
+      {
+        fetchBaskets();
+      }
+      else{
+        alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+      }
+  
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  } catch (error) {
+    console.error("Sepet getirilirken hata oluştu: ", error);
+  }
+};
+
+
+const handlePieceSave = async(item, action) => {
+  let total = item.total;
+  if (action === "increase") {
+    total += 1;
+  } else if (action === "decrease" && item.total > 0) {
+    total -= 1;
+  }
+
+  try {
+      const basketData = {
+        id:item.id,
+        userId:userID,
+        productId: item.productDetailResponse.id,
+        total: total,
+        userAddressId: item.userAddressId,
+        shipmentDate: item.shipmentDate,
+        cardNote: item.cardNote
+      };
+        
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+        body: JSON.stringify(basketData)
+      };
+
+    await fetch(baseUrl+`api/Basket/UpdateBasket`,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if(data.success)
+        {
+          fetchBaskets();
+        }
+        else{
+          alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+        }
+    
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  } catch (error) {
+    console.error("Sepet getirilirken hata oluştu: ", error);
+  }
+};
 
   return (
     <div  style={{ margin: "100px" }}>
@@ -94,17 +196,60 @@ useEffect(() => {
     </tr>
   </thead>
   <tbody>
-    {items.map((item) => (
+    {items?.map((item) => (
       <React.Fragment key={item.id}>
         <tr>
-          <td style={{ width: "80px", verticalAlign: "middle" }}><img src={item?.productDetailResponse?.fileResponses?.[0].fileUrl} alt={item.name} width="50" height="50" /></td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>{item?.productDetailResponse?.name}</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.total}</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.productDetailResponse.price}</td>
+          <td style={{ width: "80px", verticalAlign: "middle" }}>
+            <img src={item?.productDetailResponse?.fileResponses?.[0].fileUrl} alt={item.name} width="45%" height="45%" 
+            style={{borderRadius:"10px"}}/>
+          </td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>
+            {item?.productDetailResponse?.name}
+          </td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "100px" }}>{item.total} adet</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.productDetailResponse.price} TL</td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "20px" }}>
+            <a style={{ cursor: "pointer" }} onClick={() => toggleDetails(item.id)}>
+              <img src={"/images/opendetail.png"} alt="" width={12} height={12} />
+            </a> </td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}> 
+            <a style={{cursor: "pointer" }} onClick={()=>handleDelete(item.id)}>
+              <img src={"/images/delete.png"} alt="" width={12} height={12} />
+            </a>  
+          </td>
         </tr>
+        {openDetailsId === item.id && (
+            <tr>
+              <td colSpan="4" style={{ border: "none"}}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: "16%" }}>
+                  <div style={{ marginRight: '20px' }}>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adres <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.userAddressDetailResponseModel?.address}</p>
+                  </div>
+                  <div style={{ marginRight: '20px' }}>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adet</strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}> 
+                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "decrease")}>
+                        <img src="/images/minussignicon.png" alt="Decrease" width={16} height={4} style={{ marginRight:"25px" }} />
+                      </a>
+                      {item.total} adet
+                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "increase")}>                  
+                        <img src="/images/plusicon.png" alt="Increase" width={16} height={15} style={{ marginLeft:"25px"}} />
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Not <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.cardNote ?? "Not eklemediniz."}</p>
+                  </div>
+                </div>
+                <hr style={{ border:"none" }} />
+              </td>
+            </tr>
+          )}
         <tr>
-          <td colSpan="4" style={{ border: "none" }}>
-            <hr style={{ borderTop: "1px solid #ddd" }} />
+          <td colSpan="5" style={{ border: "none" }}>
+            <hr style={{ color:"black" }} />
           </td>
         </tr>
       </React.Fragment>
@@ -114,8 +259,8 @@ useEffect(() => {
     <tr>
       <td style={{fontWeight:"bold",fontStyle:"italic",fontFamily:"Times New Roman"}}>Toplam:</td>
       <td></td>
-      <td>{totalItems} adet</td>
-      <td>{totalPrice} TL</td>
+      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{totalItems} adet</td>
+      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{totalPrice} TL</td>
     </tr>
     <tr>
     <td></td>
@@ -132,7 +277,7 @@ useEffect(() => {
   
       
       <div style={{marginTop: "80px"}}>
-      <h1>Birlikte iyi Gider </h1>
+      <h1>Birlikte İyi Gider </h1>
       <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
         breakpoint: 800,
         settings: {
