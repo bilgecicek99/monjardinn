@@ -61,7 +61,8 @@ function App() {
     
         <Route path="/productlist" element={<ProductList/>} />
         <Route path="/list" element={<List/>} />
-        <Route path="/productinfo" element={<ProductInfo/>} />
+        <Route path="/list/:categoryId" element={<List/>} />
+        <Route path="/productinfo/:id" element={<ProductInfo/>} />
         <Route path="/basket" element={<Basket/>} />
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp/>} />
@@ -81,7 +82,7 @@ function App() {
 
         <Route path="/createyourself" element={<CreateYourself/>} />
         <Route path="/stock" element={<Stock/>} />
-        <Route path="/blogdetail" element={<BlogDetail/>} />
+        <Route path="/blogdetail/:id" element={<BlogDetail/>} />
         <Route path="/editproduct" element={<EditProduct/>} />
         <Route path="/editblog/:blog" element={<EditBlog/>} />
         <Route path="/editcategory" element={<EditCategory/>} /> 
