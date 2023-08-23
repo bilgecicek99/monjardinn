@@ -47,8 +47,8 @@ function Navbars() {
                   <hr />
                   <NavLink className="menu-items-link" to='/Search'>Arama</NavLink>
                   <hr />
-                  <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
-                  <hr />
+                  {/* <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
+                  <hr /> */}
                   <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
                   <hr />
                {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }

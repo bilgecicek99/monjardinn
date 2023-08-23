@@ -40,7 +40,7 @@ import Basket from './Basket';
 import Search from './Search';
 import Favorite from './Favorite';
 import Blog from './Blog';
-import CreateYourself from './CreateYourself' 
+// import CreateYourself from './CreateYourself' 
 import Stock from './Stock';
 import BlogDetail from './BlogDetail';
 import Navbars from './Navbars';
@@ -80,7 +80,7 @@ function App() {
         <Route path="/adminallblog" element={<AdminAllBlog/>} />
 
 
-        <Route path="/createyourself" element={<CreateYourself/>} />
+        {/* <Route path="/createyourself" element={<CreateYourself/>} /> */}
         <Route path="/stock" element={<Stock/>} />
         <Route path="/blogdetail/:id" element={<BlogDetail/>} />
         <Route path="/editproduct" element={<EditProduct/>} />
