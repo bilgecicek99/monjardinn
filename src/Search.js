@@ -56,17 +56,24 @@ const Search = () => {
     
     <>
      <div className="search-area">
-      <form onSubmit={search}>
+      <form onSubmit={search} style={{paddingTop: "6%", paddingBottom: "3%"}}>
        
-          <input
-            type="text"
-            name="searchTerm"
-            placeholder="Arama yapmak için buraya yazın..."
-          />
-          <button1 type="submit">
-            <img src="/images/search.png" alt="" width={"16"} height={"16"} />
-          </button1>
-      
+      <input
+          type="text"
+          name="searchTerm"
+          style={{
+            border: "none",
+            borderBottom: "1px solid black",
+            outline: "none",
+            fontSize: "16px",
+            padding: "5px 0",
+            background: `url('/images/search.png') no-repeat right center`,
+            backgroundSize: "16px 16px",
+            width: "40%",
+            fontStyle:"italic"
+          }}
+          placeholder="Ürün adını giriniz"
+        />
       </form>
       <div id="search-results"></div>
       <div className="previous-searches">
