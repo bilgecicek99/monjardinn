@@ -346,12 +346,11 @@ const handleCorporate = (event) => {
      await fetch(baseUrl+`api/UserAddress/GetAllUserAddressByUserId/?userId=${userID}`,requestOptions)
       .then(response => response.json())
       .then(data => {
-        if (data.data.length === 0) {
-          console.error("Kayıtlı adres bulunamamıştır.");
+        if (data.success) {
+          setUserAddress(data.data);
 
         } else {
-          setUserAddress(data.data);
-          console.log('adresler',data.data);
+          alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
         }
      
       })
