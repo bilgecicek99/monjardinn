@@ -862,3 +862,29 @@ li.selected {
   height: 8px;
   margin: 0 1px;
 }
+
+.contact-page {
+  padding: 10% 8% 10% 8%;
+  
+}
+
+.contact-heading {
+  font-size: 5vh;
+}
+
+.contact-section {
+  padding: 0 2% 0 2%;
+  display: flex;
+}
+
+.contact-subheading {
+  font-size: 100%;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.contact-section p {
+  margin-top: -2px;
+  font-size: 100%;
+
+}

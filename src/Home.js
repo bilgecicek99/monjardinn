@@ -79,7 +79,7 @@ const styles = {
 };
     
 return (
-    <div style={{padding:"100px"}}> 
+    <div style={{padding:"50px"}}> 
     <div>
     <div className="row">
       <div className="col-md-6">

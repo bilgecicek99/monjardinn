@@ -92,7 +92,7 @@ function App() {
         <Route path="/addaddress" element={<AddUserAddress />} />
         <Route path="/editaddres/:id" element={<EditUserAddress />} />
         <Route path="/Morethan" element={<MenuMoreThan />} />
-        {/* <Route path="/Contact" element={<Contact />} /> */}
+         <Route path="/Contact" element={<Contact />} /> 
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 

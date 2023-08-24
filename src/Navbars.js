@@ -51,8 +51,8 @@ function Navbars() {
                   <hr /> */}
                   <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
                   <hr />
-                  {/* <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
-                  <hr /> */}
+                  <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
+                  <hr /> 
                   <NavLink className="menu-items-link" to='/Morethan'>
                   <div className="more-button-container">
                       {Array.from({ length: 3 }).map((_, index) => (
