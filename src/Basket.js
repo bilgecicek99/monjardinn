@@ -292,7 +292,7 @@ const handlePieceSave = async(item, action) => {
         }
       }]}>
       {recommendedProducts.map((product) => (
-            <div>
+            <div key={product.id}>
             <li
               key={product.id}
               style={{
