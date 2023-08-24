@@ -20,7 +20,8 @@ const ProductInfo = (props) => {
   const [selectedPiece, setSelectedPiece] = useState("");
   const [note, setNote] = useState("");
   const [addedToCart, setAddedToCart] = useState(false);
-  const [favorited, setFavorited] = useState(false);
+  const [favorited, setFavorited] = useState();
+  const [favoriteId, setFavoriteId] = useState("");
   const navigate = useNavigate();
   const [saveBasket, setSaveBasket] = useState(false);
   let setNewUserAddressId = "";
@@ -128,9 +129,58 @@ const handleCorporate = (event) => {
 
   // Favorilere ekle butonuna tıklanınca
   const handleAddToFavorites = () => {
-    setFavorited(true);
-    // Favorilere ekleme işlemini burada gerçekleştirin
-    // Örneğin: favorilereEkle(props.urunId)
+    if(favorited)
+    {     
+      console.log(favoriteId);
+      fetch(baseUrl+`api/Favorite/DeleteFavorite?id=${parseInt(favoriteId)}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+         if(data.success)
+         {
+          setFavoriteId("");
+         }
+         else{
+          alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+         }
+        })
+        .catch((error) => {
+          alert("Bilinmeyen bir hata ile karşılaşıldı.")
+        });
+    }
+    else{
+      const favorite = 
+      {
+        userId:userID,
+        productId:props.urunId
+      };
+      fetch(baseUrl+'api/Favorite/CreateFavorite', {
+        method: 'POST',
+        body: JSON.stringify(favorite),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.success)
+           {
+            setFavoriteId(data.data);
+           }
+           else{
+            alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+           }
+      })
+      .catch(error => {
+        alert('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      });
+    }
+    setFavorited(!favorited);
   };
 
   // Kayıtlı adres seçildiğinde
@@ -366,6 +416,39 @@ const handleCorporate = (event) => {
     }
 };
 
+const fetchFavorite = async (urunId) => {
+  try {  
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+    
+   await fetch(baseUrl+`api/Favorite/GetAllFavoriteByUserId/${userID}`,requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const isProductInFavorites = data.data.some(favorite => favorite.productId === urunId);
+        setFavorited(isProductInFavorites)
+        console.log(isProductInFavorites);
+        if(isProductInFavorites)
+        {
+          const userFavoriteId = data.data.find(favorite => favorite.productId === urunId);
+          setFavoriteId(userFavoriteId?.favoriteId);
+        }
+      } else {
+        alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
+      }
+   
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  } catch (error) {
+    console.error("Favoriler getirilirken hata oluştu: ", error);
+  }
+};
+
 const dates = [];
 const today = new Date();
 
@@ -378,9 +461,11 @@ for (let i = 0; i < 3; i++) {
 
 useEffect(() => 
 {
+  console.log('deneme',props); 
   fetchUserAddress();
   fetchDistricts();
-},[]);
+  fetchFavorite(props.urunId);
+},[props]);
 
   return (
     <div  style={{ margin: "100px" }}>
@@ -410,14 +495,14 @@ useEffect(() =>
 
               <div style={{marginLeft: "-11%"}}>
 
-                <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+                <button className="detay-buton" onClick={()=>handleAddToFavorites()}>
+
                   <img width={40} height={40}
-                    src="/images/fav.png"
+                    src = {favorited ? "/images/selectedfavorite.png" : "/images/fav.png"}
                     alt="Favori İkonu"
-                    onClick={handleAddToFavorites}
                     style={{ cursor: "pointer" }}
                   />
-      
+
                 {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
 
         

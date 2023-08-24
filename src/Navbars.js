@@ -51,6 +51,18 @@ function Navbars() {
                   <hr /> */}
                   <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
                   <hr />
+                  {/* <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
+                  <hr /> */}
+                  <NavLink className="menu-items-link" to='/Morethan'>
+                  <div className="more-button-container">
+                      {Array.from({ length: 3 }).map((_, index) => (
+                        <div key={index} className="more-button" />
+                      ))}
+                      Daha Fazla
+                    </div>  </NavLink>
+                  <hr />
+                  {/* <NavLink className="menu-items-link" to=''>Ayarlar</NavLink>
+                  <hr /> */}
                {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
                 </div>
               </div>

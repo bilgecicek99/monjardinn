@@ -817,3 +817,48 @@ input[type='radio'] {
   padding:10px;
   border-radius: 50% 0 50% 50%;
 }
+
+
+.container {
+  display: flex;
+}
+
+.left-panel {
+  flex: 1;
+  padding: 20px;
+}
+
+.right-panel {
+  flex: 2;
+  padding: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+li.selected {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.more-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.more-button {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin: 0 1px;
+}

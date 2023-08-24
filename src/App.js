@@ -45,6 +45,8 @@ import Stock from './Stock';
 import BlogDetail from './BlogDetail';
 import Navbars from './Navbars';
 import ProductListByCategory from './ProductListByCategory';
+import MenuMoreThan from './MenuMoreThan';
+import Contact from './Contact';
 
 
 function App() {
@@ -89,6 +91,8 @@ function App() {
         <Route path="/editproduct/:product" element={<EditProduct />} />
         <Route path="/addaddress" element={<AddUserAddress />} />
         <Route path="/editaddres/:id" element={<EditUserAddress />} />
+        <Route path="/Morethan" element={<MenuMoreThan />} />
+        {/* <Route path="/Contact" element={<Contact />} /> */}
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
