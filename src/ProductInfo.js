@@ -184,6 +184,9 @@ const handleCorporate = (event) => {
             alert("Değişiklikler başarıyla kaydedilmiştir.");
             navigate("/Basket")
           }
+          else{
+            alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+          }
           //setErrorMessage(data.message);
         })
         .catch((error) => {

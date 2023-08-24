@@ -24,7 +24,7 @@ const List = () => {
   const [showSizeOptions, setShowSizeOptions] = useState(false); // State for showing/hiding price options
 
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
-
+  const [isCategoryVisible, setISCategoryVisible] = useState(false);
   const handleSizeFilterChange = (event) => {
     // Handle change event for select element
     const selectedSize = event.target.value;
@@ -85,6 +85,7 @@ const List = () => {
           await fetchProducts(categoryId);
         } else {
           await fetchProducts();
+          setISCategoryVisible(true);
         }
         await fetchCategories();
       } catch (error) {
@@ -145,13 +146,16 @@ const List = () => {
   return (
     <div className="kategori1" style={{ display: "flex" }}>
     <div style={{ flex: "0 0 25%", padding: "10px" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
-      <label className="kategori" htmlFor="categoryFilter">Kategori</label>
-        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
-          {/* Arrow icon */}
-          <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
-        </div>   
-      </div>
+     {isCategoryVisible && 
+      (<div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+        <label className="kategori" htmlFor="categoryFilter">Kategori</label>
+          <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
+            {/* Arrow icon */}
+            <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
+          </div>   
+        </div>)
+        
+        }
       {categoryFilterOpen && (
         <div style={{marginTop:"5px"}}>
           <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
@@ -165,10 +169,9 @@ const List = () => {
               {category.name}
             </label>
           ))}
-        </div>
-      
+        </div>   
       )}
-    <hr />
+      {isCategoryVisible && (<hr/>)}
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
         <label className="kategori" htmlFor="colorFilter">Renk:</label>
