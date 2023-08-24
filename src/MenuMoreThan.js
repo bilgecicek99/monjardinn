@@ -15,7 +15,7 @@ const MenuMoreThan = () => {
     };
   
   return (
-    <div style={{ margin: "100px" }}>
+    <div style={{ marginTop: "100px" }}>
     
     <div className="container">
       <div className="left-panel">
