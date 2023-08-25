@@ -35,12 +35,12 @@ function Navbars() {
               <div className="menu-items" onClick={() => setMenuOpen(false)}>
                 
                {user && (
-  <div className="text-center">
-    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-    <p className='menu-items-admin-link'>{user.firstName}</p>
-    <p className='menu-items-admin-link'>{user.email}</p>
-  </div>
-)}
+                  <div className="text-center">
+                    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
+                    <p className='menu-items-admin-link'>{user.firstName}</p>
+                    <p className='menu-items-admin-link'>{user.email}</p>
+                  </div>
+                )}
 
                 <div className="menu-items-container">
                   <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>

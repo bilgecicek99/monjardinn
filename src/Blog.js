@@ -111,8 +111,8 @@ const Blog = () => {
         }
       };
   return (
-    <div style={{  }}>
-    <div style={{margin:"100px"}}>
+    <div className="mobile-generic-css">
+    <div style={{margin:"9%"}}>
      
     <Navbar onSearch={handleSearch} />
       <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center", background: "#D2ADD7", padding:"10px", borderRadius:"10px", maxWidth: "800px", margin: "0 auto"}}>

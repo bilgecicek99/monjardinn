@@ -56,7 +56,7 @@ const Search = () => {
     
     <>
      <div className="search-area">
-      <form onSubmit={search} style={{paddingTop: "6%", paddingBottom: "3%"}}>
+      <form onSubmit={search} style={{paddingTop: "10%", paddingBottom: "3%"}}>
        
       <input
           type="text"
@@ -75,7 +75,7 @@ const Search = () => {
           placeholder="Ürün adını giriniz"
         />
       </form>
-      <div id="search-results"></div>
+      {/* <div id="search-results"></div>
       <div className="previous-searches">
         <h3>Önceden Aradıklarınız:</h3>
         <ul style={{ display: "flex" }}>
@@ -151,7 +151,7 @@ const Search = () => {
             </div>
           ))}
         </ul>
-      </div>
+      </div> */}
         </div>
     </>
   );
