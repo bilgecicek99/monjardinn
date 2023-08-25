@@ -183,9 +183,8 @@ const handlePieceSave = async(item, action) => {
 };
 
   return (
-    <div  style={{ margin: "100px" }}>
-  
-      
+    <div className="mobile-generic-css"  style={{ margin: "8% 5% 5% 5%"}}>
+   
     <table className='table table-light'>
   <thead>
     <tr>
@@ -208,17 +207,17 @@ const handlePieceSave = async(item, action) => {
           </td>
           <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "100px" }}>{item.total} adet</td>
           <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.productDetailResponse.price} TL</td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "20px" }}>
+          {/* <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "20px" }}>
             <a style={{ cursor: "pointer" }} onClick={() => toggleDetails(item.id)}>
               <img src={"/images/opendetail.png"} alt="" width={12} height={12} />
-            </a> </td>
+            </a> </td> */}
           <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}> 
             <a style={{cursor: "pointer" }} onClick={()=>handleDelete(item.id)}>
               <img src={"/images/delete.png"} alt="" width={12} height={12} />
             </a>  
           </td>
         </tr>
-        {openDetailsId === item.id && (
+        {/* {openDetailsId === item.id && (
             <tr>
               <td colSpan="4" style={{ border: "none"}}>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: "16%" }}>
@@ -246,9 +245,9 @@ const handlePieceSave = async(item, action) => {
                 <hr style={{ border:"none" }} />
               </td>
             </tr>
-          )}
+          )} */}
         <tr>
-          <td colSpan="5" style={{ border: "none" }}>
+          <td colSpan="4" style={{ border: "none" }}>
             <hr style={{ color:"black" }} />
           </td>
         </tr>
@@ -276,7 +275,7 @@ const handlePieceSave = async(item, action) => {
 
   
       
-      <div style={{marginTop: "80px"}}>
+      {/* <div style={{marginTop: "80px"}}>
       <h1>Birlikte İyi Gider </h1>
       <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
         breakpoint: 800,
@@ -313,7 +312,7 @@ const handlePieceSave = async(item, action) => {
             </div>
           ))}
       </Slide>
-      </div>
+      </div> */}
   </div>
       
     

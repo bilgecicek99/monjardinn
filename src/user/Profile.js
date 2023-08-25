@@ -329,7 +329,7 @@ const Profile = () => {
             </p>
       <hr className="profile-hr" />
       <button className="save-button" onClick={updateUser}>Kaydet</button>
-      <div style={{ display:"flex", flexDirection: "column"}} >
+      <div style={{ display:"flex", flexDirection: "column",marginTop:"3%"}} >
      <div> <p className="profile-text"> Mevcut Şifre: <input
           type="text"
           value={oldPassword}

@@ -569,10 +569,32 @@ nav li {
   background:transparent;
   height:auto
 }
+
+.product-info-page{
+  margin: 7% 4% 0% 0%;
+}
+.address-product-info{
+  padding-right:17%;
+  padding-left:17%;
+}
+.address-radio{
+  margin-left: 25%;
+}
+.product-info-img{
+  width: 250px;
+  height:325px;
+  margin-right: 16%;
+  border-radius:15px;
+}
+.product-info-detay{
+  margin-top: 6%;
+  margin-bottom: 4rem;
+  margin-left: 6%;
+}
 @media only screen and (max-width: 700px) {
  
   .profile-hr{
-    width:10rem;
+    width:90%;
     text-align: center ;
     justify-content: center;
     margin-bottom:20px !important;
@@ -592,6 +614,30 @@ nav li {
     background:transparent;
     height:auto
   }
+  .product-info-page{
+    margin: 20% 4% 0% 0%;
+  }
+  .address-product-info {
+    padding-left: 4%;
+    padding-right: 0%;
+}
+.product-info-detay{
+  word-wrap: break-word;
+}
+
+.address-radio{
+  margin-left: 8%;
+}
+.product-info-img {
+  width: 150px;
+  height: 200px;
+  margin-right: 9%;
+  border-radius: 15px;
+}
+.mobile-generic-css
+{
+  margin-top: 20% !important;
+}
 }
 
 .navbar-toggler{
@@ -864,7 +910,7 @@ li.selected {
 }
 
 .contact-page {
-  padding: 10% 8% 10% 8%;
+  padding: 7% 8% 10% 8%;
   
 }
 

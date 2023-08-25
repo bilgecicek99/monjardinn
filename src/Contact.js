@@ -33,7 +33,7 @@ const contactSections = [
 const Contact = () => {
 
   return (
-    <div className="contact-page">
+    <div className="contact-page mobile-generic-css">
       <h1 className="contact-heading">İletişim</h1>
       <div style={{padding:"3% 2% 2% 2%"}}>
         <h2 className="contact-subheading" style={{paddingBottom:"2%"}}>Adres</h2>

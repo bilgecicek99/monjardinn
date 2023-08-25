@@ -9,6 +9,70 @@ import { getEmail, getToken, getUserInfo} from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
 
 
+
+const FlowerRating = (props) => {
+  const puan = props.puan;
+
+  const roundedPuan = (() => {
+    if (puan <= 1.2) {
+      return 1;
+    } else if (puan <= 1.7) {
+      return 1.5;
+    } else if (puan <= 2.2) {
+      return 2;
+    } else if (puan <= 2.7) {
+      return 2.5;
+    } else if (puan <= 3.2) {
+      return 3;
+    } else if (puan <= 3.7) {
+      return 3.5;
+    } else if (puan <= 4.2) {
+      return 4;
+    } else if (puan <= 4.7) {
+      return 4.5;
+    } else {
+      return 5;
+    }
+  })();
+
+  // const emptyFlowerCount = Math.max(0, 5 - Math.floor(roundedPuan));
+  const fullFlowerCount = Math.floor(roundedPuan);
+  const halfFlowerCount = roundedPuan - fullFlowerCount === 0.5 ? 1 : 0;
+  const emptyFlowerCount = 5-(fullFlowerCount+halfFlowerCount);
+  console.log(emptyFlowerCount);
+  return (
+    <div>     
+      {Array.from({ length: fullFlowerCount }, (_, index) => (
+        <img
+          key={`fullFlower-${index}`}
+          src="/images/fullflowericon.png"
+          alt="Dolu Çiçek İkonu"
+          width={30}
+          height={30}
+        />
+      ))}
+      {Array.from({ length: halfFlowerCount }, (_, index) => (
+        <img
+          key={`halfFlower-${index}`}
+          src="/images/halfflower.png"
+          alt="Yarım Çiçek İkonu"
+          width={30}
+          height={30}
+        />
+      ))}
+      {Array.from({ length: emptyFlowerCount }, (_, index) => (
+        <img
+          key={`emptyFlower-${index}`}
+          src="/images/emptyflowericon.png"
+          alt="Boş Çiçek İkonu"
+          width={30}
+          height={30}
+        />
+      ))}
+    </div>
+  );
+};
+
 const ProductInfo = (props) => {
  // Ürünün detayları için state kullanımı
  //const [favorited, setFavorited] = useState(false);
@@ -462,17 +526,21 @@ for (let i = 0; i < 3; i++) {
 useEffect(() => 
 {
   console.log('deneme',props); 
-  fetchUserAddress();
+  if(userID)
+  {
+    fetchUserAddress();
   fetchDistricts();
   fetchFavorite(props.urunId);
+  }
+  
 },[props]);
 
   return (
-    <div  style={{ margin: "100px" }}>
+    <div className="product-info-page">
     <div>
       <div style={{ display: "flex", alignItems: "center" ,marginLeft:"6%"}}>
         {/* Ürün fotoğrafı */}
-        <img src={props.foto} alt={props.ad} style={{ width: "250px",height:"325px", marginRight: "16%", borderRadius:"15px" }} />
+        <img src={props.foto} alt={props.ad} className="product-info-img"/>
 
         <div>
           <div style={{display:"block"}}>
@@ -482,18 +550,10 @@ useEffect(() =>
            
 
             <div style={{marginLeft: "2%"}}> <p>{props.fiyat} TL</p></div>
-            <button style={{background:"transparent",marginLeft: "-9%"}} onClick={handleAddToFavorites} disabled={favorited}>
-                  <img 
-                    height= {54}
-                    width= {145}
-                    src="/images/puan.png"
-                    alt="Puan İkonu"
-                    onClick={handleAddToFavorites}
-                    style={{ cursor: "pointer" }}
-                  />
-            </button>
+            <FlowerRating puan={props.puan} />
 
-              <div style={{marginLeft: "-11%"}}>
+
+              <div style={{marginLeft: "-4%"}}>
 
                 <button className="detay-buton" onClick={()=>handleAddToFavorites()}>
 
@@ -528,13 +588,13 @@ useEffect(() =>
      
 
       {/* Ürün detaylı açıklaması */}
-      <p  style={{marginTop: "6%",marginBottom: "4rem", marginLeft: "6%"}}>{props.detay}</p>
+      <p  className="product-info-detay">{props.detay}</p>
 
        {/* Adres seçim alanı */}
        <div>
        <div style={{  justifyContent: "space-between" }}>
-  <div style={{marginleft: "25%", paddingRight:"17%", paddingLeft:"17%" }}>
-    <div style={{ marginLeft:"25%"}}>
+  <div className="address-product-info">
+    <div className="address-radio">
       <input
         type="radio"
         name="address"
@@ -798,7 +858,7 @@ useEffect(() =>
 </div>
 
 </div>
-<div style={{marginTop: "80px"}}>
+{/* <div style={{marginTop: "80px"}}>
 
       <h1>Birlikte iyi Gider </h1>
       <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
@@ -836,10 +896,12 @@ useEffect(() =>
             </div>
           ))}
       </Slide>
-      </div>
+      </div> */}
   </div>
           );
         };
+
+        
            
 const UrunDetay = () => {
   const { id } = useParams();
@@ -856,6 +918,7 @@ const UrunDetay = () => {
        .then(response => response.json())
        .then(data => {  
         setProductDetail(data.data)
+
         console.log(data.data);        
        })
        .catch(error => {
@@ -885,7 +948,10 @@ useEffect(() => {
           ad={productDetail.name} 
           fiyat={productDetail.price} 
           detay={productDetail.description} 
+          puan={productDetail.pointAverage}
           />;
 };
 
 export default WithNavbar(UrunDetay);
+
+

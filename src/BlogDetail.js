@@ -50,13 +50,13 @@ const defaultImage = '/images/blogdefault.png';
 
 
   return (
-    <div style={{margin:"100px"}}>
-      <nav style={{ backgroundColor: "#893694", padding: "5px" }}>
-        {backButtonVisible && (
+    <div className="mobile-generic-css" style={{margin:"8%"}}>
+      <nav style={{ backgroundColor: "#893694", padding: "2%" }}>
+        {/* {backButtonVisible && (
           <span style={{ cursor: "pointer" }} onClick={goBack}>
           <img src="/images/Vector.png" alt="Blog Resmi" style={{margin: "6px",width: "4%"}}/>
           </span>
-        )}
+        )} */}
       </nav>
       <div style={{ backgroundColor: "#E7D1EA", padding: "4%" }}>
         <h1 style={{float:"left", fontWeight:"bold", fontFamily:"Times New Roman"}}>{blogDetail.title}</h1>

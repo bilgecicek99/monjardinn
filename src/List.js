@@ -259,16 +259,13 @@ const List = () => {
     
     </div>
     <div style={{ flex: "0 0 75%", padding: "10px" }}>
-
-    <div className="container">
-  <div className="row">
-    {Array.from({ length: Math.ceil(filteredProducts.length / 3) }).map((_, rowIndex) => (
-      <div key={rowIndex} className="col-md-4" >
-        { 
-         filteredProducts.slice(rowIndex * 3, (rowIndex + 1) * 3).map((product) => (
-          <li key={product.id} style={{ listStyle: "none" }}>
+  <div className="container">
+    <div className="row">
+      {filteredProducts.map((product, index) => (
+        <div key={product.id} className="col-md-4">
+          <li style={{ listStyle: "none" }}>
             <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-              <img style={{ borderRadius:"15px" }} src = { product?.fileResponseModel[0]?.fileUrl ?? process.env.PUBLIC_URL + '/images/defaultflower.png' } alt={product.name} width={300} height={350} />
+              <img style={{ borderRadius: "15px", height: "auto", width: "90%", maxHeight: "100%" }} src={product?.fileResponseModel[0]?.fileUrl ?? process.env.PUBLIC_URL + '/images/defaultflower.png'} alt={product.name}/>
               <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
               <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
               <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
@@ -276,13 +273,13 @@ const List = () => {
               <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.price} TL</p>
             </Link>
           </li>
-        ))  
-      }
-      </div>
-    ))}
+          {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+        </div>
+      ))}
+    </div>
   </div>
 </div>
-    </div>
+
     <hr />
   </div>
 );
