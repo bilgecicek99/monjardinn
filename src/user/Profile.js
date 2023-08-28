@@ -42,6 +42,7 @@ const Profile = () => {
   let userID= userInfo?.userId;
   let email= getEmail();
   let token= getToken();
+  
    const fetchUserAddress = async () => {
       try {  
         const requestOptions = {
@@ -72,11 +73,10 @@ const Profile = () => {
   useEffect(() => {
    
     if (!token) {
-    
-      navigate('/login'); 
+     navigate('/login'); 
       return;
     }
-  
+
     const fetchProfilVerileri = async () => {
       try {  
         const requestOptions = {
@@ -97,6 +97,8 @@ const Profile = () => {
             email: email,
             dateOfBirth: dateOfBirth
           }
+          localStorage.setItem('UserAllInfo', JSON.stringify(updatedUser));
+
           console.log("uppp",updatedUser);
           setUser(updatedUser);
         } else {
@@ -111,8 +113,6 @@ const Profile = () => {
         console.error("Profil verileri getirilirken hata oluştu: ", error);
       }
     };
-
-
 
     fetchProfilVerileri();
     fetchUserAddress();
@@ -192,10 +192,15 @@ const Profile = () => {
     }
     };
    
+
   const Address = ({ description, title, corporate, district, quarter,id }) => {
-    const handleDelete = async() => {
-      // Silme işlemini gerçekleştirmek için gerekli kodları buraya yazabilirsiniz
-    
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const handleDelete = () => {
+      setShowConfirmation(true);
+    };
+  
+    const handleConfirm = async () => {
       try {  
         const requestOptions = {
           headers: {
@@ -217,8 +222,14 @@ const Profile = () => {
         });
       } catch (error) {
         console.error("Adres verileri getirilirken hata oluştu: ", error);
-      }
+      }      setShowConfirmation(false);
     };
+  
+    const handleCancel = () => {
+      setShowConfirmation(false);
+    };
+  
+
     const handleEdit = async(id) => {
       navigate(`/editaddres/${id}`, { state: { id } });
 
@@ -229,24 +240,37 @@ const Profile = () => {
 
       <div style={styles.card}>
       <div style={{ ...styles.cardContent, padding: "20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontFamily:"times", }}>
           <div>
-            <h4>{title}</h4>
+            <h4  style={{ fontStyle:"normal",  fontWeight:"bold"}}>{title}</h4>
             <p style={{color:"#6F6D6D", fontSize:"18px",fontStyle:"italic" }}>{quarter} - {district}/İzmir</p>
           </div>
-          <div style={{ display: "flex", marginTop: "-20px" }}>
-
+          <div style={{ display: "flex" }}>
             <a style={{ margin: "0 20px",cursor: "pointer" }} onClick={() => handleEdit(id)}>
               <img src={"/images/addressedit.png"} alt="" width={18} height={18} />
             </a>
 
-            <a style={{ margin: "0 3px",cursor: "pointer" }} onClick={handleDelete}>
-              <img src={"/images/delete.png"} alt="" width={13} height={13} />
-            </a>  
+            <div>
+      <a
+        style={{ margin: "0 3px", cursor: "pointer" }}
+        onClick={handleDelete}
+      >
+        <img src={"/images/delete.png"} alt="" width={13} height={13} />
+      </a>
+
+    
+    </div>
 
           </div>
         </div>
       </div>
+      {showConfirmation && (
+        <div className="confirmation-dialog">
+          <p>Bu ürünü silmek istediğinizden emin misiniz?</p>
+          <button onClick={handleConfirm}>Evet</button>
+          <button onClick={handleCancel}>Hayır</button>
+        </div>
+      )}
       </div>
     );
   };
@@ -262,7 +286,7 @@ const Profile = () => {
       color: "black",
       //padding: "20px",
       borderRadius: "12px",
-      marginBottom:"50px",
+      marginBottom:"30px",
       border:"1px solid #D9D9D9",
       boxShadow: "20px 20px 20px rgba(0,0,0,0.25)"
     },
@@ -282,7 +306,7 @@ const Profile = () => {
   return (
     <div style={{ marginTop: "100px" }}>
       <h1  style={{ textAlign: "center", fontStyle:"italic" }}>Profilim</h1>
-      <div style={{ display: "block", justifyContent: "center",marginTop: "50px",textAlign:"center" }}>
+      <div style={{ display: "block", justifyContent: "center",textAlign:"center" }}>
     <div className="profile-card-area">
       <p className="profile-text">Adı: 
       <input
@@ -317,10 +341,11 @@ const Profile = () => {
       <p className="profile-text">E-posta:  
   
        <span className="edit-input-area">{user.email}  </span>     </p>
+      {/* 
       <hr className="profile-hr" />
       <p className="profile-text">Doğum Tarihi:
       <span className="edit-input-area">{user.dateOfBirth}  </span>     </p>
- 
+  */}
       {/* <input
                 type="text"
                 name="dateOfBirth"
@@ -358,11 +383,10 @@ const Profile = () => {
 
       <hr className="profile-hr" />
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0" }}>
-        <h2 style={{ textAlign: "left", fontStyle: "italic", margin: 0 }}>Kayıtlı Adreslerim</h2>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 10% 0",marginBottom:"30px" }}>
+        <h2 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h2>
         <a
-          style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer"
-        }}
+          style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer", fontFamily:"times", fontSize:"18px" }}
           onClick={() => handleAddAddress()}
         >
           Adres Ekle
