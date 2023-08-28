@@ -4,6 +4,7 @@ import 'react-slideshow-image/dist/styles.css'
 import WithNavbar from './WithNavbar'; 
 import { baseUrl } from './config/Constants';
 import { getToken, getUserInfo } from "./service/AuthService";
+import { useNavigate } from 'react-router-dom';
 
 
 const recommendedProducts = [
@@ -132,7 +133,10 @@ const handleDelete = async(id) => {
     console.error("Sepet getirilirken hata oluştu: ", error);
   }
 };
-
+const navigate = useNavigate();
+const goHomePage = () => {
+  navigate('/');
+};
 
 const handlePieceSave = async(item, action) => {
   let total = item.total;
@@ -185,7 +189,7 @@ const handlePieceSave = async(item, action) => {
   return (
     <div className="mobile-generic-css"  style={{ margin: "8% 5% 5% 5%"}}>
    
-    <table className='table table-light'>
+   {items?.length > 0 ? (  <table className='table table-light'>
   <thead>
     <tr>
       <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}}></th>
@@ -271,8 +275,15 @@ const handlePieceSave = async(item, action) => {
       </td>
     </tr>
   </tfoot>
-</table>
-
+</table>) :
+(
+    <div style={{ textAlign: 'center',marginTop:"270px" }}>
+      <p className="basket-no-product">Sepetinizde ürün bulunmamaktadır.</p>
+      <button className="basket-no-product-button" onClick={goHomePage}>
+        Alışverişe devam et
+      </button>
+    </div>
+)}
   
       
       {/* <div style={{marginTop: "80px"}}>
