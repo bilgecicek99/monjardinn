@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './index.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -35,32 +35,34 @@ function Navbars() {
               <div className="menu-items" onClick={() => setMenuOpen(false)}>
                 
                {user && (
-  <div className="text-center">
-    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-    <p className='menu-items-admin-link'>{user.firstName}</p>
-    <p className='menu-items-admin-link'>{user.email}</p>
-  </div>
-)}
+                  <div className="text-center">
+                    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
+                    <p className='menu-items-admin-link'>{user.firstName}</p>
+                    <p className='menu-items-admin-link'>{user.email}</p>
+                  </div>
+                )}
 
                 <div className="menu-items-container">
                   <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>
                   <hr />
                   <NavLink className="menu-items-link" to='/Search'>Arama</NavLink>
                   <hr />
-                  <NavLink className="menu-items-link" to='/List'>Saksı</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Kurutulmuş Çicek</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Çicekler</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Aranjmanlar</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/List'>Büyük Bitkiler</NavLink>
-                  <hr />
-                  <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
-                  <hr />
+                  {/* <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
+                  <hr /> */}
                   <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
                   <hr />
+                  <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
+                  <hr /> 
+                  <NavLink className="menu-items-link" to='/Morethan'>
+                  <div className="more-button-container">
+                      {Array.from({ length: 3 }).map((_, index) => (
+                        <div key={index} className="more-button" />
+                      ))}
+                      Daha Fazla
+                    </div>  </NavLink>
+                  <hr />
+                  {/* <NavLink className="menu-items-link" to=''>Ayarlar</NavLink>
+                  <hr /> */}
                {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
                 </div>
               </div>

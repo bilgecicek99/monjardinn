@@ -40,11 +40,13 @@ import Basket from './Basket';
 import Search from './Search';
 import Favorite from './favorite/Favorite';
 import Blog from './Blog';
-import CreateYourself from './CreateYourself' 
+// import CreateYourself from './CreateYourself' 
 import Stock from './Stock';
 import BlogDetail from './BlogDetail';
 import Navbars from './Navbars';
 import ProductListByCategory from './ProductListByCategory';
+import MenuMoreThan from './MenuMoreThan';
+import Contact from './Contact';
 
 
 function App() {
@@ -61,7 +63,8 @@ function App() {
     
         <Route path="/productlist" element={<ProductList/>} />
         <Route path="/list" element={<List/>} />
-        <Route path="/productinfo" element={<ProductInfo/>} />
+        <Route path="/list/:categoryId" element={<List/>} />
+        <Route path="/productinfo/:id" element={<ProductInfo/>} />
         <Route path="/basket" element={<Basket/>} />
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp/>} />
@@ -79,15 +82,17 @@ function App() {
         <Route path="/adminallblog" element={<AdminAllBlog/>} />
 
 
-        <Route path="/createyourself" element={<CreateYourself/>} />
+        {/* <Route path="/createyourself" element={<CreateYourself/>} /> */}
         <Route path="/stock" element={<Stock/>} />
-        <Route path="/blogdetail" element={<BlogDetail/>} />
+        <Route path="/blogdetail/:id" element={<BlogDetail/>} />
         <Route path="/editproduct" element={<EditProduct/>} />
         <Route path="/editblog/:blog" element={<EditBlog/>} />
         <Route path="/editcategory" element={<EditCategory/>} /> 
         <Route path="/editproduct/:product" element={<EditProduct />} />
         <Route path="/addaddress" element={<AddUserAddress />} />
         <Route path="/editaddres/:id" element={<EditUserAddress />} />
+        <Route path="/Morethan" element={<MenuMoreThan />} />
+         <Route path="/Contact" element={<Contact />} /> 
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 

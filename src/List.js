@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import React, { useState,useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
-
-
-
-const products = [
-    
-  { id: 1, name: "Mon Jardin", price: 600, category: "Kategori 1", color: "Mor", size: "Boyut 1", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',  },
-  { id: 2, name: "Mon Jardin", price: 200, category: "Kategori 2", color: "Mor", size: "Boyut 2", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 3, name: "Mon Jardin", price: 800, category: "Kategori 3", color: "Pembe", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 4, name: "Mon Jardin", price: 900, category: "Kategori 1", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 5, name: "Mon Jardin", price: 800, category: "Kategori 2", color: "Mor", size: "Boyut 3", image:  process.env.PUBLIC_URL + '/images/pembelale.jpg',},
-  { id: 6, name: "Mon Jardin", price: 600, category: "Kategori 3", color: "Lila", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 7, name: "Mon Jardin", price: 700, category: "Kategori 1", color: "Pembe", size: "Boyut 1", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 8, name: "Mon Jardin", price: 1000, category: "Kategori 2", color: "Sarı", size: "Boyut 2", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  { id: 9, name: "Mon Jardin", price: 800, category: "Kategori 1", color: "Mor", size: "Boyut 3", image: process.env.PUBLIC_URL + '/images/pembelale.jpg', },
-  // Diğer ürünler
-];
-
-
-
-  
+import { baseUrl } from './config/Constants';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const List = () => {
     
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filteredProduct,setFilteredProduct]= useState([]);
+  const { categoryId } = useParams();
+
   //const [categoryFilter, setCategoryFilter] = useState("");
   //const [colorFilter, setColorFilter] = useState("");
   //const [priceFilter, setPriceFilter] = useState("");
@@ -37,7 +24,7 @@ const List = () => {
   const [showSizeOptions, setShowSizeOptions] = useState(false); // State for showing/hiding price options
 
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
-
+  const [isCategoryVisible, setISCategoryVisible] = useState(false);
   const handleSizeFilterChange = (event) => {
     // Handle change event for select element
     const selectedSize = event.target.value;
@@ -81,59 +68,110 @@ const List = () => {
     setColorFilter(event.target.value);
   };
 
-  
-
-
-  
-
-  
-
-  const filteredProducts = products.filter((product) => {
+  let filteredProducts = products.filter((product) => {
     return (
-      (categoryFilter === "" || product.category === categoryFilter) &&
+      (categoryFilter === "" || product.categoryId === parseInt(categoryFilter)) &&
       (colorFilter === "" || product.color === colorFilter) &&
       (priceFilter === "" || product.price <= parseInt(priceFilter)) &&
       (sizeFilter === "" || product.size === sizeFilter)
     );
   });
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (categoryId) {
+          await fetchProducts(categoryId);
+        } else {
+          await fetchProducts();
+          setISCategoryVisible(true);
+        }
+        await fetchCategories();
+      } catch (error) {
+        console.error('Bilinmeyen bir hata gerçekleşti:', error);
+      }
+    };
+    fetchData();
+  }, [categoryId]);
+  
+  const fetchProducts = async (categoryId = null) => {
+    try {
+      await fetch(baseUrl + 'api/Product/GetAllProducts')
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.data) {
+            const allProducts = data.data;
+            
+            if (categoryId) {
+              filteredProducts = allProducts.filter(product => product.categoryId === parseInt(categoryId));
+              setProducts(filteredProducts);
+              setFilteredProduct(filteredProduct);
+            } else {
+              setProducts(allProducts);
+            }
+          } else {
+            console.error('Ürünler alınamadı.');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error('Ürünler getirilirken hata ile karşılaşıldı: ', error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      await fetch(baseUrl + 'api/Category/GetMainCategories')
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.data) {
+            setCategories(data.data);
+          } 
+          else {
+            console.error('Kategoriler alınamadı.');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error('Kategoriler getirilirken hata ile karşılaşıldı: ', error);
+    }
+  };
   
 
   return (
     <div className="kategori1" style={{ display: "flex" }}>
     <div style={{ flex: "0 0 25%", padding: "10px" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
+     {isCategoryVisible && 
+      (<div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
         <label className="kategori" htmlFor="categoryFilter">Kategori</label>
-        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
-          {/* Arrow icon */}
-          <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
-        </div>   
-      </div>
+          <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
+            {/* Arrow icon */}
+            <span>{categoryFilterOpen ?  "\u25B2" :"\u25BC" }</span>
+          </div>   
+        </div>)
+        
+        }
       {categoryFilterOpen && (
         <div style={{marginTop:"5px"}}>
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Tümü
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori1" name="kategori1" value="Kategori 1" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
-          Kategori 1
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori2" name="kategori2" value="Kategori 2" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Kategori 2
-        </label>
-      
-        <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="kategori3" name="kategori3" value="Kategori 3" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-          Kategori 3
-        </label>
-      </div>
-      
+          <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+            <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
+            Tümü
+          </label>
+              
+          {categories.map((category) => (
+            <label key={category.id} style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+              <input type="checkbox" id={`kategori${category.id}`} name={`kategori${category.id}`} value={category.id} onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
+              {category.name}
+            </label>
+          ))}
+        </div>   
       )}
-    <hr />
+      {isCategoryVisible && (<hr/>)}
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
         <label className="kategori" htmlFor="colorFilter">Renk:</label>
@@ -164,7 +202,6 @@ const List = () => {
           Lila
         </label>
         
-
         <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
           <input type="checkbox" id="Sarı" name="Sarı" value="Sarı" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
           Sarı
@@ -219,90 +256,30 @@ const List = () => {
 
 
     <hr />
-    <div >
-   
-    <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between" }}>
-        <label className="kategori" htmlFor="sizeFilter">Boyut</label>
-        <div style={{ marginRight: "8px", cursor: "pointer" }} onClick={toggleSizeOptions}>
-          {/* Arrow icon */}
-          <span>{showSizeOptions ?  "\u25B2" :"\u25BC" }</span>
-        </div>   
-      </div>
-
-     
-      
-    {showSizeOptions && (
-       <div style={{marginTop:"5px"}}>
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 1" name="Boyut 1" value="Boyut 1" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
-         Boyut 1
-       </label>
-     
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 2" name="Boyut 2" value="Boyut 2" onChange={handleSizeFilterChange} style={{marginRight:"5px"}} />
-         Boyut 2
-       </label>
-     
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-         <input type="checkbox" id="Boyut 3" name="Boyut 3" value="Boyut 3" onChange={handleSizeFilterChange} style={{marginRight:"5px"}}/>
-         Boyut 3
-       </label>
-   
-     </div>
-    )}
-    </div>
-    <hr />
+    
     </div>
     <div style={{ flex: "0 0 75%", padding: "10px" }}>
-
+  <div className="container">
     <div className="row">
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-          <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic",  fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
+      {filteredProducts.map((product, index) => (
+        <div key={product.id} className="col-md-4">
+          <li style={{ listStyle: "none" }}>
+            <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+              <img style={{ borderRadius: "15px", height: "auto", width: "90%", maxHeight: "100%" }} src={product?.fileResponseModel[0]?.fileUrl ?? process.env.PUBLIC_URL + '/images/defaultflower.png'} alt={product.name}/>
+              <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.size}</p>
+              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.price} TL</p>
+            </Link>
           </li>
-        ))}
-      
-      </div>
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-          <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic" , fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
-          </li>
-        ))}
-      
-      </div>
-      <div className="col-md-4">
-        {filteredProducts.slice(0, Math.ceil(filteredProducts.length / 3)).map((product)=>  (
-          <li key={product.id} style={{ listStyle: "none" }}>
-          <img src={product.image} alt={product.name} width={300} height={350}/>
-          <h3 style={{fontStyle:"italic", fontWeight:"300", fontFamily:"Times New Roman"}}>{product.name}</h3>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.category} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.color} </p>
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.size} </p>
-
-          <p style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>{product.price} TL</p>
-        
-          </li>
-        ))}
-      
-      </div>
-      </div>
+          {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+        </div>
+      ))}
     </div>
+  </div>
+</div>
+
     <hr />
   </div>
 );

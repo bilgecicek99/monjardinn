@@ -57,3 +57,12 @@ form input {
   font-size: 16px;
   width: 200px;
 }
+
+.product-detail-form{
+  border: 1px solid rgb(204, 204, 204) !important;
+  border-color: black !important;
+  border-radius: 4px !important;
+  height: 45px;
+  width: 100%;
+  margin-top: 20px;
+}

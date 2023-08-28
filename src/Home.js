@@ -2,8 +2,11 @@ import Carousel1 from "./Carousel1";
 import WithNavbar from './WithNavbar'; 
 import { baseUrl } from './config/Constants';
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+
+  
   const [categoryList, setCategoryList] = useState([]);
 
   const fetchCategoryList = async () => {
@@ -29,6 +32,7 @@ const Home = () => {
   
     const Cardx = ({ fileUrl, name, id, data, click }) => {
       return (
+        <Link to={`/List/${id}`} style={styles.link}>
         <div key={id} style={styles.card}>
           <div style={styles.cardContent}>
             <h3>{name}</h3>
@@ -37,6 +41,7 @@ const Home = () => {
             <img style={styles.cardImage} src={fileUrl} alt={name} />
           </div>          
         </div>
+      </Link>
       );
 };
     
@@ -68,10 +73,13 @@ const styles = {
         fontStyle: "italic",
         height: "100%", // set the height of the content to match the card's height
       },
+      link: {
+        textDecoration: 'none',
+      },
 };
     
 return (
-    <div style={{padding:"100px"}}> 
+    <div style={{padding:"50px"}}> 
     <div>
     <div className="row">
       <div className="col-md-6">
@@ -116,7 +124,7 @@ return (
   return (
     <div style={{ marginTop: "100px" }}>
         <Carousel1/>
-        <HomeCard cards={categoryList} />
+          <HomeCard cards={categoryList} />
       </div>
    
   );

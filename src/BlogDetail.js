@@ -1,32 +1,72 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { baseUrl } from './config/Constants';
+import { useParams } from 'react-router-dom';
+import WithNavbar from './WithNavbar'; 
 
-
-
-export default function BlogDetail() {
+const BlogDetail= () => {
   const [backButtonVisible, setBackButtonVisible] = useState(true);
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [blogDetail, setBlogDetail] = useState([]);
 
   const goBack = () => {
     navigate('/Blog');
-    console.log("Geri gidiyorum!");
   };
 
+  const fetchBlogDetail = async (id) => {
+    try {
+      const requestOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
+       await fetch(baseUrl+`api/Blog/GetBlogDetailById/${id}`,requestOptions)
+       .then(response => response.json())
+       .then(data => {  
+        setBlogDetail(data.data)
+        console.log(data.data);        
+       })
+       .catch(error => {
+         console.error(error);
+         //setErrorMessage(error.message);
+       });      
+  }
+  catch (error) {
+    //setErrorMessage(error);
+    console.error(error)
+  }
+
+};
+
+useEffect(() => {
+  const fetchData = async () => {
+    await fetchBlogDetail(id); 
+  };
+  fetchData();
+}, [id]);
+
+const defaultImage = '/images/blogdefault.png';
+
+
   return (
-    <div style={{margin:"100px"}}>
-      <nav style={{ backgroundColor: "#893694", padding: "10px" }}>
-        {backButtonVisible && (
+    <div className="mobile-generic-css" style={{margin:"8%"}}>
+      <nav style={{ backgroundColor: "#893694", padding: "2%" }}>
+        {/* {backButtonVisible && (
           <span style={{ cursor: "pointer" }} onClick={goBack}>
-          <img src="/images/Vector.png" alt="Blog Resmi" />
+          <img src="/images/Vector.png" alt="Blog Resmi" style={{margin: "6px",width: "4%"}}/>
           </span>
-        )}
+        )} */}
       </nav>
-      <div style={{ backgroundColor: "#E7D1EA", padding: "10px" }}>
-        <h1 style={{float:"left", fontWeight:"bold", fontFamily:"Times New Roman"}}>Yeni Atölyeler</h1>
-        <div style={{marginTop:"80px"}}><img src="/images/blog1.png" alt="Blog Resmi" /></div>
-        <p>Eğer çiçek aranjmanlarına ilginiz varsa sizi de aramızda görmek <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p> <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p> <p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <p>Excepteur sint occaecat cupidatat non proident, </p>sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div style={{ backgroundColor: "#E7D1EA", padding: "4%" }}>
+        <h1 style={{float:"left", fontWeight:"bold", fontFamily:"Times New Roman"}}>{blogDetail.title}</h1>
+        <div style={{marginTop:"80px"}}>
+          <img src={blogDetail?.fileResponses?.[0]?.fileUrl || defaultImage} alt="Blog Resmi" style={{width: "100%",maxHeight: "370px",marginBottom:"3%",borderRadius:"10px"}}/></div>
+          <p style={{ wordWrap: "break-word"}}>{blogDetail.description}
         </p>
       </div>
     </div>
   );
 }
+
+export default WithNavbar(BlogDetail);
