@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import WithNavbar from '../WithNavbar'; 
 import { baseUrl } from '../config/Constants';
 import { getToken,getUserInfo } from "../service/AuthService";
+import { useNavigate } from 'react-router-dom';
 
  
 const FavoriListesi = () => {
@@ -168,9 +169,14 @@ const FavoriListesi = () => {
   
   );
   
+  const navigate = useNavigate();
+  const goHomePage = () => {
+    navigate('/');
+  };
+
   return (
     <div className="favori-page">
-      <div className="profile-card-area">
+    {products?.length > 0 ? (  <div className="profile-card-area">
         {products.map((product) => (
           <FavoriteCard
             Image={product.productFile}
@@ -182,8 +188,15 @@ const FavoriListesi = () => {
           />
         ))}
         
-      </div>
-
+      </div>): 
+      (
+      <div style={{ textAlign: 'center',marginTop:"180px" }}>
+      <p className="basket-no-product">Favorilerinizde ürün bulunmamaktadır.</p>
+      <button className="basket-no-product-button" onClick={goHomePage}>
+        Alışverişe devam et
+      </button>
+    </div>
+    )}   
     </div>
   );
 };
