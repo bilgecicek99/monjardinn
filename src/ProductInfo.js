@@ -7,6 +7,8 @@ import WithNavbar from './WithNavbar';
 import "./App.css";
 import { getEmail, getToken, getUserInfo} from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 
@@ -34,8 +36,6 @@ const FlowerRating = (props) => {
       return 5;
     }
   })();
-
-  // const emptyFlowerCount = Math.max(0, 5 - Math.floor(roundedPuan));
   const fullFlowerCount = Math.floor(roundedPuan);
   const halfFlowerCount = roundedPuan - fullFlowerCount === 0.5 ? 1 : 0;
   const emptyFlowerCount = 5-(fullFlowerCount+halfFlowerCount);
@@ -74,14 +74,10 @@ const FlowerRating = (props) => {
 };
 
 const ProductInfo = (props) => {
- // Ürünün detayları için state kullanımı
- //const [favorited, setFavorited] = useState(false);
- //const [addedToCart, setAddedToCart] = useState(false);
   const [isExistingAddress, setIsExistingAddress] = useState(true);
-  //const [newAddress, setNewAddress] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
-  const [shipmentDate, setShipmentDate] = useState("");
-  const [selectedPiece, setSelectedPiece] = useState("");
+  const [shipmentDate, setShipmentDate] = useState(null);
+
   const [note, setNote] = useState("");
   const [addedToCart, setAddedToCart] = useState(false);
   const [favorited, setFavorited] = useState();
@@ -99,6 +95,19 @@ const ProductInfo = (props) => {
     city:"İzmir"
   });
 
+
+  const QuantitySelector = ({ value, onIncrement, onDecrement }) => {
+    return (
+      <span className="quantity-selector">
+        <span onClick={onDecrement}  style={{padding:"10px"}}> 
+          <img src="/images/minussignicon.png" alt="Increase" width={20}/></span>
+        <span  style={{padding:"10px"}}>{value}</span>
+        <span onClick={onIncrement}  style={{padding:"10px"}}>
+          <img src="/images/plusicon.png" alt="Increase" width={20} height={20}/>
+        </span>
+      </span>
+    );
+  };
 
   const handleSelectDistrict = (event) => {
     const selectedDistrict = event.target.value;
@@ -125,73 +134,46 @@ const handleSelectQuarterChange = (event) => {
   let userEmail= getEmail();
   const [userAddress, setUserAddress] = useState([]);
 
-const [newAddress, setNewAddress] = useState("");
-const [district, setDistrict] = useState([]);
-const [quarter, setQuarter] = useState([]);
-const handleAddressChange = (event) => {
-  setNewAddress(event.target.value);
-};
-
-const [saveAddress, setSaveAddress] = useState(false);
-const [corparate, setCorporate] = useState(false);
-
-const handleSaveAddress = (event) => {
-  setSaveAddress(event.target.checked);
-};
-
-const handleCorporate = (event) => {
-  setCorporate(event.target.checked);
-};
-
-  const recommendedProducts = [
-    {
-      id: 1,
-      name: "Mon Jardin",
-      price: "800 TL",
-      image: "/images/sepetbirlikte.png",
-    },
-    {
-      id: 2,
-      name: "Mon Jardin",
-      price: "800 TL ",
-      image: "/images/sepetbirlikte.png",
-    },
-    {
-      id: 3,
-      name: "Mon Jardin",
-      price: "800 TL ",
-      image: "/images/sepetbirlikte.png",
-    },
-    // Diğer önerilen ürünler buraya eklenir
-  ];
-  
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+  const [newAddress, setNewAddress] = useState("");
+  const [district, setDistrict] = useState([]);
+  const [quarter, setQuarter] = useState([]);
+  const handleAddressChange = (event) => {
+    setNewAddress(event.target.value);
   };
 
+  const [saveAddress, setSaveAddress] = useState(false);
+  const [corparate, setCorporate] = useState(false);
+
+  const handleSaveAddress = (event) => {
+    setSaveAddress(event.target.checked);
+  };
+
+  const handleCorporate = (event) => {
+    setCorporate(event.target.checked);
+  };
+  
   const handleSelectAddress = (e) => {
     setSelectedAddress(e.target.value);
   };
-  const handleSelectShipmetDate = (e) => {
-    const selectedDate = e.target.value;
-    const formattedDate = new Date(selectedDate).toISOString();
-    setShipmentDate(formattedDate);
+ 
+  const handleSelectShipmetDate = (selectedDate) => {
+    setShipmentDate(selectedDate);
   };
-  const handleSelectPiece = (e) => {
-    setSelectedPiece(e.target.value);
-  };
-  // Sepete ekle butonuna tıklanınca
-  const handleAddToCart = () => {
-    setAddedToCart(true);
-    // Sepete ekleme işlemini burada gerçekleştirin
-    // Örneğin: sepeteEkle(props.urunId)
+  
+  const [selectedPiece, setSelectedPiece] = useState(1);
+
+  const handleIncrement = () => {
+    setSelectedPiece(selectedPiece + 1);
   };
 
-  // Favorilere ekle butonuna tıklanınca
+  const handleDecrement = () => {
+    if (selectedPiece > 1) {
+      setSelectedPiece(selectedPiece - 1);
+    }
+  };
+  const handleAddToCart = () => {
+    setAddedToCart(true);
+  };
   const handleAddToFavorites = () => {
     if(favorited)
     {     
@@ -247,12 +229,9 @@ const handleCorporate = (event) => {
     setFavorited(!favorited);
   };
 
-  // Kayıtlı adres seçildiğinde
   const handleExistingAddress = () => {
     setIsExistingAddress(true);
   };
-
-  // Yeni adres seçildiğinde
   const handleNewAddress = () => {
     setIsExistingAddress(false);
   };
@@ -261,7 +240,6 @@ const handleCorporate = (event) => {
   setNote(e.target.value)  
   };
 
-  
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
   
@@ -432,27 +410,55 @@ const handleCorporate = (event) => {
                    });
       } 
       }
-     };
+  };
 
   const fetchDistricts = async () => {
-    try {
-      const response = await fetch(baseUrl+`api/Quarter/GetQuartersByDistrictGroup`);
-      if (!response.ok) {
-        throw new Error('Bölgeler listesi getirilemedi.');
-      }
-      const data = await response.json();
-    
-      const districtData= data.data;
-   
-      setDistrict(districtData);
-     
-    } catch (error) {
+      try {
+        const response = await fetch(baseUrl+`api/Quarter/GetQuartersByDistrictGroup`);
+        if (!response.ok) {
+          throw new Error('Bölgeler listesi getirilemedi.');
+        }
+        const data = await response.json();
       
-      console.error("Bölgeler getirlirken hatayla karşılaşıldı.");
-    }
-};
-  
+        const districtData= data.data;
+    
+        setDistrict(districtData);
+      
+      } catch (error) {
+        
+        console.error("Bölgeler getirlirken hatayla karşılaşıldı.");
+      }
+  };
+    
   const fetchUserAddress = async () => {
+      try {  
+        const requestOptions = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+        
+      await fetch(baseUrl+`api/UserAddress/GetAllUserAddressByUserId/?userId=${userID}`,requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            setUserAddress(data.data);
+
+          } else {
+            alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
+          }
+      
+        })
+        .catch(error => {
+          // Hata durumunda burada hata işleme yapabilirsiniz
+          console.error(error);
+        });
+      } catch (error) {
+        console.error("Adres verileri getirilirken hata oluştu: ", error);
+      }
+  };
+
+  const fetchFavorite = async (urunId) => {
     try {  
       const requestOptions = {
         headers: {
@@ -460,449 +466,322 @@ const handleCorporate = (event) => {
         }
       };
       
-     await fetch(baseUrl+`api/UserAddress/GetAllUserAddressByUserId/?userId=${userID}`,requestOptions)
+    await fetch(baseUrl+`api/Favorite/GetAllFavoriteByUserId/${userID}`,requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          setUserAddress(data.data);
-
+          const isProductInFavorites = data.data.some(favorite => favorite.productId === urunId);
+          setFavorited(isProductInFavorites)
+          console.log(isProductInFavorites);
+          if(isProductInFavorites)
+          {
+            const userFavoriteId = data.data.find(favorite => favorite.productId === urunId);
+            setFavoriteId(userFavoriteId?.favoriteId);
+          }
         } else {
           alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
         }
-     
+    
       })
       .catch(error => {
-        // Hata durumunda burada hata işleme yapabilirsiniz
         console.error(error);
       });
     } catch (error) {
-      console.error("Adres verileri getirilirken hata oluştu: ", error);
+      console.error("Favoriler getirilirken hata oluştu: ", error);
     }
-};
+  };
 
-const fetchFavorite = async (urunId) => {
-  try {  
-    const requestOptions = {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-    
-   await fetch(baseUrl+`api/Favorite/GetAllFavoriteByUserId/${userID}`,requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        const isProductInFavorites = data.data.some(favorite => favorite.productId === urunId);
-        setFavorited(isProductInFavorites)
-        console.log(isProductInFavorites);
-        if(isProductInFavorites)
-        {
-          const userFavoriteId = data.data.find(favorite => favorite.productId === urunId);
-          setFavoriteId(userFavoriteId?.favoriteId);
-        }
-      } else {
-        alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
-      }
-   
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  } catch (error) {
-    console.error("Favoriler getirilirken hata oluştu: ", error);
-  }
-};
-
-const dates = [];
-const today = new Date();
-
-for (let i = 0; i < 3; i++) {
-  const date = new Date(today);
-  date.setDate(today.getDate() + i);
-  const formattedDate = date.toISOString().substr(0, 10);
-  dates.push(formattedDate);
-}
-
-useEffect(() => 
-{
-  console.log('deneme',props); 
-  if(userID)
+  useEffect(() => 
   {
-    fetchUserAddress();
-  fetchDistricts();
-  fetchFavorite(props.urunId);
-  }
-  
-},[props]);
+    if(userID)
+    {
+      fetchUserAddress();
+    fetchDistricts();
+    fetchFavorite(props.urunId);
+    }
+    
+  },[props]);
 
   return (
-    <div className="product-info-page">
-    <div>
-      <div style={{ display: "flex", alignItems: "center" ,marginLeft:"6%"}}>
-        {/* Ürün fotoğrafı */}
-        <img src={props.foto} alt={props.ad} className="product-info-img"/>
+    <div  className="product-info-page"> 
+      <div  className="product-info-area" >
+        <div style={{ display: "flex", alignItems: "center"}}>
+        <img
+        src={props.foto || "/images/monjardinlogo.png"} 
+        alt={props.ad}
+        className="product-info-img"
+      />          <div>
+            <div style={{display:"block", fontFamily:"times", fontStyle:"italic"}}>
+              <div> 
+                <h2>{props.ad}</h2>
+              </div>         
+              <div > <p>{props.fiyat} TL</p></div>
+              <FlowerRating puan={props.puan} />
+               
+                  <div className="detay-buton" onClick={()=>handleAddToFavorites()}>
+                    <img width={40} height={40}
+                      src = {favorited ? "/images/selectedfavorite.png" : "/images/fav.png"}
+                      alt="Favori İkonu"
+                      style={{ cursor: "pointer" }}
+                    />
+                  {favorited ? "" : "Favorile"}
 
-        <div>
-          <div style={{display:"block"}}>
-            <div>  {/* Ürün adı ve fiyatı */}
-              <h2>{props.ad}</h2>
+          
+                  </div>
+             
+                
             </div>
-           
-
-            <div style={{marginLeft: "2%"}}> <p>{props.fiyat} TL</p></div>
-            <FlowerRating puan={props.puan} />
-
-
-              <div style={{marginLeft: "-4%"}}>
-
-                <button className="detay-buton" onClick={()=>handleAddToFavorites()}>
-
-                  <img width={40} height={40}
-                    src = {favorited ? "/images/selectedfavorite.png" : "/images/fav.png"}
-                    alt="Favori İkonu"
-                    style={{ cursor: "pointer" }}
-                  />
-
-                {favorited ? "Favorilere Eklendi" : "Favorilere Ekle"}
-
-        
-                </button>
-                {/* <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
-                  <img width={40} height={40}
-                    src="/images/menu-icon2.png"
-                    alt="sepet"
-                    onClick={handleAddToFavorites}
-                    style={{ cursor: "pointer" }}
-                  />
-      
-                  {favorited ? "Sepete Eklendi" : "Sepete Ekle"}
-
-        
-                </button> */}
-              </div>
             </div>
           </div>
-        </div>
-        
-      
-     
-
-      {/* Ürün detaylı açıklaması */}
-      <p  className="product-info-detay">{props.detay}</p>
-
-       {/* Adres seçim alanı */}
-       <div>
-       <div style={{  justifyContent: "space-between" }}>
-  <div className="address-product-info">
-    <div className="address-radio">
-      <input
-        type="radio"
-        name="address"
-        checked={isExistingAddress}
-        onChange={handleExistingAddress}
-        style={{color: isExistingAddress ? "#893694" : "initial",width: "15px",
-        height: "15px"}} 
-      />
-      Kayıtlı Adres
-      <input
-        type="radio"
-        name="address"
-        checked={!isExistingAddress}
-        onChange={handleNewAddress}
-        style={{ marginLeft: "5rem",color: !isExistingAddress ? "#893694" : "initial",width: "15px",
-        height: "15px" }}
-      />
-      Yeni Adres Gir
-    </div>
-    <div>
-      {isExistingAddress && (
-        <div>
-
-            <select
-              type="number"
-              name="userAddressId"
-              value={userAddress.userAddressId}
-              onChange={handleSelectAddress}             
-              className="product-detail-form"
-             >
-              <option value="">Adres Seçiniz</option>
-              {userAddress.length === 0 ? (
-                <option disabled>Kayıtlı Adres Bulunamadı</option>
-              ) : (
-                userAddress.map(address => (
-                  <option key={address.userAddressId} value={address.userAddressId}>
-                    {address.addressTitle}
-                  </option>
-                ))
-              )}
-            </select>
-
-            <select 
-            className="product-detail-form" 
-            style={{ width: "48%" }}
-            onChange={handleSelectShipmetDate}             
-            >
-            <option value="">Tarih Seçiniz</option>
-            {dates.map((date, index) => (
-              <option key={index} value={date}>
-                {date}
-              </option>
-            ))}
-          </select>
-
-          <select 
-          className="product-detail-form" 
-          style={{width:"48%", marginLeft:"4%"}}
-          onChange={handleSelectPiece}
-          >
-            <option value="">Adet Seçiniz</option>
-            <option key={1} value="1">1</option>
-            <option key={2} value="2">2</option>
-            <option key={3} value="3">3</option>
-          </select>
-          <textarea
-            value={note}
-            onChange={handleNote}
-            rows={3}
-            placeholder="Not Yazınız..."
-            className="product-detail-form"
-            style={{ height: "100px", resize: "vertical" }}
-          />
-        </div>
-      )}
-       {!isExistingAddress && (
-        <div>
-           <input
-                type="text"
-                name="nameSurname"
-                value={address.name}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Adınız Soyadınız"
-              />
-             <input
-                type="number"
-                name="phone"
-                value={address.districtId}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Telefon Numaranız"
-                
-              />
-              <select
-                name="districtId"
-                value={address.districtId}
-                onChange={handleSelectDistrict}
-                className="product-detail-form" 
-              >
-                 <option value="">İlçe Seçiniz</option>
-                  {district.length === 0 ? (
-                    <option disabled>İçe bulunamadı.</option>
-                  ) : (
-                    district.map(d => (
-                      <option key={d.districtId} value={d.districtId}>
-                        {d.districtName}
-                      </option>
-                    ))
-                  )}
-               </select>
-
-               <select
-                name="quarterId"
-                value={address.quarterId}
-                onChange={handleSelectQuarterChange}
-                className="product-detail-form"
-                >
-                 <option value="">Mahalle Seçiniz</option>
-                  {quarter.length === 0 ? (
-                    <option disabled>Mahalle bulunamadı.</option>
-                  ) : (
-                    quarter.map(q => (
-                      <option key={q.id} value={q.id}>
-                        {q.name}
-                      </option>
-                    ))
-                  )}
-              </select>
-
-         <select 
-         name="shipmentDate"
-         value={address.shipmentDate}
-         onChange={handleInputChange}
-         className="product-detail-form" style={{ width: "48%" }}>
-            <option value="">Tarih Seçiniz</option>
-            {dates.map((date, index) => (
-              <option key={index} value={date}>
-                {date}
-              </option>
-            ))}
-          </select>
-
-          <select 
-          name="piece"
-          value={address.piece}
-          onChange={handleInputChange}
-          className="product-detail-form" 
-          style={{width:"48%", marginLeft:"4%"}}>
-            <option value="">Adet Seçiniz</option>
-            <option key={1} value="1">1</option>
-            <option key={2} value="2">2</option>
-            <option key={3} value="3">3</option>
-          </select>
-          <input
-                type="text"
-                name="addressTitle"
-                value={address.addressTitle}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Adres Başlığı"
-                
-              />
-            <input
-                type="text"
-                name="address"
-                value={address.address}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Açık Adresi Yazınız..."
-              />
-          <textarea
-            name="note"
-            value={address.note}
-            className="product-detail-form"
-            onChange={handleInputChange}
-            rows={3}
-            placeholder="Not Yazınız.."
-            style={{ height: "100px", resize: "vertical" }}
-
-          />
-          <label style={{ marginTop: "1rem" }}>
-            <input
-              type="checkbox"
-              name="secret"
-              checked={address.secret}
-              onChange={handleInputChange}
-              style={{
-                width: "18px", 
-                height: "18px",
-                borderRadius: "50%", 
-                border: "1px solid #ccc",
-                marginRight: "0.5rem"
-              }}
-            />
-            Adresi Kaydet
-          </label>
-          <label style={{ marginTop: "1rem" , marginLeft:"4%"}}>
-            <input
-              type="checkbox"
-              name="corporate"
-              checked={address.corporate}
-              onChange={handleInputChange}
-              style={{
-                width: "18px", 
-                height: "18px",
-                borderRadius: "80%", 
-                border: "1px solid #ccc",
-                marginRight: "0.5rem",
-              }}
-            />
-            Kurumsal
-          </label>
-          {address.corporate && (
+          <p  className="product-info-detay">{props.detay}</p>
+          <div className="address-radio">
+                  <input
+                    type="radio"
+                    name="address"
+                    checked={isExistingAddress}
+                    onChange={handleExistingAddress}
+                    style={{color: isExistingAddress ? "#893694" : "initial",width: "15px",
+                    height: "15px"}} 
+                  />
+                  Kayıtlı Adres
+                  <input
+                    type="radio"
+                    name="address"
+                    checked={!isExistingAddress}
+                    onChange={handleNewAddress}
+                    style={{ marginLeft: "5rem",color: !isExistingAddress ? "#893694" : "initial",width: "15px",
+                    height: "15px" }}
+                  />
+                  Yeni Adres Gir
+          </div>
           <div>
-              <input
-                type="text"
-                name="taxIdentificationNumber"
-                value={address.taxIdentificationNumber}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Vergi Kimlik Numarası"
-              />
-                <input
-                type="text"
-                name="taxOffice"
-                value={address.taxOffice}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Vergi Dairesi"
-              />
-                <input
-                type="text"
-                name="companyName"
-                value={address.companyName}
-                onChange={handleInputChange}
-                className="product-detail-form"
-                placeholder="Şirket Adı"
-              />
-          </div>
-          )}
-        </div>
-      )}
+                  {isExistingAddress && (
+                    <div>
+
+                        <select
+                          type="number"
+                          name="userAddressId"
+                          value={userAddress.userAddressId}
+                          onChange={handleSelectAddress}             
+                          className="product-detail-form"
+                        >
+                          <option value="">Adres Seçiniz</option>
+                          {userAddress.length === 0 ? (
+                            <option disabled>Kayıtlı Adres Bulunamadı</option>
+                          ) : (
+                            userAddress.map(address => (
+                              <option key={address.userAddressId} value={address.userAddressId}>
+                                {address.addressTitle}
+                              </option>
+                            ))
+                          )}
+                        </select>     
+                  <DatePicker
+                    className="product-detail-form"
+                    style={{ width: "48%" }}
+                    selected={shipmentDate}
+                    onChange={handleSelectShipmetDate}
+                    dateFormat="yyyy-MM-dd"
+                    minDate={new Date()}
+                    placeholderText="Tarih Seçiniz"
+                  />
+                   <QuantitySelector
+                      value={selectedPiece}
+                      onIncrement={handleIncrement}
+                      onDecrement={handleDecrement}
+                    />
+                    
+                      <textarea
+                        value={note}
+                        onChange={handleNote}
+                        rows={3}
+                        placeholder="Not Yazınız..."
+                        className="product-detail-form"
+                        style={{ height: "100px", resize: "vertical" }}
+                      />
+                    </div>
+                  )}
+                  {!isExistingAddress && (
+                    <div>
+                      <input
+                            type="text"
+                            name="nameSurname"
+                            value={address.name}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Adınız Soyadınız"
+                          />
+                        <input
+                            type="number"
+                            name="phone"
+                            value={address.districtId}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Telefon Numaranız"
+                            
+                          />
+                          <select
+                            name="districtId"
+                            value={address.districtId}
+                            onChange={handleSelectDistrict}
+                            className="product-detail-form" 
+                          >
+                            <option value="">İlçe Seçiniz</option>
+                              {district.length === 0 ? (
+                                <option disabled>İçe bulunamadı.</option>
+                              ) : (
+                                district.map(d => (
+                                  <option key={d.districtId} value={d.districtId}>
+                                    {d.districtName}
+                                  </option>
+                                ))
+                              )}
+                          </select>
+
+                          <select
+                            name="quarterId"
+                            value={address.quarterId}
+                            onChange={handleSelectQuarterChange}
+                            className="product-detail-form"
+                            >
+                            <option value="">Mahalle Seçiniz</option>
+                              {quarter.length === 0 ? (
+                                <option disabled>Mahalle bulunamadı.</option>
+                              ) : (
+                                quarter.map(q => (
+                                  <option key={q.id} value={q.id}>
+                                    {q.name}
+                                  </option>
+                                ))
+                              )}
+                          </select>
+
+                      <DatePicker   
+                    name="shipmentDate"
+                    value={address.shipmentDate}
+                    className="product-detail-form"
+                    style={{ width: "48%" }}
+                    selected={shipmentDate}
+                    onChange={handleSelectShipmetDate}
+                    dateFormat="yyyy-MM-dd"
+                    minDate={new Date()}
+                    placeholderText="Tarih Seçiniz"
+                  />
+                   <QuantitySelector
+                    name="piece"
+                    value={address.piece}        
+                    onIncrement={handleIncrement}
+                    onDecrement={handleDecrement}
+                      />
+
+                  
+                      <input
+                            type="text"
+                            name="addressTitle"
+                            value={address.addressTitle}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Adres Başlığı"
+                            
+                          />
+                        <input
+                            type="text"
+                            name="address"
+                            value={address.address}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Açık Adresi Yazınız..."
+                          />
+                      <textarea
+                        name="note"
+                        value={address.note}
+                        className="product-detail-form"
+                        onChange={handleInputChange}
+                        rows={3}
+                        placeholder="Not Yazınız.."
+                        style={{ height: "100px", resize: "vertical" }}
+
+                      />
+                      <label style={{ marginTop: "1rem" }}>
+                        <input
+                          type="checkbox"
+                          name="secret"
+                          checked={address.secret}
+                          onChange={handleInputChange}
+                          style={{
+                            width: "18px", 
+                            height: "18px",
+                            borderRadius: "50%", 
+                            border: "1px solid #ccc",
+                            marginRight: "0.5rem"
+                          }}
+                        />
+                        Adresi Kaydet
+                      </label>
+                      <label style={{ marginTop: "1rem" , marginLeft:"4%"}}>
+                        <input
+                          type="checkbox"
+                          name="corporate"
+                          checked={address.corporate}
+                          onChange={handleInputChange}
+                          style={{
+                            width: "18px", 
+                            height: "18px",
+                            borderRadius: "80%", 
+                            border: "1px solid #ccc",
+                            marginRight: "0.5rem",
+                          }}
+                        />
+                        Kurumsal
+                      </label>
+                      {address.corporate && (
+                      <div>
+                          <input
+                            type="text"
+                            name="taxIdentificationNumber"
+                            value={address.taxIdentificationNumber}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Vergi Kimlik Numarası"
+                          />
+                            <input
+                            type="text"
+                            name="taxOffice"
+                            value={address.taxOffice}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Vergi Dairesi"
+                          />
+                            <input
+                            type="text"
+                            name="companyName"
+                            value={address.companyName}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Şirket Adı"
+                          />
+                      </div>
+                      )}
+                    </div>
+                  )}
+          </div>  
+         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" ,paddingRight:"17%" }}>
+          <button 
+                onClick={addToBasket}
+                style={{ 
+                  borderRadius: "12px", 
+                  height: "55px", 
+                  fontSize: "18px", 
+                  fontWeight: "500", 
+                  fontStyle: "italic"
+                  }}>
+                  Sepete Ekle
+          </button>
+        </div> 
+      </div>
     </div>
-  </div>
-  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" ,paddingRight:"17%" }}>
-  <button 
-  onClick={addToBasket}
-  style={{ 
-    borderRadius: "12px", 
-    height: "55px", 
-    fontSize: "18px", 
-    fontWeight: "500", 
-    fontStyle: "italic"
-    }}>
-    Sepete Ekle
-  </button>
-</div>
-</div>
-
-</div>
-
-</div>
-{/* <div style={{marginTop: "80px"}}>
-
-      <h1>Birlikte iyi Gider </h1>
-      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
-        breakpoint: 800,
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 6
-        }
-      }, {
-        breakpoint: 500,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3
-        }
-      }]}>
-      {recommendedProducts.map((product) => (
-            <div key={product.id}>
-            <li
-              key={product.id}
-              style={{
-                marginRight: "16px",
-                listStyleType: "none",
-                textAlign: "center"
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                width={"200"}
-                height={"200"}
-              />
-              <p>{product.name}</p>
-              <p>{product.price}</p>
-            </li>
-            </div>
-          ))}
-      </Slide>
-      </div> */}
-  </div>
-          );
-        };
-
-        
-           
+  ); 
+};    
 const UrunDetay = () => {
   const { id } = useParams();
   const [productDetail, setProductDetail] = useState([]);
@@ -955,3 +834,58 @@ useEffect(() => {
 export default WithNavbar(UrunDetay);
 
 
+
+
+/* <div style={{marginTop: "80px"}}>
+
+      <h1>Birlikte iyi Gider </h1>
+      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 6
+        }
+      }, {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      }]}>
+      {recommendedProducts.map((product) => (
+            <div key={product.id}>
+            <li
+              key={product.id}
+              style={{
+                marginRight: "16px",
+                listStyleType: "none",
+                textAlign: "center"
+              }}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                width={"200"}
+                height={"200"}
+              />
+              <p>{product.name}</p>
+              <p>{product.price}</p>
+            </li>
+            </div>
+          ))}
+      </Slide>
+      </div> */
+
+
+           /* <button className="detay-buton" onClick={handleAddToFavorites} disabled={favorited}>
+                    <img width={40} height={40}
+                      src="/images/menu-icon2.png"
+                      alt="sepet"
+                      onClick={handleAddToFavorites}
+                      style={{ cursor: "pointer" }}
+                    />
+        
+                    {favorited ? "Sepete Eklendi" : "Sepete Ekle"}
+
+          
+                  </button> */

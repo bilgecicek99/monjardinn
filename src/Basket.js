@@ -187,7 +187,7 @@ const handlePieceSave = async(item, action) => {
 };
 
   return (
-    <div className="mobile-generic-css"  style={{ margin: "8% 5% 5% 5%"}}>
+    <div className="mobile-generic-css"  style={{ margin: "5% 10%"}}>
    
    {items?.length > 0 ? (  <table className='table table-light'>
   <thead>
@@ -202,56 +202,24 @@ const handlePieceSave = async(item, action) => {
     {items?.map((item) => (
       <React.Fragment key={item.id}>
         <tr>
-          <td style={{ width: "80px", verticalAlign: "middle" }}>
-            <img src={item?.productDetailResponse?.fileResponses?.[0].fileUrl} alt={item.name} width="45%" height="45%" 
-            style={{borderRadius:"10px"}}/>
+          <td style={{  verticalAlign: "middle", padding:0,width:"250px"}}>
+           <img src={ item?.productDetailResponse?.fileResponses?.[0]?.fileUrl || "images/monjardinlogo.png"}  alt={item.name} className="basket-image" 
+          />
           </td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0 }}>
             {item?.productDetailResponse?.name}
           </td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "100px" }}>{item.total} adet</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item.productDetailResponse.price} TL</td>
-          {/* <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "20px" }}>
-            <a style={{ cursor: "pointer" }} onClick={() => toggleDetails(item.id)}>
-              <img src={"/images/opendetail.png"} alt="" width={12} height={12} />
-            </a> </td> */}
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "150px" }}> 
+          <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.total} adet</td>
+          <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.productDetailResponse.price} TL</td>
+          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0  }}> 
             <a style={{cursor: "pointer" }} onClick={()=>handleDelete(item.id)}>
-              <img src={"/images/delete.png"} alt="" width={12} height={12} />
+              <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
             </a>  
           </td>
         </tr>
-        {/* {openDetailsId === item.id && (
-            <tr>
-              <td colSpan="4" style={{ border: "none"}}>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: "16%" }}>
-                  <div style={{ marginRight: '20px' }}>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adres <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.userAddressDetailResponseModel?.address}</p>
-                  </div>
-                  <div style={{ marginRight: '20px' }}>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adet</strong></p>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}> 
-                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "decrease")}>
-                        <img src="/images/minussignicon.png" alt="Decrease" width={16} height={4} style={{ marginRight:"25px" }} />
-                      </a>
-                      {item.total} adet
-                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "increase")}>                  
-                        <img src="/images/plusicon.png" alt="Increase" width={16} height={15} style={{ marginLeft:"25px"}} />
-                      </a>
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Not <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
-                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.cardNote ?? "Not eklemediniz."}</p>
-                  </div>
-                </div>
-                <hr style={{ border:"none" }} />
-              </td>
-            </tr>
-          )} */}
+       
         <tr>
-          <td colSpan="4" style={{ border: "none" }}>
+          <td colSpan="5" style={{ border: "none",padding:0 }}>
             <hr style={{ color:"black" }} />
           </td>
         </tr>
@@ -333,3 +301,44 @@ const handlePieceSave = async(item, action) => {
 };
 
 export default WithNavbar(Basket);
+
+
+
+ /* {openDetailsId === item.id && (
+            <tr>
+              <td colSpan="4" style={{ border: "none"}}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: "16%" }}>
+                  <div style={{ marginRight: '20px' }}>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adres <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.userAddressDetailResponseModel?.address}</p>
+                  </div>
+                  <div style={{ marginRight: '20px' }}>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Adet</strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}> 
+                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "decrease")}>
+                        <img src="/images/minussignicon.png" alt="Decrease" width={16} height={4} style={{ marginRight:"25px" }} />
+                      </a>
+                      {item.total} adet
+                      <a style={{cursor: "pointer" }} onClick={()=>handlePieceSave(item, "increase")}>                  
+                        <img src="/images/plusicon.png" alt="Increase" width={16} height={15} style={{ marginLeft:"25px"}} />
+                      </a>
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}><strong>Not <img src="/images/edit.png" alt="" width={16} height={16} /></strong></p>
+                    <p style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{item?.cardNote ?? "Not eklemediniz."}</p>
+                  </div>
+                </div>
+                <hr style={{ border:"none" }} />
+              </td>
+            </tr>
+          )} 
+          
+          
+          
+            <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", width: "20px" }}>
+            <a style={{ cursor: "pointer" }} onClick={() => toggleDetails(item.id)}>
+              <img src={"/images/opendetail.png"} alt="" width={12} height={12} />
+            </a> </td> 
+            
+            */

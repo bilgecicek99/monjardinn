@@ -53,23 +53,33 @@ button {
 
 .menu-icon {
   display: flex;
-  
   cursor: pointer;
+  position: relative;
+  z-index: 2;
+  padding: 10px;
 }
 
+
+/* Menü simgesi rengi varsayılan olarak siyah */
 .menu-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
+  color: black;
 }
+
+/* Menü açıkken menü simgesini beyaz yap */
+.menu-icon.menu-open svg {
+  color: white;
+}
+
 
 .menu-items {
-  
   background-color: #760D9B; /* Mor arka plan rengi */
   display: flex;
   flex-direction: column;
   position: absolute;
   border-bottom: 1px solid #ccc;
-  z-index: 100;
+  z-index: 1;
   left: 0;
   padding-bottom: 400px;
   padding-top: 40px;
@@ -88,7 +98,7 @@ button {
   text-decoration: none;
   color: white;
   margin-top: 10px;
-  padding-left: 10px;
+  margin-left: 20px;
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
 }
@@ -436,7 +446,7 @@ tr:hover {
   }
   .navbar-left{
    position: absolute !important;
-   left:30px !important;
+   left:20px !important;
   }
   .navbar-logo-action{
    position: relative;
@@ -453,6 +463,7 @@ tr:hover {
  width: 40px;
  height: 40px;
  margin-right: 20px;
+ margin-top: 20px;
  
 }
 nav ul {
@@ -543,9 +554,10 @@ nav li {
 
 .profile-text{
   text-align: left;
+  font-family: 'Times New Roman', Times, serif;
 }
 .profile-text-password{
-  
+  font-family: 'Times New Roman', Times, serif;
  text-align: left;
 }
 .profile-hr{
@@ -558,38 +570,52 @@ nav li {
   text-align:center;
   width:80%;
   margin:auto;
-  margin-top:30px;
+}
+.favorite-card-area{
+  text-align:center;
+  margin:auto;
+}
+.product-info-area{
+  text-align:left;
+  margin:auto;
 }
 .profile-password{
   color: #893694;
   text-decoration:none;
   font-style:italic;
- 
-
+  font-family: 'Times New Roman', Times, serif;
   background:transparent;
-  height:auto
+  height:auto;
+  font-size: 18px;
 }
 
-.product-info-page{
-  margin: 7% 4% 0% 0%;
-}
-.address-product-info{
-  padding-right:17%;
-  padding-left:17%;
-}
+
 .address-radio{
   margin-left: 25%;
 }
-.product-info-img{
-  width: 250px;
-  height:325px;
-  margin-right: 16%;
-  border-radius:15px;
+.product-info-img {
+  width: 200px;
+  height: 250px;
+  margin-right: 5%;
+  border-radius: 15px;
+  object-fit: contain;
 }
+
+.basket-image {
+  width: 120px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: contain;
+} 
+.basket-delete-image {
+  width: 20px;
+  height: 20px;
+} 
+
 .product-info-detay{
-  margin-top: 6%;
-  margin-bottom: 4rem;
-  margin-left: 6%;
+  margin-top: 2%;
+ 
+  
 }
 .basket-no-product{
   font-size: 150%;
@@ -616,10 +642,8 @@ nav li {
   }
  
   .profile-card-area{
-    text-align:center;
-    width:100%;
-    margin:auto;
-    margin-top:30px;
+    width: 100%;
+    padding: 20px;
   }
   .profile-password{
     color: #893694 ;
@@ -629,13 +653,7 @@ nav li {
     background:transparent;
     height:auto
   }
-  .product-info-page{
-    margin: 20% 4% 0% 0%;
-  }
-  .address-product-info {
-    padding-left: 4%;
-    padding-right: 0%;
-}
+  
 .product-info-detay{
   word-wrap: break-word;
 }
@@ -727,8 +745,7 @@ input[type='radio'] {
 .menu-items-admin-link {
   text-decoration: none;
   color: white;
-  margin-top: 10px;
-  padding-left: 10px;
+  margin-bottom: 5px !important;
   font-family: 'Times New Roman', Times, serif;
 }
 .navbar-admin-left{
@@ -886,11 +903,26 @@ input[type='radio'] {
 .favori-page{
  padding:100px;
 }
+
+.product-info-page{
+  padding:100px;
+ }
 @media only screen and (max-width: 768px) {
   .favori-page{
-   
     padding:100px 20px;
-   }
+  }
+  .product-info-page{
+    padding:100px 20px;
+  }
+  .basket-image {
+    width: 100px;
+    height: 120px;
+    margin-right: 10px;
+  } 
+  .basket-delete-image {
+    width: 12px;
+    height: 12px;
+  } 
  
 } 
 .container {
@@ -923,19 +955,6 @@ li.selected {
   font-weight: bold;
 }
 
-.more-button-container {
-  display: flex;
-  align-items: center;
-}
-
-.more-button {
-  background-color: transparent;
-  border: 1px solid white;
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
-  margin: 0 1px;
-}
 
 .contact-page {
   padding: 7% 8% 10% 8%;
@@ -963,3 +982,18 @@ li.selected {
 
 }
 
+.react-datepicker__header{
+  background-color: #893694 !important;
+}
+
+.react-datepicker__month{
+  margin:0px !important;
+  background-color: #E7D1EA !important;
+}
+
+.quantity-selector{
+  border: 1px solid black;
+  padding: 13px 10px;
+  border-radius: 5px;
+  margin-left: 30px;
+}
