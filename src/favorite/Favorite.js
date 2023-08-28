@@ -3,6 +3,8 @@ import WithNavbar from '../WithNavbar';
 import { baseUrl } from '../config/Constants';
 import { getToken,getUserInfo } from "../service/AuthService";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const FavoriListesi = () => {
   
@@ -132,10 +134,15 @@ const FavoriListesi = () => {
   </div>
   
   );
+const navigate = useNavigate();
+  const goHomePage = () => {
+    navigate('/');
+  };
 
   return (
     <div className="favori-page">
-      <div className="favorite-card-area">
+    {products?.length > 0 ? (  <div className="favorite-card-area">
+
         {products.map((product) => (
         <Link to={`/productinfo/${product.productId}`} style={{ textDecoration: 'none', color: 'black' }}>
           <FavoriteCard
@@ -149,8 +156,15 @@ const FavoriListesi = () => {
           </Link>
         ))}
         
-      </div>
-
+      </div>): 
+      (
+      <div style={{ textAlign: 'center',marginTop:"180px" }}>
+      <p className="basket-no-product">Favorilerinizde ürün bulunmamaktadır.</p>
+      <button className="basket-no-product-button" onClick={goHomePage}>
+        Alışverişe devam et
+      </button>
+    </div>
+    )}   
     </div>
   );
 };
