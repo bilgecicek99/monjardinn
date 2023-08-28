@@ -591,6 +591,20 @@ nav li {
   margin-bottom: 4rem;
   margin-left: 6%;
 }
+.basket-no-product{
+  font-size: 150%;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.basket-no-product-button{
+  border-radius: 12px;
+  height: 55px;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: italic;
+  width: 40%;
+}
 @media only screen and (max-width: 700px) {
  
   .profile-hr{
@@ -637,6 +651,9 @@ nav li {
 .mobile-generic-css
 {
   margin-top: 20% !important;
+}
+.basket-no-product-button{
+  width: 80%;
 }
 }
 
