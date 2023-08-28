@@ -38,7 +38,7 @@ import List from './List';
 import ProductInfo from './ProductInfo';
 import Basket from './Basket';
 import Search from './Search';
-import Favorite from './Favorite';
+import Favorite from './favorite/Favorite';
 import Blog from './Blog';
 import CreateYourself from './CreateYourself' 
 import Stock from './Stock';

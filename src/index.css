@@ -556,7 +556,7 @@ nav li {
 }
 .profile-card-area{
   text-align:center;
-  width:50%;
+  width:80%;
   margin:auto;
   margin-top:30px;
 }
@@ -814,3 +814,14 @@ select {
   padding:10px;
   border-radius: 50% 0 50% 50%;
 }
+
+.favori-page{
+ padding:100px;
+}
+@media only screen and (max-width: 768px) {
+  .favori-page{
+   
+    padding:100px 20px;
+   }
+ 
+} 
