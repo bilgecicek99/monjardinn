@@ -318,15 +318,17 @@ const Profile = () => {
   
        <span className="edit-input-area">{user.email}  </span>     </p>
       <hr className="profile-hr" />
-      <p className="profile-text">Doğum Tarihi 
-      <input
+      <p className="profile-text">Doğum Tarihi:
+      <span className="edit-input-area">{user.dateOfBirth}  </span>     </p>
+ 
+      {/* <input
                 type="text"
                 name="dateOfBirth"
                 value={user.dateOfBirth}
                 onChange={handleInputChange}
                 className="edit-input-area"
-              />
-            </p>
+                disabled={true}
+              /> */}
       <hr className="profile-hr" />
       <button className="save-button" onClick={updateUser}>Kaydet</button>
       <div style={{ display:"flex", flexDirection: "column",marginTop:"3%"}} >
