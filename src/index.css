@@ -556,7 +556,7 @@ nav li {
 }
 .profile-card-area{
   text-align:center;
-  width:50%;
+  width:80%;
   margin:auto;
   margin-top:30px;
 }
@@ -865,6 +865,16 @@ input[type='radio'] {
 }
 
 
+.favori-page{
+ padding:100px;
+}
+@media only screen and (max-width: 768px) {
+  .favori-page{
+   
+    padding:100px 20px;
+   }
+ 
+} 
 .container {
   display: flex;
 }
@@ -934,3 +944,4 @@ li.selected {
   font-size: 100%;
 
 }
+
