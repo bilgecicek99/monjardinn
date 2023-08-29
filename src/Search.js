@@ -132,26 +132,7 @@ const Search = () => {
 </div>
 
   
-<div className="product-grid row">
-  {filteredProducts.slice(4).map((product) => (
-    <div
-      key={product.id}
-      className="product-item col-md-3" // Değişiklik: Sütun sayısı 4 olarak güncellendi
-    >
-      <div className="product-card" >
-        <img
-          className="product-image"
-          style={{ width: "190px", height: "180px" ,objectFit: "contain",border:"1px solid #D9D9D9",
-          boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"}}
-          src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
-          alt={product.name}
-        />
-        <p className="product-name" style={{marginTop:"25px"}}>{product.name}</p>
-        <p className="product-price"style={{marginTop:"0px"}} >{product.price}</p>
-      </div>
-    </div>
-  ))}
-</div>
+
 </div>
 
 
