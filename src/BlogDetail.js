@@ -46,7 +46,7 @@ useEffect(() => {
   fetchData();
 }, [id]);
 
-const defaultImage = '/images/blogdefault.png';
+const defaultImage = '/images/monjardinlogo.png';
 
 
   return (
@@ -60,8 +60,8 @@ const defaultImage = '/images/blogdefault.png';
       </nav>
       <div style={{ backgroundColor: "#E7D1EA", padding: "4%" }}>
         <h1 style={{float:"left", fontWeight:"bold", fontFamily:"Times New Roman"}}>{blogDetail.title}</h1>
-        <div style={{marginTop:"80px"}}>
-          <img src={blogDetail?.fileResponses?.[0]?.fileUrl || defaultImage} alt="Blog Resmi" style={{width: "100%",maxHeight: "370px",marginBottom:"3%",borderRadius:"10px"}}/></div>
+        <div style={{marginTop:"80px", justifyContent:"center", display:"flex"}}>
+          <img src={blogDetail?.fileResponses?.[0]?.fileUrl || defaultImage} alt="Blog Resmi" style={{width: "50%",maxHeight: "370px",marginBottom:"3%",borderRadius:"10px", margin: "auto"}}/></div>
           <p style={{ wordWrap: "break-word"}}>{blogDetail.description}
         </p>
       </div>

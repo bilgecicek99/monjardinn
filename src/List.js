@@ -101,8 +101,11 @@ const List = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data && data.data) {
-            const allProducts = data.data;
-            
+            const allProducts = data.data.map(product => ({
+              ...product,
+              stock: product.stock || 0, // Add stock property, default to 0
+            }));
+          
             if (categoryId) {
               filteredProducts = allProducts.filter(product => product.categoryId === parseInt(categoryId));
               setProducts(filteredProducts);
@@ -260,23 +263,40 @@ const List = () => {
     </div>
     <div style={{ flex: "0 0 75%", padding: "10px" }}>
   <div className="container">
-    <div className="row">
-      {filteredProducts.map((product, index) => (
-        <div key={product.id} className="col-md-4">
-          <li style={{ listStyle: "none" }}>
-            <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-              <img style={{ borderRadius: "15px", height: "auto", width: "90%", maxHeight: "100%" }} src={product?.fileResponseModel[0]?.fileUrl ?? process.env.PUBLIC_URL + '/images/defaultflower.png'} alt={product.name}/>
-              <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
-              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
-              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
-              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.size}</p>
-              <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.price} TL</p>
-            </Link>
-          </li>
-          {(index + 1) % 3 === 0 && <div className="w-100"></div>}
-        </div>
-      ))}
-    </div>
+    {filteredProducts.length === 0 ? (
+      <div style={{marginLeft:"20%", justifyContent:"center", textAlign: "center", marginTop: "20%", fontSize: "18px", fontFamily:"sans-serif", textSizeAdjust:"bold" }}>
+        Ürün bulunmamaktadır.
+      </div>
+    ) : (
+      <div className="row">
+        {filteredProducts.map((product, index) => (
+          <div key={product.id} className="col-md-4">
+            <li style={{ listStyle: "none" }}>
+              <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                <img
+                  style={{
+                    borderRadius: "15px",
+                    height: "150px",
+                    width: "60%",
+                    maxHeight: "100%",
+                    filter: product.stock === 0 ? "blur(2px)" : "none",
+                  }}
+                  src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
+                  alt={product.name}
+                />
+                {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter", width: "60%", textAlign: "center" }}>Tükendi</p>}
+                <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
+                <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
+                <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
+                <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.size}</p>
+                <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.price} TL</p>
+              </Link>
+            </li>
+            {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </div>
 
