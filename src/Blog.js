@@ -120,7 +120,7 @@ const Blog = () => {
           <p style={{color: "white"}}>Blog bulunamadı.</p>
         ) : (
           filteredPosts.map((post) => (
-          <div key={post.id} style={{ flexBasis: "35%", flexGrow: 1, padding: "10px",  borderRadius: "10px" }}>
+          <div key={post.id} style={{ flexBasis: "20%", flexGrow: 1, padding: "10px",  borderRadius: "10px" }}>
               <BlogCard
                 key={post.id}
                 id={post.id}

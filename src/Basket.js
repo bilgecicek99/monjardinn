@@ -199,7 +199,7 @@ const handlePieceSave = async (item, action) => {
 
 
   return (
-    <div className="mobile-generic-css"  style={{ margin: "5% 10%"}}>
+    <div className="mobile-generic-css"  style={{ margin: "5% 20%"}}>
    
    {items?.length > 0 ? (  <table className='table table-light'>
   <thead>
