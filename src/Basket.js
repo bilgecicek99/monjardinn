@@ -72,7 +72,7 @@ const Basket = () => {
       setTotalPrice(totalPrice);  
         }
         else{
-          alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+         // alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
         }
         console.log(data.data);        
        })
@@ -123,7 +123,7 @@ const handleDelete = async(id) => {
       setTotalPrice(totalPrice);
       }
       else{
-        alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+       // alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
       }
   
     })
@@ -169,6 +169,7 @@ const handlePieceSave = async (item, action) => {
       body: JSON.stringify(basketData),
     };
 
+
     await fetch(baseUrl + `api/Basket/UpdateBasket`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
@@ -179,8 +180,9 @@ const handlePieceSave = async (item, action) => {
     setTotalItems(toplamUrun);
     setTotalPrice(toplamFiyat);
       } else {
-        alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.");
+        //alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.");
       }
+
     })
     .catch((error) => {
       console.error(error);
