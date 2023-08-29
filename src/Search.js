@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import { Link } from 'react-router-dom';
 import WithNavbar from './WithNavbar';
+import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './config/Constants';
 
 const Search = () => {
@@ -24,6 +26,10 @@ const Search = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const navigate = useNavigate();
+  const goHomePage = () => {
+    navigate('/');
   };
 
   const handleSearch = (event) => {
@@ -56,7 +62,8 @@ const Search = () => {
     name="searchTerm"
     value={searchTerm}
     onChange={(e) => setSearchTerm(e.target.value)} 
-    style={{
+    style={{border:"1px solid #D9D9D9",
+    boxShadow: "20px 20px 20px rgba(0,0,0,0.25)",
       display: 'inline-block', 
       border: 'none',
       borderBottom: '1px solid black',
@@ -74,6 +81,7 @@ const Search = () => {
     alt="Search"
     style={{
       width: '16px',
+      
       height: '16px',
       cursor: 'pointer',
       verticalAlign: 'middle',
@@ -88,21 +96,37 @@ const Search = () => {
         <div className="recommended-products">
   
         <div className="product-grid row">
-  {filteredProducts.slice(0, 4).map((product) => (
-    <div
-      key={product.id}
-      className="product-item col-md-3" // Değişiklik: Sütun sayısı 4 olarak güncellendi
+        {filteredProducts.map((product) => (
+  <div key={product.id} className="product-item col-md-3">
+    <Link
+      to={`/productinfo/${product.id}`} // Updated to directly use product.id
+      style={{ textDecoration: 'none', color: 'black' }}
     >
-      <div className="product-card">
-        <img
-          className="product-image"
-          style={{ width: "190px", height: "180px" ,objectFit:"contain"}}
-          src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
-          alt={product.name}
-        />
-        <p className="product-name">{product.name}</p>
-        <p className="product-price">{product.price}</p>
-      </div>
+        <div className="product-card">
+          <img
+            className="product-image"
+            style={{
+              width: "250px",
+              height: "300px",
+              borderRadius:"30px"
+             // objectFit: "contain",
+             // border: "1px solid #D9D9D9",
+              //boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"
+            }}
+            src={
+              product?.fileResponseModel[0]?.fileUrl ||
+              process.env.PUBLIC_URL + '/images/blog1.png'
+            }
+            alt={product.name}
+          />
+          <h3 className="product-name" style={{ marginTop: "25px",marginBottom:0,fontFamily:"times" }}>
+            {product.name}
+          </h3>
+          <p className="product-price" style={{ marginTop: "0px" }}>
+            {product.price} ₺
+          </p>
+        </div>
+      </Link>
     </div>
   ))}
 </div>
@@ -114,15 +138,16 @@ const Search = () => {
       key={product.id}
       className="product-item col-md-3" // Değişiklik: Sütun sayısı 4 olarak güncellendi
     >
-      <div className="product-card">
+      <div className="product-card" >
         <img
           className="product-image"
-          style={{ width: "190px", height: "180px" ,objectFit: "contain"}}
+          style={{ width: "190px", height: "180px" ,objectFit: "contain",border:"1px solid #D9D9D9",
+          boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"}}
           src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
           alt={product.name}
         />
-        <p className="product-name">{product.name}</p>
-        <p className="product-price">{product.price}</p>
+        <p className="product-name" style={{marginTop:"25px"}}>{product.name}</p>
+        <p className="product-price"style={{marginTop:"0px"}} >{product.price}</p>
       </div>
     </div>
   ))}

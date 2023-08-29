@@ -997,3 +997,8 @@ li.selected {
   border-radius: 5px;
   margin-left: 30px;
 }
+
+
+.product-card{
+  margin-bottom: 50px;
+}
