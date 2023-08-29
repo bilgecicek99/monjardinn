@@ -107,33 +107,38 @@ const FavoriListesi = () => {
     }
   }
   
-  const FavoriteCard = ({ Image, title, description, price,favoriteId }) => (
-    
-    <div className="card" style={{ display: "flex", padding: "30px", marginBottom: "30px",border:"1px solid #D9D9D9",
-    boxShadow: "20px 20px 20px rgba(0,0,0,0.25)" }}>
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-        <img src={Image} alt={title} style={{ marginRight: "10px" , width: "150px", height: "200px", objectFit: "contain"  }}  />
-        <div style={{ textAlign: "left" }}>
-          <h2 style={{ fontFamily: "times new roman", fontWeight: "bold" }}>{title}</h2>
-          <p style={{ fontFamily: "times new roman", fontStyle: "italic", fontSize: "20px", fontWeight: "lighter" }}>{description}</p>
-          <p style={{ fontFamily: "times new roman", fontWeight: "lighter", fontStyle: "italic", fontSize: "20px" }}>{price}</p>
+  const FavoriteCard = ({ Image, title, description, price, favoriteId, onDelete,productId }) => (
+    <div className="card" style={{ display: "flex", padding: "30px", marginBottom: "30px", border: "1px solid #D9D9D9", boxShadow: "20px 20px 20px rgba(0,0,0,0.25)" }}>
+      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+      <Link to={`/productinfo/${productId}`} style={{ textDecoration: 'none', color: 'black' }}>
+
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <img src={Image} alt={title} style={{ marginRight: "30px", width: "150px", height: "200px", objectFit: "contain" }} />
+          <div style={{ textAlign: "left" }}>
+            <h2 style={{ fontFamily: "times new roman", fontWeight: "bold" }}>{title}</h2>
+            <p style={{ fontFamily: "times new roman", fontStyle: "italic", fontSize: "20px", fontWeight: "lighter" }}>{description}</p>
+            <p style={{ fontFamily: "times new roman", fontWeight: "lighter", fontStyle: "italic", fontSize: "20px" }}>{price}</p>
+          </div>
+        </div>
+        </Link>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", cursor:"pointer" }}>
+          <img
+            src="/images/selectedfavorite.png"
+            alt=""
+            style={{ marginRight: "10px" }}
+            width="30px"
+            height="30px"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(); // This will call the deleteFavori function with the appropriate favoriteId
+            }}
+          />
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-      <img
-        src="/images/selectedfavorite.png"
-        alt=""
-        style={{ marginRight: "10px" }}
-        width="30px"
-        height="30px"
-        onClick={() => deleteFavori(favoriteId)}
-      />
-      </div>
+    
     </div>
-  </div>
-  
   );
+  
 const navigate = useNavigate();
   const goHomePage = () => {
     navigate('/');
@@ -143,8 +148,8 @@ const navigate = useNavigate();
     <div className="favori-page">
     {products?.length > 0 ? (  <div className="favorite-card-area">
 
-        {products.map((product) => (
-        <Link to={`/productinfo/${product.productId}`} style={{ textDecoration: 'none', color: 'black' }}>
+    {products.map((product) => (
+      <div key={product.id} style={{ textDecoration: 'none', color: 'black' }}>
           <FavoriteCard
             Image={product.productFile ? product.productFile : "images/monjardinlogo.png"}
             key={product.id}
@@ -152,11 +157,14 @@ const navigate = useNavigate();
             description={`${product.categoryName}`}
             price={`${product.productPrice} TL`}
             favoriteId={product.favoriteId}
+            onDelete={() => deleteFavori(product.favoriteId)}
+            productId={product.productId}
           />
-          </Link>
-        ))}
-        
-      </div>): 
+      
+      </div>
+    ))}
+      </div>
+      ): 
       (
       <div style={{ textAlign: 'center',marginTop:"180px" }}>
       <p className="basket-no-product">Favorilerinizde ürün bulunmamaktadır.</p>
@@ -170,3 +178,5 @@ const navigate = useNavigate();
 };
 
 export default WithNavbar(FavoriListesi);
+
+

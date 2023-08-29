@@ -83,7 +83,7 @@ const Basket = () => {
           setTotalPrice(totalPrice);
         }
         else{
-          alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+         // alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
         }
         console.log(data.data);        
        })
@@ -122,7 +122,7 @@ const handleDelete = async(id) => {
         fetchBaskets();
       }
       else{
-        alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+       // alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
       }
   
     })
@@ -174,7 +174,7 @@ const handlePieceSave = async(item, action) => {
           fetchBaskets();
         }
         else{
-          alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+         // alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
         }
     
     })
