@@ -368,6 +368,7 @@ const Profile = () => {
       <div> 
         <p className="profile-text"> Yeni Şifre:
          <input
+         style={{marginLeft:"20px"}}
           type="text"
           value={newPassword}
           onChange={handlePasswordChangeNew}
@@ -383,7 +384,7 @@ const Profile = () => {
 
       <hr className="profile-hr" />
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 10% 0",marginBottom:"30px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0",marginBottom:"30px" }}>
         <h2 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h2>
         <a
           style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer", fontFamily:"times", fontSize:"18px" }}

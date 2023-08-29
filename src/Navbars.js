@@ -13,7 +13,10 @@ import { baseUrl } from './config/Constants';
 
 function Navbars() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
+  const [activeMenufav, setActiveMenufav] = useState(false);
+  const [activeMenubasket, setActiveMenubasket] = useState(false);
+  const [activeMenuprofile, setActiveMenuprofile] = useState(false);
+
   const navigate = useNavigate();
  const token=getToken();
  const user=getUserInfo();
@@ -123,34 +126,34 @@ useEffect(() => {
         <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
           <Nav className="me-auto">
             <NavLink
-              className={`menu-items-icon ${activeMenu === '/Favorite' ? 'active' : ''}`}
+              className={`menu-items-icon ${activeMenufav === '/Favorite' ? 'active' : ''}`}
               to='/Favorite'
-              onClick={() => setActiveMenu('/Favorite')}
+              onClick={() => setActiveMenufav('/Favorite')}
             >
-              <img src={activeMenu === '/Favorite' ? "/images/selectedfavorite.png" : "/images/menu-icon1.png"} alt="" width={40} height={40} />
+              <img src={activeMenufav === '/Favorite' ? "/images/selectedfavorite.png" : "/images/menu-icon1.png"} alt="" width={40} height={40} />
             </NavLink>
             <NavLink
-              className={`menu-items-icon ${activeMenu === '/Basket' ? 'active' : ''}`}
+              className={`menu-items-icon ${activeMenubasket === '/Basket' ? 'active' : ''}`}
               to='/Basket'
-              onClick={() => setActiveMenu('/Basket')}
+              onClick={() => setActiveMenubasket('2/Basket')}
             >
-              <img src={activeMenu === '/Basket' ? "/images/selectedbasket.png" : "/images/menu-icon2.png"} alt="" width={40} height={40} />
+              <img src={activeMenubasket === '/Basket' ? "/images/selectedbasket.png" : "/images/menu-icon2.png"} alt="" width={35} height={40} />
             </NavLink>
             {token ? 
             <NavLink
-              className={`menu-items-icon ${activeMenu === '/Profile' ? 'active' : ''}`}
+              className={`menu-items-icon ${activeMenuprofile === '/Profile' ? 'active' : ''}`}
               to='/Profile'
-              onClick={() => setActiveMenu('/Profile')}
+              onClick={() => setActiveMenuprofile('/Profile')}
             >
-              <img src={activeMenu === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
+              <img src={activeMenuprofile === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
             </NavLink>
             : 
             <NavLink
-              className={`menu-items-icon ${activeMenu === '/Profile' ? 'active' : ''}`}
+              className={`menu-items-icon ${activeMenuprofile === '/Profile' ? 'active' : ''}`}
               to='/login'
-              onClick={() => setActiveMenu('/Profile')}
+              onClick={() => setActiveMenuprofile('/Profile')}
             >
-              <img src={activeMenu === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
+              <img src={activeMenuprofile === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={40} height={40} />
             </NavLink>
             }
           
