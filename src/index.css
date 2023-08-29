@@ -1010,3 +1010,7 @@ li.selected {
 .navbar{
   background-color: white;
 }
+
+.product-card{
+  margin-bottom: 50px;
+}
