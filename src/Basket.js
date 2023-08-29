@@ -6,34 +6,11 @@ import { baseUrl } from './config/Constants';
 import { getToken, getUserInfo } from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
 
-
-const recommendedProducts = [
-  {
-    id: 1,
-    name: "Mon Jardin",
-    price: "800 TL",
-    image: "/images/sepetbirlikte.png",
-  },
-  {
-    id: 2,
-    name: "Mon Jardin",
-    price: "800 TL ",
-    image: "/images/sepetbirlikte.png",
-  },
-  {
-    id: 3,
-    name: "Mon Jardin",
-    price: "800 TL ",
-    image: "/images/sepetbirlikte.png",
-  },
-  // Diğer önerilen ürünler buraya eklenir
-];
-
-
 const Basket = () => {
 
   const [items, setItems] = useState([]);
-
+  
+  
   const [totalItems, setTotalItems] = useState(); 
   const [totalPrice, setTotalPrice] = useState();
   let token = getToken();
@@ -58,7 +35,17 @@ const Basket = () => {
     slidesToShow: 3,
     slidesToScroll: 3,
   };
-
+  const calculateTotals = () => {
+    let toplamUrun = 0;
+    let toplamFiyat = 0;
+  
+    for (const urun of items) {
+      toplamUrun += urun.total; // Add the quantity of each item to the total count
+      toplamFiyat += urun.total * urun.productDetailResponse.price; // Sum up the total price of all items
+    }
+  
+    return { toplamUrun, toplamFiyat };
+  };
   const fetchBaskets = async (id) => {
     try {
       const requestOptions = {
@@ -67,20 +54,22 @@ const Basket = () => {
           'Content-Type': 'application/json',
         },
       };
-       await fetch(baseUrl+`api/Basket/BasketOfUser`,requestOptions)
-       .then(response => response.json())
-       .then(data => {  
+      await fetch(baseUrl + `api/Basket/BasketOfUser`, requestOptions)
+      .then(response => response.json())
+      .then(data => {  
         if(data.success)
         {
           setItems(data.data)
-          setTotalItems(data.data.length)
-          const totalPrice = data.data.reduce((total, item) => {
-            const itemPrice = item.productDetailResponse.price;
-            const itemTotal = item.total;
-            return total + itemPrice * itemTotal;
-          }, 0);
-          
-          setTotalPrice(totalPrice);
+         
+      let totalItemCount = 0;
+      const totalPrice = data.data.reduce((total, item) => {
+        totalItemCount += item.total;
+        const itemPrice = item.productDetailResponse.price;
+        const itemTotal = item.total;
+        return total + itemPrice * itemTotal;
+      }, 0);
+      setTotalItems(totalItemCount);
+      setTotalPrice(totalPrice);  
         }
         else{
           alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
@@ -119,7 +108,19 @@ const handleDelete = async(id) => {
     .then(data => {
       if(data.success)
       {
-        fetchBaskets();
+        setItems(data.data);
+
+      // Calculate total items and total price
+      let totalItemCount = 0;
+      const totalPrice = data.data.reduce((total, item) => {
+        totalItemCount += item.total; // Sum up the quantities of all items
+        const itemPrice = item.productDetailResponse.price;
+        const itemTotal = item.total;
+        return total + itemPrice * itemTotal;
+      }, 0);
+
+      setTotalItems(totalItemCount);
+      setTotalPrice(totalPrice);
       }
       else{
         alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
@@ -138,53 +139,62 @@ const goHomePage = () => {
   navigate('/');
 };
 
-const handlePieceSave = async(item, action) => {
+const handlePieceSave = async (item, action) => {
   let total = item.total;
   if (action === "increase") {
     total += 1;
-  } else if (action === "decrease" && item.total > 0) {
+  } else if (action === "decrease" && total > 0) {
     total -= 1;
   }
-
+  console.log("Item:", item);
+  console.log("Modified Total:", total);
   try {
-      const basketData = {
-        id:item.id,
-        userId:userID,
-        productId: item.productDetailResponse.id,
-        total: total,
-        userAddressId: item.userAddressId,
-        shipmentDate: item.shipmentDate,
-        cardNote: item.cardNote
-      };
+    const basketData = {
+      id: item.id,
+      userId: userID,
+      productId: item.productDetailResponse.id,
+      total: total,
+      userAddressId: item.userAddressId,
+      shipmentDate: item.shipmentDate,
+      cardNote: item.cardNote,
+    };
+    console.log(basketData);
         
-      const requestOptions = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        method: 'PUT',
-        body: JSON.stringify(basketData)
-      };
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify(basketData),
+    };
 
-    await fetch(baseUrl+`api/Basket/UpdateBasket`,requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        if(data.success)
-        {
-          fetchBaskets();
-        }
-        else{
-          alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
-        }
-    
+    await fetch(baseUrl + `api/Basket/UpdateBasket`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Sepet güncellendiğinde totalItems ve totalPrice değerlerini güncelleyin
+        fetchBaskets();
+        const { toplamUrun, toplamFiyat } = calculateTotals();
+    setTotalItems(toplamUrun);
+    setTotalPrice(toplamFiyat);
+      } else {
+        alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.");
+      }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
-  } catch (error) {
-    console.error("Sepet getirilirken hata oluştu: ", error);
-  }
+} catch (error) {
+  console.error("Sepet güncellenirken hata oluştu: ", error);
+}
 };
+
+
+
+
+
+
 
   return (
     <div className="mobile-generic-css"  style={{ margin: "5% 10%"}}>

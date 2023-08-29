@@ -669,6 +669,7 @@ nav li {
 }
 .mobile-generic-css
 {
+
   margin-top: 20% !important;
 }
 .basket-no-product-button{
@@ -677,6 +678,7 @@ nav li {
 }
 
 .navbar-toggler{
+  
   width: 50px !important;
   height: 50px !important;
 }
@@ -927,12 +929,10 @@ input[type='radio'] {
 } 
 .container {
   display: flex;
+  margin-left: 10px;
 }
 
-.left-panel {
-  flex: 1;
-  padding: 20px;
-}
+
 
 .right-panel {
   flex: 2;

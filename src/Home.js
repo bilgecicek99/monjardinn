@@ -31,19 +31,26 @@ const Home = () => {
   function HomeCard( { cards }) {
   
     const Cardx = ({ fileUrl, name, id, data, click }) => {
+      const defaultImageUrl = '/images/monjardinlogo.png';
+    
       return (
         <Link to={`/List/${id}`} style={styles.link}>
-        <div key={id} style={styles.card}>
-          <div style={styles.cardContent}>
-            <h3>{name}</h3>
+          <div key={id} style={styles.card}>
+            <div style={styles.cardContent}>
+              <h3>{name}</h3>
+            </div>
+            <div style={styles.cardImageContainer}>
+              {fileUrl ? ( 
+                <img style={styles.cardImage} src={fileUrl} alt={name} />
+              ) : (
+                <img style={styles.cardImage} src={defaultImageUrl} alt="Logo" />
+              )}
+            </div>
           </div>
-          <div style={styles.cardImageContainer}>
-            <img style={styles.cardImage} src={fileUrl} alt={name} />
-          </div>          
-        </div>
-      </Link>
+        </Link>
       );
-};
+    };
+    
     
 const styles = {
       card: {
