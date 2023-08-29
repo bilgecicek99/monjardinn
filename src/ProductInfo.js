@@ -539,8 +539,17 @@ useEffect(() =>
     <div className="product-info-page">
     <div>
       <div style={{ display: "flex", alignItems: "center" ,marginLeft:"6%"}}>
+        
         {/* Ürün fotoğrafı */}
-        <img src={props.foto} alt={props.ad} className="product-info-img"/>
+        {props.foto ? (
+          <img src={props.foto} alt={props.ad} className="product-info-img" />
+        ) : (
+          <img
+            src="/images/monjardinlogo.png" 
+            alt="Default Ürün İkonu"
+            className="product-info-img"
+          />
+        )}
 
         <div>
           <div style={{display:"block"}}>

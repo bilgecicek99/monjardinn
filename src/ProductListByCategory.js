@@ -7,6 +7,8 @@ export default function ProductListByCategory() {
   //const { productList } = props.location.state;
 //console.log("productList",productList)
 
+const DEFAULT_IMAGE_URL = "/images/monjardinlogo.png"; // Adjust the path accordingly
+
 const location = useLocation();
 const productList = location.state?.productList || []; // state verisini alın
 
@@ -146,7 +148,16 @@ return (
           <React.Fragment key={product.id}>
             <tr onClick={() => handleProductClick(product.id)} style={{ borderBottom: "1px solid #ccc"}}>
             
-              <td> <img src={product.fileResponseModel[0]?.fileUrl} alt={productList.name} width={128} height={128} /></td>
+            <td>
+  <img
+    src={
+      product.fileResponseModel[0]?.fileUrl || DEFAULT_IMAGE_URL
+    }
+    alt={product.name}
+    width={128}
+    height={128}
+  />
+</td>
               <td style={{verticalAlign:"middle"}}>{product.id}</td>
               <td style={{verticalAlign:"middle"}}>{product.name}</td>
             

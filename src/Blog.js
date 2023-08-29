@@ -15,7 +15,7 @@ const Navbar = ({ onSearch }) => {
   return (
     
     <div style={{margin:"0"}}>
-    <div className="nav-barblog">
+    <div className="nav-barblog" style={{maxWidth:"1200px"}}>
     <nav style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
     
      
@@ -41,7 +41,7 @@ const Navbar = ({ onSearch }) => {
 
 const BlogCard = ({ id, title, image, likes, caption }) => {
   const [liked, setLiked] = useState(false);
-  const defaultImage = '/images/blogdefault.png';
+  const defaultImage = '/images/monjardinlogo.png';
   const handleLike = () => {
     setLiked(!liked);
     // handle like button click here
@@ -56,8 +56,8 @@ const BlogCard = ({ id, title, image, likes, caption }) => {
     <div style={{ margin: "auto", width: "300px", height: "400px", border: "none", borderRadius: "10px", padding: "10px", marginBottom: "20px", background:"#E7D1EA" }}>
     <Link to={`/blogdetail/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
 
-      <img src={image || defaultImage} alt={title} style={{ width: "100%", maxHeight: "60%", objectFit: "cover",borderRadius:"10px" }} />
-     <h3 style={{ fontFamily: 'Times New Roman', fontWeight: 'bold' }}>{title}</h3>
+      <img src={image || defaultImage} alt={title} style={{ width: "100%", maxHeight: "60%",justifyContent:"center", objectFit: "cover",borderRadius:"10px",marginTop:"50px" }} />
+     <h3 style={{ fontFamily: 'Times New Roman', fontWeight: 'bold' , marginTop:"20px"}}>{title}</h3>
      <p style={{ fontFamily: 'Times New Roman', fontStyle: 'italic',display: "inline-block",
         wordBreak: "break-word",
         tableLayout: "fixed" }}>{truncateText(caption, 100)}</p>
@@ -111,11 +111,11 @@ const Blog = () => {
         }
       };
   return (
-    <div className="mobile-generic-css">
-    <div style={{margin:"9%"}}>
-     
+    <div className="mobile-generic-css" >
+    <div style={{ margin: "9%"}}>
+  
     <Navbar onSearch={handleSearch} />
-      <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center", background: "#D2ADD7", padding:"10px", borderRadius:"10px", maxWidth: "800px", margin: "0 auto"}}>
+      <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center", background: "#D2ADD7", padding:"10px", borderRadius:"10px", maxWidth: "1200px", margin: "0 auto"}}>
       {filteredPosts.length === 0 ? (
           <p style={{color: "white"}}>Blog bulunamadı.</p>
         ) : (
