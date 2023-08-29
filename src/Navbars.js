@@ -9,6 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {resetUserSession,getToken,getUserInfo} from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from './config/Constants';
 
 function Navbars() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,6 +22,52 @@ function Navbars() {
     resetUserSession();
     navigate("/");
   };
+  const storedUser = localStorage.getItem('UserAllInfo');
+  const userAllInfo = JSON.parse(storedUser);
+
+console.log("userall",userAllInfo);
+
+useEffect(() => {
+  const fetchProfilVerileri = async () => {
+    try {  
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      
+     await fetch(baseUrl+`api/User/UserProfile/${user.email}`,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.data) {
+        const { firstname, lastName, phoneNumber, email, dateOfBirth } = data.data;
+        const updatedUser = {
+          firstName: firstname,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          email: email,
+          dateOfBirth: dateOfBirth
+        }
+        localStorage.setItem('UserAllInfo', JSON.stringify(updatedUser));
+
+        console.log("uppp",updatedUser);
+       
+      } else {
+        console.error('Profil verileri alınamadı');
+      }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    } catch (error) {
+      console.error("Profil verileri getirilirken hata oluştu: ", error);
+    }
+  };
+
+  fetchProfilVerileri();
+}, []);
+
+
   return (
     <Navbar expand="lg" fixed="top">
       <Container>
@@ -28,16 +75,17 @@ function Navbars() {
 
         <Navbar.Collapse id="basic-navbar-nav" className="navbar-left">
           <Nav className="me-auto">
-            <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-              <FiMenu />
-            </div>
+          <div className={`menu-icon ${menuOpen ? 'menu-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+  <FiMenu />
+</div>
+
             {menuOpen && (
               <div className="menu-items" onClick={() => setMenuOpen(false)}>
                 
                {user && (
                   <div className="text-center">
-                    <img src="/images/person.png" alt="" width={"45"} height={"45"} />
-                    <p className='menu-items-admin-link'>{user.firstName}</p>
+                    <img src="/images/usericon.png" alt="" width={"45"} height={"45"}  style={{marginBottom:"5px"}}/>
+                    <p className='menu-items-admin-link'>{userAllInfo.firstName} {userAllInfo.lastName} </p>
                     <p className='menu-items-admin-link'>{user.email}</p>
                   </div>
                 )}
@@ -53,13 +101,11 @@ function Navbars() {
                   <hr />
                   <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
                   <hr /> 
-                  <NavLink className="menu-items-link" to='/Morethan'>
-                  <div className="more-button-container">
-                      {Array.from({ length: 3 }).map((_, index) => (
-                        <div key={index} className="more-button" />
-                      ))}
-                      Daha Fazla
-                    </div>  </NavLink>
+                 <NavLink className="menu-items-link" to='/Morethan'>
+                  <img src="/images/morethanicon.png" alt="More Than Icon" width={30} style={{marginRight:"5px"}} />
+                  Daha Fazla
+                </NavLink>
+
                   <hr />
                   {/* <NavLink className="menu-items-link" to=''>Ayarlar</NavLink>
                   <hr /> */}
