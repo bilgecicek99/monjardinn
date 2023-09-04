@@ -1084,3 +1084,8 @@ li.selected {
   border: none;
   cursor: pointer;
 }
+
+
+.Toastify__toast--success {
+  background-color: green;
+}
