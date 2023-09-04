@@ -193,88 +193,75 @@ const Profile = () => {
     };
    
 
-  const Address = ({ description, title, corporate, district, quarter,id }) => {
-    const [showConfirmation, setShowConfirmation] = useState(false);
-
-    const handleDelete = () => {
-      setShowConfirmation(true);
-    };
-  
-    const handleConfirm = async () => {
-      try {  
+    const Address = ({ description, title, corporate, district, quarter, id }) => {
+      const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
+    
+      const handleDelete = async () => {
+        // Silme işlemi burada yapılacak
         const requestOptions = {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           method: 'DELETE',
         };
-        
-       await fetch(baseUrl+`api/UserAddress/DeleteUserAddress?id=${id}`,requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          fetchUserAddress();
-          alert(data.message)
-      
-        })
-        .catch(error => {
-          // Hata durumunda burada hata işleme yapabilirsiniz
-          console.error(error);
-        });
-      } catch (error) {
-        console.error("Adres verileri getirilirken hata oluştu: ", error);
-      }      setShowConfirmation(false);
-    };
-  
-    const handleCancel = () => {
-      setShowConfirmation(false);
-    };
-  
-
-    const handleEdit = async(id) => {
-      navigate(`/editaddres/${id}`, { state: { id } });
-
-     };
-
-  
-    return (
-
-      <div style={styles.card}>
-      <div style={{ ...styles.cardContent, padding: "20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", fontFamily:"times", }}>
-          <div>
-            <h4  style={{ fontStyle:"normal",  fontWeight:"bold"}}>{title}</h4>
-            <p style={{color:"#6F6D6D", fontSize:"18px",fontStyle:"italic" }}>{quarter} - {district}/İzmir</p>
-          </div>
-          <div style={{ display: "flex" }}>
-            <a style={{ margin: "0 20px",cursor: "pointer" }} onClick={() => handleEdit(id)}>
-              <img src={"/images/addressedit.png"} alt="" width={18} height={18} />
-            </a>
-
-            <div>
-      <a
-        style={{ margin: "0 3px", cursor: "pointer" }}
-        onClick={handleDelete}
-      >
-        <img src={"/images/delete.png"} alt="" width={13} height={13} />
-      </a>
-
     
-    </div>
-
+        await fetch(baseUrl + `api/UserAddress/DeleteUserAddress?id=${id}`, requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            fetchUserAddress();
+            alert(data.message);
+          })
+          .catch((error) => {
+            // Hata durumunda burada hata işleme yapabilirsiniz
+            console.error(error);
+          });
+    
+        // Silme işlemi tamamlandığında onay kutusunu gizle
+        setIsDeleteConfirmationVisible(false);
+      };
+    
+      const handleEdit = (id) => {
+        navigate(`/editaddres/${id}`, { state: { id } });
+      };
+    
+      return (
+        <div style={styles.card}>
+          <div style={{ ...styles.cardContent, padding: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "times" }}>
+              <div>
+                <h4 style={{ fontStyle: "normal", fontWeight: "bold" }}>{title}</h4>
+                <p style={{ color: "#6F6D6D", fontSize: "18px", fontStyle: "italic" }}>{quarter} - {district}/İzmir</p>
+              </div>
+              <div style={{ display: "flex" }}>
+                <a style={{ margin: "0 20px", cursor: "pointer" }} onClick={() => handleEdit(id)}>
+                  <img src={"/images/addressedit.png"} alt="" width={18} height={18} />
+                </a>
+    
+                <div>
+                  <a
+                    style={{ margin: "0 3px", cursor: "pointer" }}
+                    onClick={() => setIsDeleteConfirmationVisible(true)} // Silme onay kutusunu göster
+                  >
+                    <img src={"/images/delete.png"} alt="" width={13} height={13} />
+                  </a>
+    
+                 
+                  {isDeleteConfirmationVisible && (
+                    <div className="delete-confirmation-overlay">
+                      <div className="delete-confirmation-box">
+                        <p>Silmek istediğinize emin misiniz?</p>
+                        <button onClick={handleDelete}>Evet</button>
+                        <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      {showConfirmation && (
-        <div className="confirmation-dialog">
-          <p>Bu ürünü silmek istediğinizden emin misiniz?</p>
-          <button onClick={handleConfirm}>Evet</button>
-          <button onClick={handleCancel}>Hayır</button>
-        </div>
-      )}
-      </div>
-    );
-  };
-  
+      );
+    };
 
   const styles = {
     card: {
