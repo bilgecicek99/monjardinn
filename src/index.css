@@ -680,8 +680,7 @@ nav li {
 }
 .mobile-generic-css
 {
-
-  margin-top: 20% !important;
+ margin: 15% 5% !important;
 }
 .basket-no-product-button{
   width: 80%;
@@ -1086,3 +1085,6 @@ li.selected {
 }
 
 
+
+
+ 

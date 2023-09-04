@@ -4,12 +4,13 @@ import { getToken, setUserSession,setUserInfo } from "../service/AuthService";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
 import WithNavbar from '../WithNavbar'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogIn = () => {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const navigate = useNavigate();
-const [errorMessage, setErrorMessage] = useState(null);
 
 const handleEmailChange = (e) => {
   setEmail(e.target.value);
@@ -28,6 +29,17 @@ const handleSubmit = (e) => {
 
 const handleLoginFormSubmit = () => {
  
+  if (!email  || !password) {
+    toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return; 
+  }
+
   fetch(baseUrl+"api/auth/login", {
   method: "POST",
   headers: {
@@ -67,7 +79,16 @@ const handleLoginFormSubmit = () => {
     }
     console.log("updatedUser",updatedUser)
     setUserInfo(updatedUser);
-    setErrorMessage(data.message);
+    
+    
+    toast.error(data.message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+   
     if (data.claims.includes('admin')) {
       // Admin paneline yönlendirme işlemini gerçekleştirin
       console.log("Yönlendirme: Admin Paneli");
@@ -84,7 +105,15 @@ const handleLoginFormSubmit = () => {
    
   })
   .catch((error) => {
-    setErrorMessage(error.message);
+    toast.error(error.message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+   
+    
     console.error("Hata:", error);
   });
   
@@ -95,6 +124,8 @@ const handleLoginFormSubmit = () => {
 
 return (
   <div style={{ marginTop: "100px" }}>
+                <ToastContainer />
+
     <>
     <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Hoşgeldiniz</h1>
 
@@ -121,7 +152,7 @@ return (
     <div>
     <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic" }} to='/forgotpassword'>Parolamı Unuttum</NavLink>
     </div>
-    {errorMessage && <p className="message">{errorMessage}</p>}
+   
     <div style={{ marginTop:"20px"}}>
     <button type="submit" onClick={handleLoginFormSubmit} className="save-button">Gönder</button>
     </div>

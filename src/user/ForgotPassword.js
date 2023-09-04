@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getEmail, getToken, getUserInfo, setUserInfo } from "../service/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ForgotPassword = () => {
   const [email, setEmail] = useState(""); 
   const [code, setCode] = useState(""); 
   const [responseCode, setResponseCode] = useState(""); 
   const [mailGeldiMi, setMailGeldiMi] = useState(false); 
   const [counter, setCounter] = useState(60); 
-  const [errorMessage, setErrorMessage] = useState(null);
   const [send, setSend] = useState(true); 
   const navigate = useNavigate();
   let token = getToken();
@@ -38,11 +38,28 @@ const ForgotPassword = () => {
       navigate('/newpassword'); 
     }
     else{
-      setErrorMessage("Kod yanlış veya eksik lütfen tekrar deneyiniz");
+      toast.error("Kod yanlış veya eksik lütfen tekrar deneyiniz", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
     }
   };
 
   const handleGonderClick = async () => {
+    if ( !email) {
+      toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return; 
+    }
+
    setSend(false);
     const requestOptions = {
       method: "POST",
@@ -58,13 +75,28 @@ const ForgotPassword = () => {
         console.log("data,",data);
         if(data.success===false){
           console.log("jhjkh");
-           setErrorMessage(data.message);
+          toast.error(data.message, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
         
+          
+        return;
         }
         else{
           setMailGeldiMi(true);
           setCounter(60); // Reset the counter to 60 seconds
-          setErrorMessage(data.message);
+        
+          toast.error(data.message, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
           setResponseCode(data.data);
           const updatedUser = {
             email: email,
@@ -76,15 +108,25 @@ const ForgotPassword = () => {
       })
       .catch((error) => {
         console.error(error);
-        setErrorMessage(error.message);
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      return;
+     
+        
       });
   };
 
   return (
     <div style={{ marginTop: "100px" }}>
+                            <ToastContainer />
+
       <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Yeni Parolanız Bir Mail Uzaklıkta</h1>
       <div style={{ justifyContent: "center", marginTop: "50px", textAlign: "center" }}>
-      {errorMessage && <p className="message" style={{marginTop:"20px"}}>{errorMessage}</p>}
        
         {mailGeldiMi ? (
           <div style={{ marginTop: "20px", fontStyle: "italic", justifyContent: "center" }}>
