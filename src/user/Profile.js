@@ -161,38 +161,58 @@ const Profile = () => {
   }
   };
 
-  const updateUser = async() => {
+  const updateUser = async () => {
     try {
       
+      if (!user.firstName || !user.lastName || !user.phoneNumber) {
+        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        setTimeout(() => {
+          window.location.href = '/Profile';
+        }, 3000); 
+        return; 
+      }
+     
+  
+      // Kullanıcı verilerini oluştur
       const userData = {
-        ...user, // user nesnesinin tüm alanlarını içeri aktar
-        id: userID // userId değişkeninden gelen id değerini ekle
+        ...user, // Kullanıcı nesnesinin tüm alanlarını içeri aktar
+        id: userID, // userId değişkeninden gelen id değerini ekle
       };
-      
+  
       const requestOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       };
-      
-      await fetch(baseUrl+`api/Auth/UserUpdate`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          //setErrorMessage(data.message);
-          alert(data.message)
-        })
-        .catch(error => {
-          console.error(error);
-          setErrorMessage(error.message);
-        });
-      
+  
+      // Veriyi gönder ve yanıtı işle
+      const response = await fetch(baseUrl + 'api/Auth/UserUpdate', requestOptions);
+      const data = await response.json();
+  
+      // Başarı mesajı göster
+      toast.success('Profil Başarıyla Güncellenmiştir', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
     } catch (error) {
+      // Hata durumunda hata mesajını göster
       console.error("Profil güncellerken hata oluştu: ", error);
+      setErrorMessage(error.message);
     }
-    };
+  };
+  
    
 
     const Address = ({ description, title, corporate, district, quarter, id }) => {
