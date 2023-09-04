@@ -115,7 +115,7 @@ const Search = () => {
             }}
             src={
               product?.fileResponseModel[0]?.fileUrl ||
-              process.env.PUBLIC_URL + '/images/blog1.png'
+              process.env.PUBLIC_URL + '/images/monjardinlogo.png'
             }
             alt={product.name}
           />
