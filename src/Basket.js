@@ -254,10 +254,10 @@ const handlePieceSave = async (item, action) => {
   </tbody>
   <tfoot>
     <tr>
-      <td style={{fontWeight:"bold",fontStyle:"italic",fontFamily:"Times New Roman"}}>Toplam:</td>
+      <td className="toplamtext" >Toplam:</td>
       <td></td>
-      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{totalItems} adet</td>
-      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" }}>{totalPrice} TL</td>
+      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px",fontSize:"18px" }}>{totalItems} adet</td>
+      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" ,fontSize:"18px"}}>{totalPrice} TL</td>
     </tr>
     <tr>
     <td></td>
