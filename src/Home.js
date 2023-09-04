@@ -3,24 +3,40 @@ import WithNavbar from './WithNavbar';
 import { baseUrl } from './config/Constants';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
-
-  
   const [categoryList, setCategoryList] = useState([]);
 
   const fetchCategoryList = async () => {
     try {
       const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
       if (!response.ok) {
-        throw new Error('Kategori listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
+        toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return;
       }
       const data = await response.json();
       const categoryData = data.data;
       setCategoryList(categoryData);
     } catch (error) {
       console.error(error);
-      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return; 
+  
+     
     }
   };
   useEffect(() => {
@@ -134,6 +150,8 @@ return (
 
   return (
     <div style={{ marginTop: "100px" }}>
+              <ToastContainer />
+
         <Carousel1/>
           <HomeCard cards={categoryList} />
       </div>

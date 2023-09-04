@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getEmail, getToken, getUserInfo, setUserInfo } from "../service/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NewPassword = () => {
  
   const [newPassword, setNewPassword] = useState(""); 
-  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   let token = getToken();
   let userInfo = getUserInfo();
@@ -36,18 +37,37 @@ const NewPassword = () => {
       .then((response) => response.json())
       .then((data) => { 
         console.log("data,",data);
-        setErrorMessage(data.message);
-        alert("Şifre başarıyla güncellendi")
-        navigate("/login")
+       
+        toast.error('Şifre Başarıyla Güncellendi', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+  
+    
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+       
       })
       .catch((error) => {
         console.error(error);
-        setErrorMessage(error.message);
+      
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
       });
   };
 
   return (
     <div style={{ marginTop: "100px" }}>
+         <ToastContainer />
       <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Yeni Parolanız Bir Mail Uzaklıkta</h1>
       <div style={{ justifyContent: "center", marginTop: "50px", textAlign: "center" , display:"block"}}>
       <div>
@@ -65,7 +85,7 @@ const NewPassword = () => {
             Gönder
           </button>
        </div>
-      {errorMessage && <p className="message" style={{marginTop:"20px"}}>{errorMessage}</p>}
+
 
     </div>
   );

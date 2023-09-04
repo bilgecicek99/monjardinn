@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getToken, setUserSession, setUserInfo } from "../service/AuthService";
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,15 +14,33 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [birthday, setBirthday] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
+    if (!firstName  || !lastName || !passwordAgain || !password || !phone  || !email) {
+      toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return; 
+    }
+
+
     if (password !== passwordAgain) {
-      setErrorMessage("Parolalar eşleşmiyor");
+      toast.error("Parolalar Eşleşmiyor", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      
       return;
     }
 
@@ -36,16 +56,34 @@ const SignUp = () => {
       requestBody.dateOfBirth = birthday;
     }
     if (password.length < 5) {
-      setErrorMessage("Şifre minimum 5 karakterden oluşmalıdır.");
+      toast.error("Şifre minimum 5 karakterden oluşmalıdır.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
       return; 
     }
     
     if (lastName.length < 2) {
-      setErrorMessage("Soyad minimum 2 karakterden oluşmalıdır.");
+      toast.error("Soyad minimum 2 karakterden oluşmalıdır.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
       return; 
     }
     if (firstName.length < 2) {
-      setErrorMessage("Ad minimum 2 karakterden oluşmalıdır.");
+      toast.error("Ad minimum 2 karakterden oluşmalıdır.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
       return; 
     }
 
@@ -68,24 +106,40 @@ const SignUp = () => {
         });
       })
       .then((data) => {
-        setErrorMessage(data.message);
+        
+        toast.success(data.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         const updatedUser = {
           firstName: firstName,
           email: email,
         }
         setUserInfo(updatedUser);
-        navigate('/login');
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
         console.log("dataaa",data);
       })
       .catch((error) => {
         console.log("error",error);
-        setErrorMessage(error.message);
-        console.error("Hata:", error);
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
       });
   };
 
   return (
     <div  style={{ marginTop: "100px" }}>
+                      <ToastContainer />
+
       <h1 style={{ textAlign: "center", fontStyle:"italic" }}>
         Sizi de Aramızda Görmekten Mutlu Oluruz
       </h1>
@@ -115,7 +169,7 @@ const SignUp = () => {
         <div style={{ display: "block", justifyContent: "center", textAlign:"center" }}>
           <div style={{ marginTop: "20px"}}>
         <input
-          type="tel"
+          type="number"
           placeholder="Telefon Numarası"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -162,7 +216,6 @@ const SignUp = () => {
         <button type="submit" className="button-action">Gönder</button>
         </div>
 
-      {errorMessage && <p className="message">{errorMessage}</p>}
 
        <div style={{ textAlign: "center" , display:"flex", justifyContent:"center", marginTop:"50px",  marginBottom:"50px"}}>
           <hr style={{ width:"20rem"}} />

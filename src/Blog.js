@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
 import { baseUrl } from './config/Constants';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Navbar = ({ onSearch }) => {
   
@@ -92,7 +95,15 @@ const Blog = () => {
           setFilteredPosts(blogData)
         } catch (error) {
           console.error(error);
-          alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+          toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return; 
+      
         }
       };
       useEffect(() => {
@@ -112,6 +123,8 @@ const Blog = () => {
       };
   return (
     <div className="mobile-generic-css" >
+              <ToastContainer />
+
     <div style={{ margin: "5%"}}>
   
     <Navbar onSearch={handleSearch} />

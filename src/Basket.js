@@ -5,18 +5,16 @@ import WithNavbar from './WithNavbar';
 import { baseUrl } from './config/Constants';
 import { getToken, getUserInfo } from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Basket = () => {
 
   const [items, setItems] = useState([]);
-  
-  
   const [totalItems, setTotalItems] = useState(); 
   const [totalPrice, setTotalPrice] = useState();
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
-
   let token = getToken();
-
   const [openDetailsId, setOpenDetailsId] = useState(null);
 
   let userInfo= getUserInfo();
@@ -79,11 +77,17 @@ const Basket = () => {
         console.log(data.data);        
        })
        .catch(error => {
-         alert(error.message);
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        
        });      
   }
-  catch (error) {
-    //setErrorMessage(error);
+  catch (error) { 
     console.error(error)
   }
 
@@ -179,7 +183,6 @@ const handlePieceSave = async (item, action) => {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        // Sepet güncellendiğinde totalItems ve totalPrice değerlerini güncelleyin
         fetchBaskets();
         const { toplamUrun, toplamFiyat } = calculateTotals();
     setTotalItems(toplamUrun);
@@ -197,15 +200,9 @@ const handlePieceSave = async (item, action) => {
 }
 };
 
-
-
-
-
-
-
   return (
     <div className="mobile-generic-css"  style={{ margin: "5% 20%"}}>
-   
+        <ToastContainer />
    {items?.length > 0 ? (  <table className='table table-light'>
   <thead>
     <tr>

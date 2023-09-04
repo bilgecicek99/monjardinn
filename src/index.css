@@ -680,8 +680,7 @@ nav li {
 }
 .mobile-generic-css
 {
-
-  margin-top: 20% !important;
+ margin: 15% 5% !important;
 }
 .basket-no-product-button{
   width: 80%;
@@ -1086,12 +1085,11 @@ li.selected {
 }
 
 
-.Toastify__toast--success {
-  background-color: green;
-}
+
 .toplamtext{
   font-size: 25px !important;
   font-weight: bold;
   font-style: italic ;
   font-family: 'Times New Roman', Times, serif;
 }
+

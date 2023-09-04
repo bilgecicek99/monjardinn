@@ -4,6 +4,9 @@ import { baseUrl } from '../config/Constants';
 import { getToken,getUserInfo } from "../service/AuthService";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const FavoriListesi = () => {
@@ -53,7 +56,13 @@ const FavoriListesi = () => {
           console.log('Favori ürünler:', favoriUrunData);
         } catch (error) {
           console.error(error);
-          alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+          toast.error("Lütfen Daha Sonra Tekrar Deneyiniz", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
         }
       };
 
@@ -80,7 +89,13 @@ const FavoriListesi = () => {
       console.log('Favori ürünler:', favoriUrunData);
     } catch (error) {
       console.error(error);
-      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      toast.error("Lütfen Daha Sonra Tekrar Deneyiniz", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
     }
   };
   
@@ -116,8 +131,8 @@ const FavoriListesi = () => {
 
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
           <img src={Image} alt={title} style={{ marginRight: "30px", width: "120px", height: "200px", objectFit: "contain" }} />
-          <div style={{ textAlign: "left" }}>
-            <h2 style={{ fontFamily: "times new roman", fontWeight: "bold" }}>{title}</h2>
+          <div style={{ textAlign: "left" , marginTop:"40px"}}>
+            <h2 style={{ fontFamily: "times new roman", fontWeight: "bold" }} >{title}</h2>
             <p style={{ fontFamily: "times new roman", fontStyle: "italic", fontSize: "20px", fontWeight: "lighter" }}>{description}</p>
             <p style={{ fontFamily: "times new roman", fontWeight: "lighter", fontStyle: "italic", fontSize: "20px" }}>{price}</p>
 
@@ -151,6 +166,8 @@ const navigate = useNavigate();
 
   return (
     <div className="favori-page">
+                  <ToastContainer />
+
     {products?.length > 0 ? (  <div className="favorite-card-area">
 
     {products.map((product) => (
