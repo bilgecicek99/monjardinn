@@ -44,7 +44,7 @@ const BlogCard = ({ id, title, image, likes, caption }) => {
   const defaultImage = '/images/monjardinlogo.png';
   const handleLike = () => {
     setLiked(!liked);
-    // handle like button click here
+   
   };
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -112,7 +112,7 @@ const Blog = () => {
       };
   return (
     <div className="mobile-generic-css" >
-    <div style={{ margin: "9%"}}>
+    <div style={{ margin: "5%"}}>
   
     <Navbar onSearch={handleSearch} />
       <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center", background: "#D2ADD7", padding:"10px", borderRadius:"10px", maxWidth: "1200px", margin: "0 auto"}}>

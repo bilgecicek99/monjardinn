@@ -220,6 +220,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
 }
 @media only screen and (min-width: 1200px) {
+ 
   .content__blog__container {
     width: 84%;
   }
@@ -920,6 +921,7 @@ input[type='radio'] {
   padding:100px;
  }
 @media only screen and (max-width: 768px) {
+
   .favori-page{
     padding:100px 20px;
   }
@@ -941,6 +943,7 @@ input[type='radio'] {
   display: flex;
   margin-left: 10px;
 }
+
 
 
 
@@ -1015,6 +1018,27 @@ li.selected {
 .product-card{
   margin-bottom: 50px;
 }
+.cardimage{
+  width: "100%";
+  height: "auto"; 
+  max-width : "100%";
+  max-height: "200px";
+}
+.textcard {
+  font-size: 24px;
+ }
+ @media (max-width: 768px) {
+  .textcard {
+    font-size: 14px; 
+  }
+  .cardimage {
+  width: "70%";
+  max-width : "100%";
+  max-height: "200px";
+  }
+}
+
+
 
 
 

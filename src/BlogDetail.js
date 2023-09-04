@@ -50,7 +50,7 @@ const defaultImage = '/images/monjardinlogo.png';
 
 
   return (
-    <div className="mobile-generic-css" style={{margin:"8%"}}>
+    <div className="mobile-generic-css" style={{margin:"5%"}}>
       <nav style={{ backgroundColor: "#893694", padding: "2%" }}>
         {/* {backButtonVisible && (
           <span style={{ cursor: "pointer" }} onClick={goBack}>

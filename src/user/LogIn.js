@@ -40,8 +40,17 @@ const handleLoginFormSubmit = () => {
   .then((response) => {
     return response.json().then((data) => {
       if (!response.ok) {
-        const errorMessage = data.message || "Bilinmeyen bir hata oluştu";
-        throw new Error(errorMessage);
+        const errorMessage =
+          data.message || "Bilinmeyen bir hata oluştu"; 
+        if (response.status === 401) {
+        
+          throw new Error("Yetkisiz erişim. Lütfen giriş yapın.");
+        } else if (response.status === 403) {
+      
+          throw new Error("Bu işlemi gerçekleştirmek için yetkiniz yok.");
+        } else {
+          throw new Error(errorMessage);
+        }
       }
       return data;
     });

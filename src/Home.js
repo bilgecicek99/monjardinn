@@ -37,9 +37,9 @@ const Home = () => {
         <Link to={`/List/${id}`} style={styles.link}>
           <div key={id} style={styles.card}>
             <div style={styles.cardContent}>
-              <h3>{name}</h3>
+              <p className="textcard">{name}</p>
             </div>
-            <div style={styles.cardImageContainer}>
+            <div className="cardimage" style={styles.cardImageContainer}>
               {fileUrl ? ( 
                 <img style={styles.cardImage} src={fileUrl} alt={name} />
               ) : (
@@ -52,7 +52,7 @@ const Home = () => {
     };
     
     
-const styles = {
+    const styles = {
       card: {
         display: "flex",
         flexDirection: "row",
@@ -72,13 +72,17 @@ const styles = {
       },
       cardImage: {
         width: "100%",
-        height: "100%", // set a fixed height for the image
+        height: "auto", 
+        textAlign: "center",
+        maxWidth: "100%", 
+        maxHeight: "200px",
       },
       cardContent: {
         width: "50%",
         textAlign: "center",
         fontStyle: "italic",
-        height: "100%", // set the height of the content to match the card's height
+        
+  
       },
       link: {
         textDecoration: 'none',
