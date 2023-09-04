@@ -3,6 +3,8 @@ import WithNavbar from '../WithNavbar';
 import {getEmail, getToken, getUserInfo, setUserInfo} from "../service/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -209,7 +211,13 @@ const Profile = () => {
           .then((response) => response.json())
           .then((data) => {
             fetchUserAddress();
-            alert(data.message);
+            toast.success('Adres Başarıyla Silinmiştir', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
           })
           .catch((error) => {
             // Hata durumunda burada hata işleme yapabilirsiniz
@@ -292,6 +300,8 @@ const Profile = () => {
 
   return (
     <div style={{ marginTop: "100px" }}>
+              <ToastContainer />
+
       <h2  style={{ textAlign: "center", fontStyle:"italic",fontFamily:"times"}}>Profilim</h2>
       <div style={{ display: "block", justifyContent: "center",textAlign:"center" }}>
     <div className="profile-card-area">

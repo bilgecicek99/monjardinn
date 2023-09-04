@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
 import WithNavbar from '../WithNavbar'; 
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddUserAddress = () => {
   const navigate = useNavigate();
@@ -62,75 +64,108 @@ const AddUserAddress = () => {
   let userInfo=getUserInfo();
 
   const handleKaydet = async(event) => {
-      event.preventDefault();
-      const updatedAddress = {
-        ...address,
-        userId: userInfo.userId,
-        districtId:parseInt(selectedDistrict),
-        quarterId:parseInt(selectedQuarter)
-      };
-      const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId','quarterId','address','addressTitle','corporate'];
-      const isEmptyField = requiredFields.some((field) => {
-        const value = updatedAddress[field];
-         console.log(field,value)
-        return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
-      });
-        
-      if (isEmptyField) {
-        console.log(updatedAddress);
-        alert('Lütfen Tüm Alanları Doldurunuz.');
-      } else {
-  
-      fetch(baseUrl+"api/UserAddress/CreateUserAddress", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedAddress),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("data",data);
-          setErrorMessage(data.message);
-        
-         const requestBody = {
-          userId: userInfo.userId,
-          taxIdentificationNumber: address.taxIdentificationNumber,
-          taxOffice: address.taxOffice,
-          companyName: address.companyName,
-          userAddressId: data.data,
-          email: address.email,
-
-        };
-     
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify(requestBody)
-        };
-        
-        fetch(baseUrl+`api/CorparateAddress/CreateCorparateAddress`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            setErrorMessage(data.message);
-              alert("Değişiklikler başarıyla kaydedilmiştir.")
-              navigate("/profile")
-          })
-          .catch(error => {
-            console.error(error);
-            setErrorMessage(error.message);
-          });
-        })
-        .catch((error) => {
-          setErrorMessage(error.message);
-        });
-      }
-     
+    event.preventDefault();
+    const updatedAddress = {
+      ...address,
+      userId: userInfo.userId,
+      districtId: parseInt(selectedDistrict),
+      quarterId: parseInt(selectedQuarter)
     };
+    const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle', 'corporate'];
+  
+    if (!updatedAddress.corporate) {
+      // Corporate işaretli değilse, diğer alanları kontrol et
+      const isNonCorporateEmpty = requiredFields.some((field) => {
+        const value = updatedAddress[field];
+        return value === undefined || value === null || value === '' || (typeof value === 'number' && isNaN(value));
+      });
+  
+      if (isNonCorporateEmpty) {
+        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // Diğer alanlar eksik, işlemi tamamlama
+      }
+    } else {
+      // Corporate işaretliyse, corporate alanları kontrol et
+      const requiredCorporateFields = ['taxIdentificationNumber', 'taxOffice', 'companyName', 'email'];
+      const isCorporateEmpty = requiredCorporateFields.some((corporateField) => {
+        return !updatedAddress[corporateField];
+      });
+  
+      if (isCorporateEmpty) {
+        toast.error('Lütfen Kurumsal Alanların Tümünü Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // Corporate alanlar eksik, işlemi tamamlama
+      }
+    }
+  
+    // Tüm kontrolleri geçtiyse işlemi tamamla ve adresi ekle
+    fetch(baseUrl + "api/UserAddress/CreateUserAddress", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedAddress),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("data",data);
+      setErrorMessage(data.message);
+  
+      const requestBody = {
+        userId: userInfo.userId,
+        taxIdentificationNumber: address.taxIdentificationNumber,
+        taxOffice: address.taxOffice,
+        companyName: address.companyName,
+        userAddressId: data.data,
+        email: address.email,
+      };
+  
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(requestBody)
+      };
+  
+      fetch(baseUrl + `api/CorparateAddress/CreateCorparateAddress`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setErrorMessage(data.message);
+        toast.success('Adres Başarıyla Eklenmiştir', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
+      })
+      .catch(error => {
+        console.error(error);
+        setErrorMessage(error.message);
+      });
+    })
+    .catch((error) => {
+      setErrorMessage(error.message);
+    });
+  };
+  
 
     const handleSelectDistrictChange = (event) => {
       const selectedDistrict = event.target.value;
@@ -150,8 +185,10 @@ const AddUserAddress = () => {
       const selectedQuarter = event.target.value;
       setSelectedQuarter(selectedQuarter);
     };
+
   return(
     <div style={{ marginTop: "100px" }}>
+        <ToastContainer />
     <h2  style={{ textAlign: "center", fontStyle:"italic" ,fontFamily:"times"}}>Adres Ekle</h2>
     <div style={{ marginTop: "20px" ,textAlign: "center"}}>
           <div >
@@ -348,7 +385,7 @@ const AddUserAddress = () => {
             
               <p className="profile-text">Email:
               <input
-                type="text"
+                type="email"
                 name="email"
                 value={address.email}
               
