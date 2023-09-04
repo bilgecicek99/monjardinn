@@ -63,7 +63,7 @@ const Search = () => {
     value={searchTerm}
     onChange={(e) => setSearchTerm(e.target.value)} 
     style={{border:"1px solid #D9D9D9",
-    boxShadow: "20px 20px 20px rgba(0,0,0,0.25)",
+
       display: 'inline-block', 
       border: 'none',
       borderBottom: '1px solid black',

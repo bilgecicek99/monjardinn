@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import React, { useState,useEffect } from 'react';
 import './index.css';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from './config/Constants';
 
 function Navbars() {
+  const currentLocation = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMenufav, setActiveMenufav] = useState(false);
   const [activeMenubasket, setActiveMenubasket] = useState(false);
@@ -27,6 +28,18 @@ function Navbars() {
   };
   const storedUser = localStorage.getItem('UserAllInfo');
   const userAllInfo = JSON.parse(storedUser);
+  useEffect(() => {
+    // Her sayfa değiştiğinde activeMenu'ları sıfırla
+    setActiveMenufav(currentLocation.pathname);
+    setActiveMenubasket(currentLocation.pathname);
+    setActiveMenuprofile(currentLocation.pathname);
+  }, [currentLocation.pathname]);
+
+  const handleMenuClick = (menu) => {
+    setActiveMenufav(menu);
+    setActiveMenubasket(menu);
+    setActiveMenuprofile(menu);
+  };
 
 console.log("userall",userAllInfo);
 
@@ -135,7 +148,7 @@ useEffect(() => {
             <NavLink
               className={`menu-items-icon ${activeMenubasket === '/Basket' ? 'active' : ''}`}
               to='/Basket'
-              onClick={() => setActiveMenubasket('2/Basket')}
+              onClick={() => setActiveMenubasket('/Basket')}
             >
               <img src={activeMenubasket === '/Basket' ? "/images/selectedbasket.png" : "/images/menu-icon2.png"} alt="" width={35} height={40} />
             </NavLink>
