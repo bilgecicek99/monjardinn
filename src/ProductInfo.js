@@ -9,6 +9,8 @@ import { getEmail, getToken, getUserInfo} from "./service/AuthService";
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -175,6 +177,17 @@ const handleSelectQuarterChange = (event) => {
     setAddedToCart(true);
   };
   const handleAddToFavorites = () => {
+    if (!token) {
+      toast.error('Ürünü Favorilemek için Giriş Yapmalısınız', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return; 
+    }
+
     if(favorited)
     {     
       console.log(favoriteId);
@@ -191,11 +204,25 @@ const handleSelectQuarterChange = (event) => {
           setFavoriteId("");
          }
          else{
-          alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+          toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return; 
          }
         })
         .catch((error) => {
-          alert("Bilinmeyen bir hata ile karşılaşıldı.")
+          toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return; 
         });
     }
     else{
@@ -219,11 +246,25 @@ const handleSelectQuarterChange = (event) => {
             setFavoriteId(data.data);
            }
            else{
-            alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+            toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return; 
            }
       })
       .catch(error => {
-        alert('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; 
       });
     }
     setFavorited(!favorited);
@@ -253,8 +294,42 @@ const handleSelectQuarterChange = (event) => {
 
   const addToBasket = async(event) => {
     event.preventDefault();
+
+    if (!token) {
+      toast.error('Sepetinize Ürün Eklemek için Giriş Yapmalısınız', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return; 
+    }
+
+    if (!selectedPiece  || !shipmentDate) {
+      toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
+    }
+
     if(isExistingAddress && selectedAddress)
     {
+      if ( !selectedAddress) {
+        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return;
+      }
+
       fetch(baseUrl+"api/Basket/CreateBasket", {
         method: "POST",
         headers: {
@@ -271,17 +346,36 @@ const handleSelectQuarterChange = (event) => {
                             })
         .then((response) => response.json())
         .then((data) => {
+          
           if(data.success)
           {
-            alert("Değişiklikler başarıyla kaydedilmiştir.");
-            navigate("/Basket")
+            console.log(data);
+            toast.success('Ürün Sepete Başarıyla Eklenmiştir', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            setTimeout(() => {
+              navigate("/Basket");
+            }, 2000);
           }
           else{
-            alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
+            console.log(data);
+            toast.error(data.message, {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return; 
           }
           //setErrorMessage(data.message);
         })
         .catch((error) => {
+          console.error(error);
           //setErrorMessage(error.message);
         });
     }
@@ -294,25 +388,38 @@ const handleSelectQuarterChange = (event) => {
         quarterId:parseInt(selectedQuarter),
         secret:!address.secret
       };
-      const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId','quarterId','address','addressTitle','corporate','shipmentDate','piece'];
+      const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId','quarterId','address','addressTitle','corporate'];
       const isEmptyField = requiredFields.some((field) => {
         const value = updatedAddress[field];
         return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
       });
         
       if (isEmptyField) {
-        alert('Lütfen Tüm Alanları Doldurunuz.');
+        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; 
       } else {
         if(updatedAddress.corporate)
         {
-          const requiredFields = ['taxIdentificationNumber', 'taxOffice', 'companyName'];
+          const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId','quarterId','address','addressTitle','corporate','taxIdentificationNumber', 'taxOffice', 'companyName','email'];
           const isEmptyField = requiredFields.some((field) => {
             const value = updatedAddress[field];
             return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
           });
           if (isEmptyField) {
-            alert('Lütfen Tüm Alanları Doldurunuz.');
-            return "";
+            toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return; 
           }
         }
         fetch(baseUrl+"api/UserAddress/CreateUserAddress", {
@@ -359,7 +466,14 @@ const handleSelectQuarterChange = (event) => {
             .then(data => {
               if(data.success)
                 {
-                  alert("Değişiklikler başarıyla kaydedilmiştir.")
+                  toast.success('Adres Başarıyla Eklenmiştir', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                  });
+            
                   setSaveBasket(true)
                 }
               })
@@ -384,22 +498,38 @@ const handleSelectQuarterChange = (event) => {
                   body: JSON.stringify({
                     userId: userID,
                     productId: props.urunId,
-                    total: parseInt(address.piece),
+                    total: selectedPiece,
                     userAddressId: parseInt(setNewUserAddressId),
-                    shipmentDate: new Date(address.shipmentDate).toISOString(),
-                    cardNote: address.note
+                    shipmentDate: shipmentDate,
+                    cardNote: note
                   }),
                   })
                   .then((response) => response.json())
                   .then((data) => {
                     if(data.success)
                     {
-                       navigate('/Basket');
-                       alert(data.message);
+                      toast.success('Ürün Sepete Başarıyla Eklenmiştir', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                      });
+                      setTimeout(() => {
+                        navigate("/Basket");
+                      }, 2000);
                     }
                     if(!data.success)
                     {
-                      alert(data.message)
+                      console.log(data)
+                      toast.error(data.message, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                      });
+                      return; 
                     }
                     //setErrorMessage(data.message);
                   })
@@ -409,7 +539,7 @@ const handleSelectQuarterChange = (event) => {
                }
                    });
       } 
-      }
+    }
   };
 
   const fetchDistricts = async () => {
@@ -445,7 +575,14 @@ const handleSelectQuarterChange = (event) => {
             setUserAddress(data.data);
 
           } else {
-            alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
+            toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return; 
           }
       
         })
@@ -479,7 +616,14 @@ const handleSelectQuarterChange = (event) => {
             setFavoriteId(userFavoriteId?.favoriteId);
           }
         } else {
-          alert(data.message ?? "bilinmeyen bir hata ile karşılaşıldı")
+          toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return; 
         }
     
       })
@@ -504,6 +648,8 @@ const handleSelectQuarterChange = (event) => {
 
   return (
     <div  className="product-info-page"> 
+            <ToastContainer />
+
       <div  className="product-info-area" >
         <div style={{ display: "flex", alignItems: "center"}}>
         <img
@@ -591,6 +737,7 @@ const handleSelectQuarterChange = (event) => {
                       onDecrement={handleDecrement}
                     />
                     
+                    
                       <textarea
                         value={note}
                         onChange={handleNote}
@@ -656,9 +803,7 @@ const handleSelectQuarterChange = (event) => {
                               )}
                           </select>
 
-                      <DatePicker   
-                    name="shipmentDate"
-                    value={address.shipmentDate}
+                          <DatePicker
                     className="product-detail-form"
                     style={{ width: "48%" }}
                     selected={shipmentDate}
@@ -667,13 +812,15 @@ const handleSelectQuarterChange = (event) => {
                     minDate={new Date()}
                     placeholderText="Tarih Seçiniz"
                   />
-                   <QuantitySelector
-                    name="piece"
-                    value={address.piece}        
-                    onIncrement={handleIncrement}
-                    onDecrement={handleDecrement}
-                      />
 
+                    
+                  
+
+<QuantitySelector
+                      value={selectedPiece}
+                      onIncrement={handleIncrement}
+                      onDecrement={handleDecrement}
+                    />
                   
                       <input
                             type="text"
@@ -737,7 +884,7 @@ const handleSelectQuarterChange = (event) => {
                       {address.corporate && (
                       <div>
                           <input
-                            type="text"
+                            type="number"
                             name="taxIdentificationNumber"
                             value={address.taxIdentificationNumber}
                             onChange={handleInputChange}
@@ -759,6 +906,14 @@ const handleSelectQuarterChange = (event) => {
                             onChange={handleInputChange}
                             className="product-detail-form"
                             placeholder="Şirket Adı"
+                          />
+                            <input
+                            type="text"
+                            name="email"
+                            value={address.email}
+                            onChange={handleInputChange}
+                            className="product-detail-form"
+                            placeholder="Mail Adresi"
                           />
                       </div>
                       )}
