@@ -16,6 +16,7 @@ function Navbars() {
   const [activeMenufav, setActiveMenufav] = useState(false);
   const [activeMenubasket, setActiveMenubasket] = useState(false);
   const [activeMenuprofile, setActiveMenuprofile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const navigate = useNavigate();
  const token=getToken();
@@ -70,14 +71,79 @@ useEffect(() => {
   fetchProfilVerileri();
 }, []);
 
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
 
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
   return (
     <Navbar expand="lg" fixed="top">
+                  {isMobile ? <>
+                    <Container>
+        
+
+          <Nav className="" >
+          <div className={`menu-icon ${menuOpen ? 'menu-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+  <FiMenu />
+</div>
+
+            {menuOpen && (
+              <div className="menu-items" onClick={() => setMenuOpen(false)}>
+                
+               {user && (
+                  <div className="text-center">
+                    <img src="/images/usericon.png" alt="" width={"45"} height={"45"}  style={{marginBottom:"5px"}}/>
+                    <p className='menu-items-admin-link'>{userAllInfo.firstName} {userAllInfo.lastName} </p>
+                    <p className='menu-items-admin-link'>{user.email}</p>
+                  </div>
+                )}
+
+                <div className="menu-items-container">
+                  <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>
+                  <hr />
+                  <NavLink className="menu-items-link" to='/Favorite'>Favoriler</NavLink>
+                  <hr />
+                  <NavLink className="menu-items-link" to='/Basket'>Sepetim</NavLink>
+                  <hr />
+                  <NavLink className="menu-items-link" to='/Profile'>Profil</NavLink>
+                  <hr />
+                  <NavLink className="menu-items-link" to='/Search'>Arama</NavLink>
+                  <hr />
+                  {/* <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>
+                  <hr /> */}
+                  <NavLink className="menu-items-link" to='/Blog'>Blog</NavLink>
+                  <hr />
+                  <NavLink className="menu-items-link" to='/Contact'>İletişim</NavLink>
+                  <hr /> 
+                 <NavLink className="menu-items-link" to='/Morethan'>
+                  <img src="/images/morethanicon.png" alt="More Than Icon" width={30} style={{marginRight:"5px"}} />
+                  Daha Fazla
+                </NavLink>
+
+                  <hr />
+                  {/* <NavLink className="menu-items-link" to=''>Ayarlar</NavLink>
+                  <hr /> */}
+               {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
+                </div>
+              </div>
+            )}
+          </Nav>
+          <Navbar.Brand style={{ margin:"auto" }}>
+          <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
+        </Navbar.Brand>
+      </Container>
+                  </> : 
+                  <>
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-        <Navbar.Collapse id="basic-navbar-nav" className="navbar-left">
-          <Nav className="me-auto">
+          <Nav className="me-auto navbar-left" >
           <div className={`menu-icon ${menuOpen ? 'menu-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
   <FiMenu />
 </div>
@@ -117,14 +183,13 @@ useEffect(() => {
               </div>
             )}
           </Nav>
-        </Navbar.Collapse>
+        
 
         <Navbar.Brand style={{ margin: "auto" }}>
           <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
         </Navbar.Brand>
 
-        <Navbar.Collapse id="basic-navbar-nav" className="navbar-right">
-          <Nav className="me-auto">
+          <Nav className="me-auto navbar-right">
             <NavLink
               className={`menu-items-icon ${activeMenufav === '/Favorite' ? 'active' : ''}`}
               to='/Favorite'
@@ -159,8 +224,12 @@ useEffect(() => {
           
           
           </Nav>
-        </Navbar.Collapse>
+      
       </Container>
+      </>
+      }
+
+    
     </Navbar>
   );
 }

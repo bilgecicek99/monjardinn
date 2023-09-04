@@ -225,14 +225,14 @@ const EditUserAddress = () => {
 
 
   return(
-    <div style={{ margin: "100px" }}>
-    <h1  style={{ textAlign: "center", fontStyle:"italic" }}>Adres Güncelle</h1>
-    <div style={{ display: "flex", justifyContent: "center",marginTop: "50px" }}>
+    <div style={{ marginTop: "100px" }}>
+    <h2  style={{ textAlign: "center", fontStyle:"italic" ,fontFamily:"times"}}>Adres Güncelle</h2>
+    <div style={{  justifyContent: "center",marginTop: "20px" }}>
       
           <div >
-            <div style={{ display:"block" }}>
-            <div> 
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Ad Soyad:</span>
+            <div className="profile-card-area">
+            
+              <p className="profile-text">Ad Soyad:
               <input
                 type="text"
                 name="nameSurname"
@@ -240,11 +240,11 @@ const EditUserAddress = () => {
                 onChange={handleInputChange}
                 className="edit-input-area"
               />
-              </div>
+             </p>
               <hr className="profile-hr" />
 
-              <div >
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Telefon:</span>
+              
+              <p  className="profile-text">Telefon:
               <input
                 type="number"
                 name="phone"
@@ -253,11 +253,11 @@ const EditUserAddress = () => {
                 onChange={handleInputChange}
                 className="edit-input-area"
               />
-            </div>
+            </p>
             <hr className="profile-hr" />
 
-            <div >
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Ülke:</span>
+            
+              <p  className="profile-text">Ülke:
               <input
                 type="text"
                 name="country"
@@ -266,12 +266,12 @@ const EditUserAddress = () => {
                 disabled={true}
                 className="edit-input-area"
                 style={{backgroundColor:"transparent"}}
-              />
-            </div>
+              /></p>
+          
             <hr className="profile-hr" />
 
-              <div >
-              <span style={{fontStyle:"italic",fontFamily:"Times New Roman"}}>Şehir:</span>
+             
+              <p  className="profile-text">Şehir:
               <input
                 type="text"
                 name="city"
@@ -280,12 +280,12 @@ const EditUserAddress = () => {
                 disabled={true}
                 className="edit-input-area"
                 style={{backgroundColor:"transparent"}}
-              /></div>
+              /></p>
                <hr className="profile-hr" />        
        
 
-            <div>
-              <span style={{fontStyle: "italic", fontFamily: "Times New Roman"}}>İlçe:</span>
+          
+              <p  className="profile-text">İlçe:
               <select
                 name="districtId"
                 value={selectedDistrict}
@@ -303,12 +303,12 @@ const EditUserAddress = () => {
                       </option>
                     ))
                   )}
-              </select>
-            </div>
+              </select></p>
+          
             <hr className="profile-hr" />
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Mahalle:</span>
+           
+              <p  className="profile-text">Mahalle:
               <select
                 name="quarterId"
                 value={selectedQuarter}
@@ -326,13 +326,13 @@ const EditUserAddress = () => {
                       </option>
                     ))
                   )}
-              </select>
-            </div>
+              </select></p>
+           
             <hr className="profile-hr" />
             
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Adres Başlığı:</span>
+            
+              <p  className="profile-text">Adres Başlığı:
               <input
                 type="text"
                 name="addressTitle"
@@ -341,11 +341,11 @@ const EditUserAddress = () => {
                 onChange={handleInputChange}
                 className="edit-input-area"
               />
-            </div>
+           </p>
             <hr/>
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Adres:</span>
+          
+              <p  className="profile-text">Adres:
               <input
                 type="text"
                 name="address"
@@ -353,25 +353,29 @@ const EditUserAddress = () => {
             
                 onChange={handleInputChange}
                 className="edit-input-area"
-              />
-            </div>
+              /></p>
+            
             <hr/>
-            <div >
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Kurumsal Adres:</span>
+
+
+          
+              <p  className="profile-text">
               <input
                 type="checkbox"
                 name="corporate"
                 checked={address.corporate}
                 onChange={handleInputChange}
                 className="edit-input-area"
+                style={{marginRight:"5px"}}
               />
-            </div>
+              Kurumsal Adres</p>
+            
             <hr className="profile-hr" />
             {address.corporate && (
             <div>
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Vergi Numarası:</span>
+          
+              <p  className="profile-text">Vergi Numarası:
               <input
                 type="text"
                 name="taxIdentificationNumber"
@@ -379,12 +383,12 @@ const EditUserAddress = () => {
               
                 onChange={handleInputChange}
                 className="edit-input-area"
-              />
-            </div>
+              /></p>
+           
             <hr className="profile-hr" />
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Vergi Dairesi:</span>
+         
+              <p  className="profile-text">Vergi Dairesi:
               <input
                 type="text"
                 name="taxOffice"
@@ -393,11 +397,11 @@ const EditUserAddress = () => {
                 onChange={handleInputChange}
                 className="edit-input-area"
               />
-            </div>
+          </p>
             <hr className="profile-hr" />
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Şirket İsmi:</span>
+            
+              <p className="profile-text" >Şirket İsmi:
               <input
                 type="text"
                 name="companyName"
@@ -405,12 +409,12 @@ const EditUserAddress = () => {
               
                 onChange={handleInputChange}
                 className="edit-input-area"
-              />
-            </div>
+              /></p>
+            
             <hr className="profile-hr" />
 
-            <div>
-              <span style={{fontStyle:"italic", fontFamily:"Times New Roman"}}>Mail Adresi:</span>
+           
+              <p  className="profile-text">Mail Adresi:
               <input
                 type="text"
                 name="email"
@@ -418,8 +422,8 @@ const EditUserAddress = () => {
               
                 onChange={handleInputChange}
                 className="edit-input-area"
-              />
-            </div>
+              /></p>
+            
             <hr className="profile-hr" />
           </div>
           )}
@@ -433,9 +437,11 @@ const EditUserAddress = () => {
                 className="edit-input-area"
               />
             </div>
+
             <hr className="profile-hr" /> */}
+                      <button onClick={handleKaydet} className="save-button" style={{ marginTop:"30px", float:"right",marginBottom:"30px"}}>Kaydet</button>
+
           </div>
-          <button onClick={handleKaydet} className="save-button" style={{ marginTop:"30px", float:"right"}}>Kaydet</button>
           </div>
           {errorMessage && <p className="message">{errorMessage}</p>}
 

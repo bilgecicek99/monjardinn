@@ -82,7 +82,7 @@ button {
   z-index: 1;
   left: 0;
   padding-bottom: 400px;
-  padding-top: 40px;
+  padding-top: 60px;
   width: 350px;
 
 }
@@ -120,6 +120,7 @@ font-family: 'Times New Roman';
 font-style: italic;
 font-weight: bold;
 text-align: center;
+margin-bottom: 0px !important;
 }
 .baslik:hover{
   font-family: 'Times New Roman';
@@ -652,7 +653,7 @@ nav li {
  
   .profile-card-area{
     width: 100%;
-    padding: 20px;
+    padding: 30px;
   }
   .profile-password{
     color: #893694 ;
@@ -1013,4 +1014,17 @@ li.selected {
 
 .product-card{
   margin-bottom: 50px;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+  .favorite-card-area {
+    width: 100%;
+  }
+  
 }

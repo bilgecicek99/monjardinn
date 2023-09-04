@@ -305,7 +305,7 @@ const Profile = () => {
 
   return (
     <div style={{ marginTop: "100px" }}>
-      <h1  style={{ textAlign: "center", fontStyle:"italic" }}>Profilim</h1>
+      <h2  style={{ textAlign: "center", fontStyle:"italic",fontFamily:"times"}}>Profilim</h2>
       <div style={{ display: "block", justifyContent: "center",textAlign:"center" }}>
     <div className="profile-card-area">
       <p className="profile-text">Adı: 
@@ -385,7 +385,7 @@ const Profile = () => {
       <hr className="profile-hr" />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0",marginBottom:"30px" }}>
-        <h2 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h2>
+        <h3 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h3>
         <a
           style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer", fontFamily:"times", fontSize:"18px" }}
           onClick={() => handleAddAddress()}
