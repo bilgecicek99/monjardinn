@@ -30,7 +30,9 @@ const FavoriListesi = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.userId === null) {
+  
       console.error('Kullanıcı kimliği (userId) null. Favori ürünler alınamıyor.');
+     
       return; // Favori ürünleri alma işlemini burada durdur.
     }
 

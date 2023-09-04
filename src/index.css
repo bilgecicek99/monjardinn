@@ -1086,5 +1086,10 @@ li.selected {
 
 
 
+.toplamtext{
+  font-size: 25px !important;
+  font-weight: bold;
+  font-style: italic ;
+  font-family: 'Times New Roman', Times, serif;
+}
 
- 

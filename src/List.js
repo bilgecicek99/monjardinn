@@ -276,15 +276,15 @@ const List = () => {
                 <img
                   style={{
                     borderRadius: "15px",
-                    height: "150px",
-                    width: "60%",
+                    height: "250px",
+                    width: "200px",
                     maxHeight: "100%",
                     filter: product.stock === 0 ? "blur(2px)" : "none",
                   }}
                   src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
                   alt={product.name}
                 />
-                {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter", width: "60%", textAlign: "center" }}>Tükendi</p>}
+                {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter", width: "200px",  textAlign: "center" }}>Tükendi</p>}
                 <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
                 <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
                 <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>
