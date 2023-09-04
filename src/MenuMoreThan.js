@@ -19,7 +19,7 @@
       
       <div className="container">
         <div className="left-panel">
-          <ul>
+          <ul style={{paddingLeft:0}}>
             {listItems.map((item, index) => (
               <li
                 key={index}

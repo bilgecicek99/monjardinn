@@ -56,7 +56,7 @@ const BlogCard = ({ id, title, image, likes, caption }) => {
     <div style={{ margin: "auto", width: "300px", height: "400px", border: "none", borderRadius: "10px", padding: "10px", marginBottom: "20px", background:"#E7D1EA" }}>
     <Link to={`/blogdetail/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
 
-      <img src={image || defaultImage} alt={title} style={{ width: "100%", maxHeight: "60%",justifyContent:"center", objectFit: "cover",borderRadius:"10px",marginTop:"50px" }} />
+      <img src={image || defaultImage} alt={title} style={{ width: "100%", height: "200px",justifyContent:"center", objectFit: "cover",borderRadius:"10px",objectFit:"contain" }} />
      <h3 style={{ fontFamily: 'Times New Roman', fontWeight: 'bold' , marginTop:"20px"}}>{title}</h3>
      <p style={{ fontFamily: 'Times New Roman', fontStyle: 'italic',display: "inline-block",
         wordBreak: "break-word",
