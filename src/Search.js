@@ -108,7 +108,9 @@ const Search = () => {
             style={{
               width: "250px",
               height: "300px",
-              borderRadius:"30px"
+              borderRadius:"30px",
+              filter: product.stock === 0 ? "blur(2px)" : "none",
+              
              // objectFit: "contain",
              // border: "1px solid #D9D9D9",
               //boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"
@@ -119,12 +121,14 @@ const Search = () => {
             }
             alt={product.name}
           />
+            {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter",textAlign: "center",width:"250px", marginLeft:"50px" }}>Tükendi</p>}
           <h3 className="product-name" style={{ marginTop: "25px",marginBottom:0,fontFamily:"times" }}>
             {product.name}
           </h3>
           <p className="product-price" style={{ marginTop: "0px" }}>
             {product.price} ₺
           </p>
+        
         </div>
       </Link>
     </div>
