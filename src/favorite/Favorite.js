@@ -113,19 +113,22 @@ const FavoriListesi = () => {
       <Link to={`/productinfo/${productId}`} style={{ textDecoration: 'none', color: 'black' }}>
 
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <img src={Image} alt={title} style={{ marginRight: "30px", width: "150px", height: "200px", objectFit: "contain" }} />
+          <img src={Image} alt={title} style={{ marginRight: "30px", width: "120px", height: "200px", objectFit: "contain" }} />
           <div style={{ textAlign: "left" }}>
             <h2 style={{ fontFamily: "times new roman", fontWeight: "bold" }}>{title}</h2>
             <p style={{ fontFamily: "times new roman", fontStyle: "italic", fontSize: "20px", fontWeight: "lighter" }}>{description}</p>
             <p style={{ fontFamily: "times new roman", fontWeight: "lighter", fontStyle: "italic", fontSize: "20px" }}>{price}</p>
+
           </div>
         </div>
+
         </Link>
+
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", cursor:"pointer" }}>
           <img
             src="/images/selectedfavorite.png"
             alt=""
-            style={{ marginRight: "10px" }}
+            style={{position:"absolute" }}
             width="30px"
             height="30px"
             onClick={(e) => {
