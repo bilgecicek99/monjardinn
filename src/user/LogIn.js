@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { getToken, setUserSession,setUserInfo } from "../service/AuthService";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
+import WithNavbar from '../WithNavbar'; 
 
 const LogIn = () => {
 const [email, setEmail] = useState("");
@@ -141,4 +142,4 @@ return (
 );
 };
 
-export default LogIn;
+export default WithNavbar(LogIn);

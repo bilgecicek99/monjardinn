@@ -92,13 +92,13 @@ const AddUserAddress = () => {
       }
     } else {
       // Corporate işaretliyse, corporate alanları kontrol et
-      const requiredCorporateFields = ['taxIdentificationNumber', 'taxOffice', 'companyName', 'email'];
+      const requiredCorporateFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle','taxIdentificationNumber', 'taxOffice', 'companyName', 'email'];
       const isCorporateEmpty = requiredCorporateFields.some((corporateField) => {
         return !updatedAddress[corporateField];
       });
   
       if (isCorporateEmpty) {
-        toast.error('Lütfen Kurumsal Alanların Tümünü Doldurunuz.', {
+        toast.error('Lütfen Kurumsal Alan ve Diğer Alanların Tümünü Doldurunuz.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
           hideProgressBar: false,
@@ -346,7 +346,7 @@ const AddUserAddress = () => {
            
               <p className="profile-text">Vergi Numarası:
               <input
-                type="text"
+                type="number"
                 name="taxIdentificationNumber"
                 value={address.taxIdentificationNumber}
               
@@ -388,7 +388,6 @@ const AddUserAddress = () => {
                 type="email"
                 name="email"
                 value={address.email}
-              
                 onChange={handleInputChange}
                 className="edit-input-area"
               />

@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
 import WithNavbar from '../WithNavbar'; 
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditUserAddress = () => {
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ const EditUserAddress = () => {
   const handleKaydet = async(event) => {
     event.preventDefault();
     
-    const { email, userAddressId,corparateResponseModel,taxIdentificationNumber,taxOffice, adress, ...rest } = address;
+    const { userAddressId,corparateResponseModel, adress, ...rest } = address;
     const updatedAddress = {
       ...rest,
       userId: userInfo.userId,
@@ -69,6 +71,47 @@ const EditUserAddress = () => {
       quarterId: parseInt(selectedQuarter),
     };
     
+
+    const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle', 'corporate'];
+  
+    if (!updatedAddress.corporate) {
+      // Corporate işaretli değilse, diğer alanları kontrol et
+      const isNonCorporateEmpty = requiredFields.some((field) => {
+        const value = updatedAddress[field];
+        return value === undefined || value === null || value === '' || (typeof value === 'number' && isNaN(value));
+      });
+  
+      if (isNonCorporateEmpty) {
+        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // Diğer alanlar eksik, işlemi tamamlama
+      }
+    } else {
+      // Corporate işaretliyse, corporate alanları kontrol et
+      const requiredCorporateFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle','taxIdentificationNumber', 'taxOffice', 'companyName', 'email'];
+      const isCorporateEmpty = requiredCorporateFields.some((corporateField) => {
+        return !updatedAddress[corporateField];
+      });
+  
+      if (isCorporateEmpty) {
+        console.log("kk")
+        toast.error('Lütfen Kurumsal Alan ve Diğer Alanların Tümünü Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        console.log(updatedAddress)
+        return; // Corporate alanlar eksik, işlemi tamamlama
+      }
+    }
+
       fetch(baseUrl+"api/UserAddress/UpdateUserAddress", {
         method: "PUT",
         headers: {
@@ -105,8 +148,16 @@ const EditUserAddress = () => {
               .then(response => response.json())
               .then(data => {
                 setErrorMessage(data.message);
-                  alert("Değişiklikler başarıyla kaydedilmiştir.")
-                  navigate("/profile")
+                toast.success('Adresteki Değişiklikler Başarıyla Eklenmiştir', {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                });
+                setTimeout(() => {
+                  navigate("/profile");
+                }, 2000);
               })
               .catch(error => {
                 console.error(error);
@@ -119,8 +170,16 @@ const EditUserAddress = () => {
               .then(response => response.json())
               .then(data => {
                 setErrorMessage(data.message);
-                  alert("Değişiklikler başarıyla kaydedilmiştir.")
-                  navigate("/profile")
+                toast.success('Adresteki Değişiklikler Başarıyla Eklenmiştir', {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                });
+                setTimeout(() => {
+                  navigate("/profile");
+                }, 2000);
               })
               .catch(error => {
                 console.error(error);
@@ -226,6 +285,8 @@ const EditUserAddress = () => {
 
   return(
     <div style={{ marginTop: "100px" }}>
+              <ToastContainer />
+
     <h2  style={{ textAlign: "center", fontStyle:"italic" ,fontFamily:"times"}}>Adres Güncelle</h2>
     <div style={{  justifyContent: "center",marginTop: "20px" }}>
       
@@ -377,7 +438,7 @@ const EditUserAddress = () => {
           
               <p  className="profile-text">Vergi Numarası:
               <input
-                type="text"
+                type="number"
                 name="taxIdentificationNumber"
                 value={address.taxIdentificationNumber}
               
