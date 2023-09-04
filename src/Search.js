@@ -54,8 +54,8 @@ const Search = () => {
 
   return (
     <>
-      <div className="search-area">
-        <form onSubmit={handleSearch} style={{ paddingTop: '10%', paddingBottom: '3%' }}>
+      <div style={{textAlign:"center",marginTop:"100px"}}>
+        <form onSubmit={handleSearch}>
         <input
     type="text"
     id="searchTerm"
@@ -70,7 +70,7 @@ const Search = () => {
       outline: 'none',
       fontSize: '16px',
       padding: '5px 0',
-      width: '30%', 
+      width: '70%', 
       marginRight: '5px',
       fontStyle: 'italic',
     }}
@@ -111,7 +111,7 @@ const Search = () => {
               borderRadius:"30px",
               filter: product.stock === 0 ? "blur(2px)" : "none",
               
-             // objectFit: "contain",
+              objectFit: "contain",
              // border: "1px solid #D9D9D9",
               //boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"
             }}
@@ -121,7 +121,7 @@ const Search = () => {
             }
             alt={product.name}
           />
-            {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter",textAlign: "center",width:"250px", marginLeft:"50px" }}>Tükendi</p>}
+            {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter",textAlign: "center",width:"250px", marginLeft:"50px",margin:"auto" }}>Tükendi</p>}
           <h3 className="product-name" style={{ marginTop: "25px",marginBottom:0,fontFamily:"times" }}>
             {product.name}
           </h3>

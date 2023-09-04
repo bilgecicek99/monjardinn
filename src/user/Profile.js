@@ -124,8 +124,13 @@ const Profile = () => {
   const updatePassword = async() => {
   try {
     if (!oldPassword || !newPassword) {
-     
-      alert('Lütfen mevcut şifre ve yeni şifre alanlarını doldurunuz.');
+      toast.error('Lütfen mevcut şifre ve yeni şifre alanlarını doldurunuz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
       return;
     }
     

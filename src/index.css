@@ -936,6 +936,11 @@ input[type='radio'] {
     width: 12px;
     height: 12px;
   } 
+  .cardImageContainer{
+    width: 100px !important;
+    height: 100px !important;
+  }
+
  
 } 
 .container {
@@ -943,7 +948,42 @@ input[type='radio'] {
   margin-left: 10px;
 }
 
+.cardImageContainer {
+  width: "50%";
+  text-align: "center";
+  height: "100%";
+}
 
+.cardx {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #FFFFFF;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 50px;
+  height: 250px; /* Varsayılan yükseklik */
+  background-image: url('./images/card-background.png')
+}
+.home-card-image{
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Telefonda yüksekliği değiştir */
+@media screen and (max-width: 768px) { /* Örneğin, 768px genişlikten küçük ekranlar için */
+  .cardx {
+    height: 150px; /* Telefonda yeni yükseklik */
+  }
+  .home-card-image{
+    width: 100px;
+    height: 100px;
+   
+  }
+  
+}
 
 
 .right-panel {

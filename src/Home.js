@@ -51,15 +51,15 @@ const Home = () => {
     
       return (
         <Link to={`/List/${id}`} style={styles.link}>
-          <div key={id} style={styles.card}>
+          <div key={id} className="cardx">
             <div style={styles.cardContent}>
               <p className="textcard">{name}</p>
             </div>
-            <div className="cardimage" style={styles.cardImageContainer}>
+            <div className="cardImageContainer">
               {fileUrl ? ( 
-                <img style={styles.cardImage} src={fileUrl} alt={name} />
+                <img  className="home-card-image"  src={fileUrl} alt={name} />
               ) : (
-                <img style={styles.cardImage} src={defaultImageUrl} alt="Logo" />
+                <img className="home-card-image" src={defaultImageUrl} alt="Logo" />
               )}
             </div>
           </div>
@@ -69,30 +69,8 @@ const Home = () => {
     
     
     const styles = {
-      card: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundImage: "url('/images/card-background.png')",
-        color: "#FFFFFF",
-        padding: "40px",
-        borderRadius: "12px",
-        marginBottom: "50px",
-        height: "250px", // set a fixed height for the card
-      },
-      cardImageContainer: {
-        width: "50%",
-        textAlign: "center",
-        height: "100%", // set the height of the container to match the card's height
-      },
-      cardImage: {
-        width: "100%",
-        height: "auto", 
-        textAlign: "center",
-        maxWidth: "100%", 
-        maxHeight: "200px",
-      },
+     
+     
       cardContent: {
         width: "50%",
         textAlign: "center",
@@ -116,8 +94,7 @@ return (
               key={card.id}
               fileUrl={card.fileUrl}
               name={card.name}
-              width="400px"
-              height="300px"
+              
               id={card.id}
               data={card.data}
             />
@@ -132,8 +109,7 @@ return (
               fileUrl={card.fileUrl}
               name={card.name}
               description={card.description}
-              width="400px"
-              height="300px"
+    
               id={card.id}
               data={card.data}
 
