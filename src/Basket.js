@@ -13,6 +13,8 @@ const Basket = () => {
   
   const [totalItems, setTotalItems] = useState(); 
   const [totalPrice, setTotalPrice] = useState();
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
+
   let token = getToken();
 
   const [openDetailsId, setOpenDetailsId] = useState(null);
@@ -94,46 +96,49 @@ useEffect(() => {
   fetchData();
 }, []);
 
-const handleDelete = async(id) => {
-  try {  
+const handleDelete = async (id) => {
+  try {
     const requestOptions = {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       method: 'DELETE',
     };
-    
-   await fetch(baseUrl+`api/Basket/DeleteBasket?id=${id}`,requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      if(data.success)
-      {
-        setItems(data.data);
 
-      // Calculate total items and total price
+    const response = await fetch(baseUrl + `api/Basket/DeleteBasket?id=${id}`, requestOptions);
+    if (!response.ok) {
+      throw new Error(`HTTP hata: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Silme işlemi başarılı oldu, şimdi sepet verilerini güncelleyin
+      const updatedBasket = items.filter(item => item.id !== id);
+
+      // Calculate total items and total price for the updated basket
       let totalItemCount = 0;
-      const totalPrice = data.data.reduce((total, item) => {
+      const totalPrice = updatedBasket.reduce((total, item) => {
         totalItemCount += item.total; // Sum up the quantities of all items
         const itemPrice = item.productDetailResponse.price;
         const itemTotal = item.total;
         return total + itemPrice * itemTotal;
       }, 0);
 
+      setItems(updatedBasket);
       setTotalItems(totalItemCount);
       setTotalPrice(totalPrice);
-      }
-      else{
-       // alert(data?.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
-      }
-  
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    } else {
+      // API'den başarısız bir yanıt geldiyse burada uygun bir işlem yapın
+      console.error(data?.message || "Bilinmeyen bir hata ile karşılaşıldı.");
+    }
   } catch (error) {
-    console.error("Sepet getirilirken hata oluştu: ", error);
+    console.error("Sepet getirilirken veya silinirken hata oluştu: ", error);
   }
+  setIsDeleteConfirmationVisible(false);
 };
+
+
 const navigate = useNavigate();
 const goHomePage = () => {
   navigate('/');
@@ -224,9 +229,18 @@ const handlePieceSave = async (item, action) => {
           <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.total} adet</td>
           <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.productDetailResponse.price} TL</td>
           <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0  }}> 
-            <a style={{cursor: "pointer" }} onClick={()=>handleDelete(item.id)}>
+            <a style={{cursor: "pointer" }}  onClick={() => setIsDeleteConfirmationVisible(true)}>
               <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
-            </a>  
+            </a> 
+            {isDeleteConfirmationVisible && (
+                    <div className="delete-confirmation-overlay">
+                      <div className="delete-confirmation-box">
+                        <p>Silmek istediğinize emin misiniz?</p>
+                        <button onClick={()=>handleDelete(item.id)}>Evet</button>
+                        <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
+                      </div>
+                    </div>
+                  )} 
           </td>
         </tr>
        
