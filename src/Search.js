@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import { Link } from 'react-router-dom';
 import WithNavbar from './WithNavbar';
@@ -54,66 +53,52 @@ const Search = () => {
 
   return (
     <>
-      <div style={{textAlign:"center",marginTop:"100px"}}>
+      <div style={{textAlign:"center",marginTop:"100px", padding:"0% 5%"}}>
         <form onSubmit={handleSearch}>
-        <input
-    type="text"
-    id="searchTerm"
-    name="searchTerm"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)} 
-    style={{border:"1px solid #D9D9D9",
-
-      display: 'inline-block', 
-      border: 'none',
-      borderBottom: '1px solid black',
-      outline: 'none',
-      fontSize: '16px',
-      padding: '5px 0',
-      width: '70%', 
-      marginRight: '5px',
-      fontStyle: 'italic',
-    }}
-    placeholder="Ürün adını, kategorisini veya rengini giriniz"
-  />
-  <img
-    src="/images/search.png"
-    alt="Search"
-    style={{
-      width: '16px',
-      
-      height: '16px',
-      cursor: 'pointer',
-      verticalAlign: 'middle',
-    }}
-    onClick={handleSearch} 
-  />
-
-
-
-        
+          <input type="text"
+      id="searchTerm"
+      name="searchTerm"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)} 
+      style={{border:"1px solid #D9D9D9",
+        display: 'inline-block', 
+        border: 'none',
+        borderBottom: '1px solid black',
+        outline: 'none',
+        fontSize: '16px',
+        padding: '5px 0',
+        width: '70%', 
+        marginRight: '5px',
+        fontStyle: 'italic',
+      }}
+      placeholder="Ürün adını, kategorisini veya rengini giriniz" />
+          <img src="/images/search.png"
+                alt="Search"
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  cursor: 'pointer',
+                  verticalAlign: 'middle', }} 
+                  onClick={handleSearch} />    
         </form>
         <div className="recommended-products">
-  
-        <div className="product-grid row">
-        {filteredProducts.map((product) => (
-  <div key={product.id} className="product-item col-md-3">
-    <Link
-      to={`/productinfo/${product.id}`} // Updated to directly use product.id
-      style={{ textDecoration: 'none', color: 'black' }}
-    >
+          <div className="product-grid row">
+          <div className="product-list">
+  {filteredProducts.map((product) => (
+    <div key={product.id} className="product-item">
+      <Link
+        to={`/productinfo/${product.id}`}
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
         <div className="product-card">
           <img
             className="product-image"
             style={{
-              width: "250px",
-              height: "300px",
-              borderRadius:"30px",
-              filter: product.stock === 0 ? "blur(2px)" : "none",
-              
-              objectFit: "contain",
-             // border: "1px solid #D9D9D9",
-              //boxShadow: "10px 10px 10px rgba(0,0,0,0.25)"
+              width: '250px',
+              height: '300px',
+              borderRadius: '30px',
+              filter: product.stock === 0 ? 'blur(2px)' : 'none',
+              objectFit: 'contain',
             }}
             src={
               product?.fileResponseModel[0]?.fileUrl ||
@@ -121,25 +106,23 @@ const Search = () => {
             }
             alt={product.name}
           />
-            {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter",textAlign: "center",width:"250px", marginLeft:"50px",margin:"auto" }}>Tükendi</p>}
-          <h3 className="product-name" style={{ marginTop: "25px",marginBottom:0,fontFamily:"times" }}>
+          {product.stock === 0 && (
+            <p className='search-tukendi'>Tükendi</p>
+          )}
+          <h3 className="product-name" style={{ marginTop: '25px', marginBottom: 0, fontFamily: 'times',width:"250px" }}>
             {product.name}
           </h3>
-          <p className="product-price" style={{ marginTop: "0px" }}>
+          <p className="product-price" style={{ marginTop: '0px' }}>
             {product.price} ₺
           </p>
-        
         </div>
       </Link>
     </div>
   ))}
 </div>
 
-  
-
-</div>
-
-
+          </div>
+        </div>
       </div>
     </>
   );

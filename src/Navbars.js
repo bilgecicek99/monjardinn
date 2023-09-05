@@ -17,7 +17,7 @@ function Navbars() {
   const [activeMenufav, setActiveMenufav] = useState(false);
   const [activeMenubasket, setActiveMenubasket] = useState(false);
   const [activeMenuprofile, setActiveMenuprofile] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
 
   const navigate = useNavigate();
  const token=getToken();
@@ -86,7 +86,7 @@ useEffect(() => {
 
 useEffect(() => {
   const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+    setIsMobile(window.innerWidth <= 992);
   };
 
   window.addEventListener('resize', handleResize);

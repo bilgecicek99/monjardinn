@@ -147,6 +147,9 @@ const navigate = useNavigate();
 const goHomePage = () => {
   navigate('/');
 };
+const goLoginPage = () => {
+  navigate('/login');
+};
 
 const handlePieceSave = async (item, action) => {
   let total = item.total;
@@ -203,118 +206,91 @@ const handlePieceSave = async (item, action) => {
   return (
     <div className="mobile-generic-css"  style={{ margin: "5% 20%"}}>
         <ToastContainer />
-   {items?.length > 0 ? (  <table className='table table-light'>
-  <thead>
-    <tr>
-      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}}></th>
-      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() =>('name')}></th>
-      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('quantity')}></th>
-      <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('price')}></th>
-    </tr>
-  </thead>
-  <tbody>
-    {items?.map((item) => (
-      <React.Fragment key={item.id}>
-        <tr>
-          <td style={{  verticalAlign: "middle", padding:0,width:"250px"}}>
-           <img src={ item?.productDetailResponse?.fileResponses?.[0]?.fileUrl || "images/monjardinlogo.png"}  alt={item.name} className="basket-image" 
-          />
-          </td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0 }}>
-            {item?.productDetailResponse?.name}
-          </td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.total} adet</td>
-          <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.productDetailResponse.price} TL</td>
-          <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0  }}> 
-            <a style={{cursor: "pointer" }}  onClick={() => setIsDeleteConfirmationVisible(true)}>
-              <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
-            </a> 
-            {isDeleteConfirmationVisible && (
-                    <div className="delete-confirmation-overlay">
-                      <div className="delete-confirmation-box">
-                        <p>Silmek istediğinize emin misiniz?</p>
-                        <button onClick={()=>handleDelete(item.id)}>Evet</button>
-                        <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
-                      </div>
-                    </div>
-                  )} 
-          </td>
-        </tr>
-       
-        <tr>
-          <td colSpan="5" style={{ border: "none",padding:0 }}>
-            <hr style={{ color:"black" }} />
-          </td>
-        </tr>
-      </React.Fragment>
-    ))}
-  </tbody>
-  <tfoot>
-    <tr>
-      <td className="toplamtext" >Toplam:</td>
-      <td></td>
-      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px",fontSize:"18px" }}>{totalItems} adet</td>
-      <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" ,fontSize:"18px"}}>{totalPrice} TL</td>
-    </tr>
-    <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-   
-      <td colSpan="4">
-        <button className='satinal-button'>Satın Al</button>
-      </td>
-    </tr>
-  </tfoot>
-</table>) :
-(
-    <div style={{ textAlign: 'center',marginTop:"270px" }}>
-      <p className="basket-no-product">Sepetinizde ürün bulunmamaktadır.</p>
-      <button className="basket-no-product-button" onClick={goHomePage}>
-        Alışverişe devam et
-      </button>
-    </div>
-)}
-  
-      
-      {/* <div style={{marginTop: "80px"}}>
-      <h1>Birlikte İyi Gider </h1>
-      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
-        breakpoint: 800,
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 6
-        }
-      }, {
-        breakpoint: 500,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3
-        }
-      }]}>
-      {recommendedProducts.map((product) => (
-            <div key={product.id}>
-            <li
-              key={product.id}
-              style={{
-                marginRight: "16px",
-                listStyleType: "none",
-                textAlign: "center"
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                width={"200"}
-                height={"200"}
-              />
-              <p>{product.name}</p>
-              <p>{product.price}</p>
-            </li>
+        {token ? (
+     
+          <>
+          {items?.length > 0 ? (  <table className='table table-light'>
+            <thead>
+              <tr>
+                <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}}></th>
+                <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() =>('name')}></th>
+                <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('quantity')}></th>
+                <th style={{ color:"#893694", fontStyle:"italic", fontSize:"18px", fontFamily:"Times New Roman", fontWeight:"300"}} onClick={() => ('price')}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {items?.map((item) => (
+                <React.Fragment key={item.id}>
+                  <tr>
+                    <td style={{  verticalAlign: "middle", padding:0,width:"250px"}}>
+                    <img src={ item?.productDetailResponse?.fileResponses?.[0]?.fileUrl || "images/monjardinlogo.png"}  alt={item.name} className="basket-image" 
+                    />
+                    </td>
+                    <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0 }}>
+                      {item?.productDetailResponse?.name}
+                    </td>
+                    <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.total} adet</td>
+                    <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.productDetailResponse.price} TL</td>
+                    <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0  }}> 
+                      <a style={{cursor: "pointer" }}  onClick={() => setIsDeleteConfirmationVisible(true)}>
+                        <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
+                      </a> 
+                      {isDeleteConfirmationVisible && (
+                              <div className="delete-confirmation-overlay">
+                                <div className="delete-confirmation-box">
+                                  <p>Silmek istediğinize emin misiniz?</p>
+                                  <button onClick={()=>handleDelete(item.id)}>Evet</button>
+                                  <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
+                                </div>
+                              </div>
+                            )} 
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td colSpan="5" style={{ border: "none",padding:0 }}>
+                      <hr style={{ color:"black" }} />
+                    </td>
+                  </tr>
+                </React.Fragment>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td className="toplamtext" >Toplam:</td>
+                <td></td>
+                <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px",fontSize:"18px" }}>{totalItems} adet</td>
+                <td style={{ fontStyle: "italic", verticalAlign: "middle", width: "150px" ,fontSize:"18px"}}>{totalPrice} TL</td>
+              </tr>
+              <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colSpan="4">
+                  <button className='satinal-button'>Satın Al</button>
+              </td>
+              </tr>
+            </tfoot>
+            </table>
+            ) : (
+            <div style={{ textAlign: 'center',marginTop:"270px" }}>
+              <p className="basket-no-product">Sepetinizde ürün bulunmamaktadır.</p>
+              <button className="basket-no-product-button" onClick={goHomePage}>
+                Alışverişe devam et
+              </button>
             </div>
-          ))}
-      </Slide>
-      </div> */}
+          )}
+          </>
+          ) : (
+          <>
+           <div style={{ textAlign: 'center',marginTop:"270px" }}>
+              <p className="basket-no-product">Bu özelliği kullanmak için giriş yapmanız gerekmektedir.</p>
+              <button className="basket-no-product-button" onClick={goLoginPage}>
+              Giriş Yap
+              </button>
+            </div>
+          </>
+        )}
   </div>
       
     
@@ -365,3 +341,44 @@ export default WithNavbar(Basket);
             </a> </td> 
             
             */
+
+
+               
+      /* <div style={{marginTop: "80px"}}>
+      <h1>Birlikte İyi Gider </h1>
+      <Slide slidesToScroll={1} slidesToShow={1} indicators={true} autoplay={true}  duration={1500} responsive={[{  
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 6
+        }
+      }, {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      }]}>
+      {recommendedProducts.map((product) => (
+            <div key={product.id}>
+            <li
+              key={product.id}
+              style={{
+                marginRight: "16px",
+                listStyleType: "none",
+                textAlign: "center"
+              }}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                width={"200"}
+                height={"200"}
+              />
+              <p>{product.name}</p>
+              <p>{product.price}</p>
+            </li>
+            </div>
+          ))}
+      </Slide>
+      </div> */
