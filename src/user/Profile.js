@@ -416,12 +416,20 @@ const Profile = () => {
       <hr className="profile-hr" />
       <p className="profile-text">Telefon: 
       <input
-                type="number"
-                name="phoneNumber"
-                value={user.phoneNumber}
-                onChange={handleInputChange}
-                className="edit-input-area"
-              />
+  type="text"
+  name="phoneNumber"
+  value={user.phoneNumber}
+  onChange={(e) => {
+    const inputValue = e.target.value.replace(/\D/g, ''); // Sadece rakamları korur
+    handleInputChange({
+      target: {
+        name: 'phoneNumber',
+        value: inputValue,
+      },
+    });
+  }}
+  className="edit-input-area"
+/>
             </p>
       <hr className="profile-hr"  />
       <p className="profile-text">E-posta:  

@@ -394,17 +394,7 @@ const handleSelectQuarterChange = (event) => {
         const value = updatedAddress[field];
         return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
       });
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(updatedAddress.email)) {
-    toast.error('Lütfen geçerli bir email adresi giriniz.', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
-    return;
-  }
+      
         
       if (isEmptyField) {
         toast.error('Lütfen Tüm Alanları Doldurunuz.', {
@@ -423,6 +413,17 @@ const handleSelectQuarterChange = (event) => {
             const value = updatedAddress[field];
             return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
           });
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(updatedAddress.email)) {
+    toast.error('Lütfen geçerli bir email adresi giriniz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return;
+  }
           if (isEmptyField) {
             toast.error('Lütfen Tüm Alanları Doldurunuz.', {
               position: toast.POSITION.TOP_CENTER,
@@ -776,15 +777,19 @@ const handleSelectQuarterChange = (event) => {
                             className="product-detail-form"
                             placeholder="Adınız Soyadınız"
                           />
-                        <input
-                            type="number"
-                            name="phone"
-                            value={address.districtId}
-                            onChange={handleInputChange}
-                            className="product-detail-form"
-                            placeholder="Telefon Numaranız"
-                            
-                          />
+                       <input
+  type="text"
+  name="phone"
+  value={address.districtId}
+  onChange={handleInputChange}
+  onKeyPress={(e) => {
+    if (isNaN(String.fromCharCode(e.charCode))) {
+      e.preventDefault();
+    }
+  }}
+  className="product-detail-form"
+  placeholder="Telefon Numaranız"
+/>
                           <select
                             name="districtId"
                             value={address.districtId}
