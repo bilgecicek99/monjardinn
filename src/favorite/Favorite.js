@@ -163,38 +163,51 @@ const navigate = useNavigate();
   const goHomePage = () => {
     navigate('/');
   };
+  const goLoginPage = () => {
+    navigate('/login');
+  };
 
   return (
     <div className="favori-page">
-                  <ToastContainer />
+      <ToastContainer />
+     
+      {token ? (
+      <>
+      {products?.length > 0 ? (  <div className="favorite-card-area">
 
-    {products?.length > 0 ? (  <div className="favorite-card-area">
-
-    {products.map((product) => (
-      <div key={product.id} style={{ textDecoration: 'none', color: 'black' }}>
-          <FavoriteCard
-            Image={product.productFile ? product.productFile : "images/monjardinlogo.png"}
-            key={product.id}
-            title={product.productName}
-            description={`${product.categoryName}`}
-            price={`${product.productPrice} TL`}
-            favoriteId={product.favoriteId}
-            onDelete={() => deleteFavori(product.favoriteId)}
-            productId={product.productId}
-          />
-      
+      {products.map((product) => (
+        <div key={product.id} style={{ textDecoration: 'none', color: 'black' }}>
+            <FavoriteCard
+              Image={product.productFile ? product.productFile : "images/monjardinlogo.png"}
+              key={product.id}
+              title={product.productName}
+              description={`${product.categoryName}`}
+              price={`${product.productPrice} TL`}
+              favoriteId={product.favoriteId}
+              onDelete={() => deleteFavori(product.favoriteId)}
+              productId={product.productId}
+            />
+        
+        </div>
+      ))}
+        </div>
+        ): (
+        <div style={{ textAlign: 'center',marginTop:"180px" }}>
+        <p className="basket-no-product">Favorilerinizde ürün bulunmamaktadır.</p>
+        <button className="basket-no-product-button" onClick={goHomePage}>
+          Alışverişe devam et
+        </button>
       </div>
-    ))}
-      </div>
-      ): 
-      (
-      <div style={{ textAlign: 'center',marginTop:"180px" }}>
-      <p className="basket-no-product">Favorilerinizde ürün bulunmamaktadır.</p>
-      <button className="basket-no-product-button" onClick={goHomePage}>
-        Alışverişe devam et
-      </button>
-    </div>
-    )}   
+      )}  
+      </>  
+      ) : ( 
+        <div style={{ textAlign: 'center', marginTop: '270px' }}>
+        <p className="basket-no-product">Bu özelliği kullanmak için giriş yapmanız gerekmektedir.</p>
+        <button className="basket-no-product-button" onClick={goLoginPage}>
+          Giriş Yap
+        </button>
+        </div>
+      )}
     </div>
   );
 };
