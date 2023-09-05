@@ -100,8 +100,20 @@ useEffect(() => {
   fetchData();
 }, []);
 
+
+const [deleteConfirmationStates, setDeleteConfirmationStates] = useState({});
+
+
+  const confirmDelete = (itemId) => {
+    // Silme onayı istendiğinde ilgili onay durumunu ayarlayın
+    setDeleteConfirmationStates((prevStates) => ({
+      ...prevStates,
+      [itemId]: true,
+    }));
+  };
+
 const handleDelete = async (id) => {
-  console.log("id",id);
+  console.log(`Ürün ID ${id} silindi.`);
   try {
     const requestOptions = {
       headers: {
@@ -140,7 +152,10 @@ const handleDelete = async (id) => {
   } catch (error) {
     console.error("Sepet getirilirken veya silinirken hata oluştu: ", error);
   }
-  setIsDeleteConfirmationVisible(false);
+  setDeleteConfirmationStates((prevStates) => ({
+    ...prevStates,
+    [id]: false,
+  }));
 };
 
 
@@ -220,41 +235,47 @@ const handlePieceSave = async (item, action) => {
               </tr>
             </thead>
             <tbody>
-              {items?.map((item) => (
-                <React.Fragment key={item.id}>
-                  <tr>
-                    <td style={{  verticalAlign: "middle", padding:0,width:"250px"}}>
-                    <img src={ item?.productDetailResponse?.fileResponses?.[0]?.fileUrl || "images/monjardinlogo.png"}  alt={item.name} className="basket-image" 
-                    />
-                    </td>
-                    <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0 }}>
-                      {item?.productDetailResponse?.name}
-                    </td>
-                    <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.total} adet</td>
-                    <td style={{ fontStyle: "italic", verticalAlign: "middle",  padding:0 }}>{item.productDetailResponse.price} TL</td>
-                    <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding:0  }}> 
-                      <a style={{cursor: "pointer" }}  onClick={() => setIsDeleteConfirmationVisible(true)}>
-                        <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
-                      </a> 
-                      {isDeleteConfirmationVisible && (
-                              <div className="delete-confirmation-overlay">
-                                <div className="delete-confirmation-box">
-                                  <p>Silmek istediğinize emin misiniz?</p>
-                                  <button onClick={()=>handleDelete(item.id)}>Evet</button>
-                                  <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
-                                </div>
-                              </div>
-                      )} 
-                    </td>
-                  </tr>
-                
-                  <tr>
-                    <td colSpan="5" style={{ border: "none",padding:0 }}>
-                      <hr style={{ color:"black" }} />
-                    </td>
-                  </tr>
-                </React.Fragment>
-              ))}
+            {items?.map((item) => (
+        <React.Fragment key={item.id}>
+          <tr>
+            <td style={{ verticalAlign: "middle", padding: 0, width: "250px" }}>
+              <img
+                src={
+                  item?.productDetailResponse?.fileResponses?.[0]?.fileUrl ||
+                  "images/monjardinlogo.png"
+                }
+                alt={item.name}
+                className="basket-image"
+              />
+            </td>
+            <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding: 0 }}>
+              {item?.productDetailResponse?.name}
+            </td>
+            <td style={{ fontStyle: "italic", verticalAlign: "middle", padding: 0 }}>{item.total} adet</td>
+            <td style={{ fontStyle: "italic", verticalAlign: "middle", padding: 0 }}>{item.productDetailResponse.price} TL</td>
+            <td style={{ fontStyle: "italic", fontWeight: "bold", verticalAlign: "middle", padding: 0 }}>
+              <a style={{ cursor: "pointer" }} onClick={() => confirmDelete(item.id)}>
+                <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
+              </a>
+              {deleteConfirmationStates[item.id] && (
+                <div className="delete-confirmation-overlay">
+                  <div className="delete-confirmation-box">
+                    <p>Silmek istediğinize emin misiniz?</p>
+                    <button onClick={() => handleDelete(item.id)}>Evet</button>
+                    <button onClick={() => confirmDelete(item.id)}>Hayır</button>
+                  </div>
+                </div>
+              )}
+            </td>
+          </tr>
+
+          <tr>
+            <td colSpan="5" style={{ border: "none", padding: 0 }}>
+              <hr style={{ color: "black" }} />
+            </td>
+          </tr>
+        </React.Fragment>
+      ))}
             </tbody>
             <tfoot>
               <tr>
