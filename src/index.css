@@ -535,6 +535,17 @@ nav li {
   text-decoration: none;
 }
 
+.nav-baradminblog{
+  background-color: #893694;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
 .input-action{
   padding: 10px;
   border: 1px solid #893694;
