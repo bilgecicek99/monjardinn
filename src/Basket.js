@@ -101,6 +101,7 @@ useEffect(() => {
 }, []);
 
 const handleDelete = async (id) => {
+  console.log("id",id);
   try {
     const requestOptions = {
       headers: {
@@ -243,7 +244,7 @@ const handlePieceSave = async (item, action) => {
                                   <button onClick={() => setIsDeleteConfirmationVisible(false)}>Hayır</button>
                                 </div>
                               </div>
-                            )} 
+                      )} 
                     </td>
                   </tr>
                 

@@ -631,7 +631,7 @@ nav li {
 .basket-no-product{
   font-size: 150%;
   font-style: italic;
-  font-weight: 700;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .basket-no-product-button{
@@ -918,7 +918,7 @@ input[type='radio'] {
 }
 
 .product-info-page{
-  padding:100px;
+  padding:100px 200px;
  }
 @media only screen and (max-width: 768px) {
 
@@ -1052,7 +1052,9 @@ li.selected {
 }
 
 .contact-heading {
-  font-size: 5vh;
+ font-family: 'Times New Roman', Times, serif;
+ font-style: italic;
+ text-align: center;
 }
 
 .contact-section {
