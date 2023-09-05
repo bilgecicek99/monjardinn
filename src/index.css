@@ -667,6 +667,7 @@ nav li {
   
 .product-info-detay{
   word-wrap: break-word;
+  margin-top: 10%;
 }
 
 .address-radio{
@@ -964,7 +965,8 @@ input[type='radio'] {
   border-radius: 12px;
   margin-bottom: 50px;
   height: 250px; /* Varsayılan yükseklik */
-  background-image: url('./images/card-background.png')
+  background-image: url('./images/card-background.png');
+  background-size: cover;
 }
 .home-card-image{
   width: 300px;
@@ -978,13 +980,48 @@ input[type='radio'] {
     height: 150px; /* Telefonda yeni yükseklik */
   }
   .home-card-image{
-    width: 100px;
+    width: 100px ;
     height: 100px;
    
   }
   
+ .product-image{
+  width: 150px !important;
+  height: 200px !important;
+ }
+ .product-name {
+  width: 150px !important;
+  }
+  .search-tukendi{
+    width: 150px !important;
+  }
+  
+}
+.search-tukendi{
+  background-color: #893694;
+  color:white;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: lighter;
+  text-align: center;
+  width: 250px;
+  margin-left: 50px;
+  margin: auto;
+}
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Adjust the gap between items as needed */
 }
 
+
+.product-name {
+  white-space: nowrap; /* İsimleri bir satırda tut */
+  overflow: hidden; /* Taşan içeriği gizle */
+  text-overflow: ellipsis; /* Taşan içeriği "..." ile göster */
+}
 
 .right-panel {
   flex: 2;
@@ -1136,3 +1173,9 @@ li.selected {
   display:inline-block !important;
   }
   
+
+
+
+
+
+

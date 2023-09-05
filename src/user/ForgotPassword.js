@@ -110,7 +110,7 @@ const ForgotPassword = () => {
           setMailGeldiMi(true);
           setCounter(60); // Reset the counter to 60 seconds
         
-          toast.error(data.message, {
+          toast.success(data.message, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             hideProgressBar: false,

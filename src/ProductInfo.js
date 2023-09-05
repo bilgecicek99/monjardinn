@@ -742,6 +742,7 @@ const handleSelectQuarterChange = (event) => {
                     dateFormat="yyyy-MM-dd"
                     minDate={new Date()}
                     placeholderText="Tarih Seçiniz"
+                  
                   />
                    <QuantitySelector
                       value={selectedPiece}
