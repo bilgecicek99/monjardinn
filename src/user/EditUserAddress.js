@@ -97,6 +97,18 @@ const EditUserAddress = () => {
       const isCorporateEmpty = requiredCorporateFields.some((corporateField) => {
         return !updatedAddress[corporateField];
       });
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(address.email)) {
+    // Eğer email formatı doğru değilse hata mesajı göster
+    toast.error('Lütfen geçerli bir email adresi giriniz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return; // İşlemi tamamlama
+  }
   
       if (isCorporateEmpty) {
         console.log("kk")

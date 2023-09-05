@@ -81,6 +81,7 @@ const Search = () => {
                   verticalAlign: 'middle', }} 
                   onClick={handleSearch} />    
         </form>
+        
         <div className="recommended-products">
           <div className="product-grid row">
           <div className="product-list">
