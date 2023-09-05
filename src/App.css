@@ -65,4 +65,13 @@ form input {
   height: 45px;
   width: 100%;
   margin-top: 20px;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  padding:5px;
+}
+
+.password-input{
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  padding:5px;
 }

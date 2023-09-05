@@ -10,10 +10,7 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [userAddress, setUserAddress] = useState([]);
-
-  const [errorMessage, setErrorMessage] = useState(null);
   const [errorAddressMessage, setErrorAddressMessage] = useState(null);
-
 
   const [user, setUser] = useState({
     firstName: '',
@@ -58,7 +55,6 @@ const Profile = () => {
         .then(data => {
           if (data.data.length === 0) {
             setErrorAddressMessage("Kayıtlı adres bulunamamıştır.");
-
           } else {
             setUserAddress(data.data);
           }
@@ -133,8 +129,16 @@ const Profile = () => {
       });
       return;
     }
-    
-    
+    if (newPassword.length < 5) {
+      toast.error('Yeni şifre minimum 5 karakter olmalıdır.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
+    } 
     const requestBody = {
       userId: userInfo.userId,
       newPassword: newPassword,
@@ -150,18 +154,42 @@ const Profile = () => {
       body: JSON.stringify(requestBody)
     };
     
-    await fetch(baseUrl+`api/Auth/PasswordUpdate`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setErrorMessage(data.message);
-      })
-      .catch(error => {
-        // Hata durumunda burada hata işleme yapabilirsiniz
-        console.error(error);
-        setErrorMessage(error.message);
+    await fetch(baseUrl + `api/Auth/PasswordUpdate`, requestOptions)
+    .then(async (response) => {
+      const data = await response.json();
+      console.log("daa",data);
+      if (data.success === true) {
+        toast.success('Şifreniz başarıyla değiştirilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      } else {
+        toast.error(data.message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      }
+    })
+    .catch((error) => {
+      toast.error(error.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
       });
+    });
+  
+  
     
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Profil verileri getirilirken hata oluştu: ", error);
   }
   };
@@ -182,8 +210,38 @@ const Profile = () => {
         }, 3000); 
         return; 
       }
+      if (user.lastName.length < 2) {
+        toast.error("Soyad minimum 2 karakterden oluşmalıdır.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; 
+      }
+      if (user.firstName.length < 2) {
+        toast.error("Ad minimum 2 karakterden oluşmalıdır.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; 
+      }
      
-  
+      if (user.phoneNumber.length > 15) {
+        toast.error("Telefon numarası en fazla 15 karakterden oluşabilir.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return;
+      }
+      
       // Kullanıcı verilerini oluştur
       const userData = {
         ...user, // Kullanıcı nesnesinin tüm alanlarını içeri aktar
@@ -212,9 +270,15 @@ const Profile = () => {
         pauseOnHover: true,
       });
     } catch (error) {
-      // Hata durumunda hata mesajını göster
       console.error("Profil güncellerken hata oluştu: ", error);
-      setErrorMessage(error.message);
+      toast.error('Lütfen Daha Sonra Deneyiniz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    
     }
   };
   
@@ -362,7 +426,7 @@ const Profile = () => {
       <hr className="profile-hr"  />
       <p className="profile-text">E-posta:  
   
-       <span className="edit-input-area">{user.email}  </span>     </p>
+       <span className="edit-input-area" style={{color:"#696969"}}>{user.email}  </span>     </p>
       {/* 
       <hr className="profile-hr" />
       <p className="profile-text">Doğum Tarihi:
@@ -402,7 +466,6 @@ const Profile = () => {
       <button className="profile-password" onClick={updatePassword}>Şifreyi Değiştir</button>
       </div>
       </div>
-      {errorMessage && <p className="message">{errorMessage}</p>}
 
       <hr className="profile-hr" />
       </div>
@@ -416,6 +479,7 @@ const Profile = () => {
         </a>
       </div>
       {errorAddressMessage && <p className="message">{errorAddressMessage}</p>}
+
       <div  className="profile-card-area" >
     <div className="card" style={{ border:"none"}}>
       {userAddress.map((card) => (

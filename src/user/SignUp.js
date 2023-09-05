@@ -48,7 +48,7 @@ const SignUp = () => {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phone,
-      email: email,
+      email: email.toLowerCase(),
       password: password
     };
     
@@ -64,6 +64,16 @@ const SignUp = () => {
         pauseOnHover: true,
       });
       return; 
+    }
+    if (phone.length > 15) {
+      toast.error("Telefon numarası en fazla 15 karakterden oluşabilir.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
     }
     
     if (lastName.length < 2) {
@@ -98,9 +108,16 @@ const SignUp = () => {
       .then((response) => {
         return response.json().then((data) => {
           if (!response.ok) {
-            console.log("datajjjj",data.Message);
-            const errorMessage = data.Message || "Bilinmeyen bir hata oluştu";
-            throw new Error(errorMessage);
+            console.log("datajjjj",data.message);
+            toast.error(data.message, {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+          return;
+            
           }
           return data;
         });
@@ -126,13 +143,14 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log("error",error);
-        toast.error(error.message, {
+       /* toast.error("Lütfen Daha Sonra Tekrar Deneyiniz.", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
         });
+        */
       });
   };
 
