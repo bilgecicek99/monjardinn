@@ -7,6 +7,8 @@ import {
   getToken
 } from "../service/AuthService";
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function EditProduct() {
@@ -104,7 +106,13 @@ export default function EditProduct() {
       .then((response) => response.json())
       .then((data) => {
         navigate('/AdminProductList');
-        alert("Değişiklikler başarıyla kaydedilmiştir.")
+        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         console.log(data);
         if (selectedImage) {
         fetch(baseUrl+"api/ProductFile/CreateProductFile", {
@@ -206,6 +214,7 @@ export default function EditProduct() {
 
   return(
     <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>
+       <ToastContainer />
        <h1  className='baslik'>Mon Jardin</h1>
 
 <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>

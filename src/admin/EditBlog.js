@@ -4,6 +4,8 @@ import { baseUrl } from '../config/Constants';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {getToken} from "../service/AuthService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditBlog() {
 
@@ -101,7 +103,14 @@ useEffect(() => {
       .then((response) => response.json())
       .then((data) => {
         //navigate('/AdminProductList');
-        alert("Değişiklikler başarıyla kaydedilmiştir.")
+        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      
         console.log(data);
         if (selectedImage) {
         
@@ -155,6 +164,7 @@ useEffect(() => {
 
   return (
     <div style={{margin:"100px"}}>
+       <ToastContainer />
   <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
       <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>

@@ -5,6 +5,8 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EditCategory() {
   const navigate = useNavigate();
@@ -43,7 +45,14 @@ function EditCategory() {
       setCategoryList(categoryData);
     } catch (error) {
       console.error(error);
-      alert('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      toast.error('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+     
     }
   };
   useEffect(() => {
@@ -129,7 +138,13 @@ function EditCategory() {
     })
       .then((response) => response.json())
       .then((data) => {
-        alert("Değişiklikler başarıyla kaydedilmiştir.")
+        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         console.log(data);
         fetchCategoryList();
       })
@@ -341,7 +356,14 @@ return (
       })
       .catch(error => {
         console.error(error);
-        alert('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        toast.success('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+       
       });
   };
 
@@ -356,6 +378,7 @@ return (
 
 return (
   <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>
+     <ToastContainer />
      <h1  className='baslik'>Mon Jardin</h1>
 
     <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
