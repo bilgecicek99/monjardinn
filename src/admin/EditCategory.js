@@ -138,7 +138,7 @@ function EditCategory() {
     })
       .then((response) => response.json())
       .then((data) => {
-        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+        toast.success('Değişiklikler Başarıyla Kaydedilmiştir.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
           hideProgressBar: false,
@@ -150,6 +150,13 @@ function EditCategory() {
       })
       .catch((error) => {
         console.error(error)
+        toast.error('Lütfen Daha Sonra Tekrar Deneyiniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         //const errorMessage = handleFetchError(error);
         //console.log(errorMessage);
       });
@@ -238,6 +245,7 @@ const styles = {
       cardImage: {
         width: "100%",
         height: "100%", // set a fixed height for the image
+        objectFit:"contain"
       },
       cardContent: {
         width: "50%",
@@ -347,16 +355,20 @@ return (
       })
       .then(response => response.json())
       .then(savedCategory => {
+        toast.success('Kategori Başarıyla Kaydedildi', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         setSavedCategory(savedCategory);
-
-        
-
-      //  fetchCategoryList(); // Kategori listesini güncellemek için yeniden verileri çekin
+       fetchCategoryList();
         console.log("günce", categoryList)
       })
       .catch(error => {
         console.error(error);
-        toast.success('Kaydetme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.', {
+        toast.error('Lütfen Daha Sonra Tekrar Deneyin.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
           hideProgressBar: false,

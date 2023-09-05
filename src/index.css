@@ -98,7 +98,7 @@ button {
   text-decoration: none;
   color: white;
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 10px;
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
 }
@@ -455,7 +455,7 @@ tr:hover {
   }
   .navbar-left{
    position: absolute !important;
-   left:20px !important;
+   left:0px !important;
   }
   .navbar-logo-action{
    position: relative;
@@ -753,6 +753,7 @@ input[type='radio'] {
   padding-bottom: 400px;
   padding-top: 40px;
   width: 350px;
+  padding-left: 20px;
 }
 
 .menu-items-admin-link {
