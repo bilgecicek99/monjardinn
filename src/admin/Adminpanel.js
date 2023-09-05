@@ -153,7 +153,7 @@ console.log("user",user);
               <hr/> 
               <NavLink className="menu-items-admin-link" to='/adminallblog' style={{fontStyle:"italic"}}>Blog Düzenleme</NavLink>  
               <hr/> 
-              {token ?  <NavLink className="menu-items-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
+              {token ?  <NavLink className="menu-items-admin-link" to='/' value="Logout" onClick={logoutHandler} >Çıkış Yap</NavLink> : "" }
 
              {/* 
                <NavLink className="menu-items-admin-link" to='/AdminAllProductList' style={{fontStyle:"italic"}}>Tüm Ürünler</NavLink>
