@@ -88,69 +88,67 @@ export default function AdminAddProduct() {
       }
   };
 
-  const handleKaydet = async(event) => {
-      event.preventDefault();
-      // Check if any required fields are empty
-      const requiredFields = ['name', 'tax', 'color', 'price', 'categoryId','discountRate','discountedAmount','description'];
-      const isEmptyField = requiredFields.some((field) => {
-        const value = product[field];
-        return value === undefined || value === null || value === "";
-      });
-         
-      if (isEmptyField) {
-     
-       toast.error('Lütfen Tüm Alanları Doldurunuz.', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
+  const handleKaydet = async (event) => {
+    event.preventDefault();
+    // Check if any required fields are empty
+    const requiredFields = ['name', 'tax', 'color', 'price', 'categoryId', 'description'];
+    const isEmptyField = requiredFields.some((field) => {
+      const value = product[field];
+      return value === undefined || value === null || value === "";
     });
-      } else {
-
-        let downloadURL = "";
-      if (selectedImage) {
-      const storageRef = ref(storage, "images/" + selectedImage.name);
-      try {
-       
-        const snapshot = await uploadBytes(storageRef, selectedImage);
   
-        downloadURL = await getDownloadURL(snapshot.ref);
-        console.log("Resim başarıyla yüklendi. URL:", downloadURL);
-      } catch (error) {
-        console.error("Resim yükleme hatası:", error);
-      }
-
-     } 
-     else {
+    if (isEmptyField) {
+      toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    } else {
+      // İndirim oranı ve indirim miktarını kontrol edin
+      const discountRate = product.discountRate || 0;
+      const discountedAmount = product.discountedAmount || 0;
+  
+      let downloadURL = "";
+      if (selectedImage) {
+        const storageRef = ref(storage, "images/" + selectedImage.name);
+        try {
+          const snapshot = await uploadBytes(storageRef, selectedImage);
+          downloadURL = await getDownloadURL(snapshot.ref);
+          console.log("Resim başarıyla yüklendi. URL:", downloadURL);
+        } catch (error) {
+          console.error("Resim yükleme hatası:", error);
+        }
+      } else {
         console.log("selectedImage boş veya tanımsız.");
       }
-    
+  
       const { fileResponses, labelProducts, productDiscountInfo, categoryName, ...newProduct } = product;
       const updatedProduct = {
         ...newProduct,
-        stock: 0
+        stock: 0,
+        discountRate: discountRate, // İndirim oranı
+        discountedAmount: discountedAmount, // İndirim miktarı
       };
       console.log("newww", updatedProduct);
   
-      fetch(baseUrl+"api/Product/CreateProduct", {
+      fetch(baseUrl + "api/Product/CreateProduct", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify(updatedProduct), // Güncellenmiş ürün bilgilerini gönderin
       })
-      .then((response) => {
-        if (!response.ok) {
-         
-          throw new Error("İç Sunucu Hatası");
-        
-        }
-        return response.json();
-      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("İç Sunucu Hatası");
+          }
+          return response.json();
+        })
         .then((data) => {
-          console.log("dd",data);
+          console.log("dd", data);
           toast.error('Değişiklikler başarıyla kaydedilmiştir.', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
@@ -159,32 +157,24 @@ export default function AdminAddProduct() {
             pauseOnHover: true,
           });
           navigate('/AdminProductList');
-         
-
-        
-          fetch(baseUrl+"api/ProductFile/CreateProductFile", {
+  
+          fetch(baseUrl + "api/ProductFile/CreateProductFile", {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
-          
             body: JSON.stringify({ productId: data.data, fileUrl: downloadURL }),
           })
-          
             .then((response) => response.json())
             .then((responseData) => {
-          
-              console.log("foto gitti",responseData);
+              console.log("foto gitti", responseData);
             })
             .catch((error) => {
-            
               console.error(error);
             });
-        
-
         })
-        .catch((error) => { 
+        .catch((error) => {
           toast.error('Lütfen daha sonra tekrar deneyiniz.', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
@@ -192,13 +182,11 @@ export default function AdminAddProduct() {
             closeOnClick: true,
             pauseOnHover: true,
           });
-          throw error; // Hata 
-       
+          throw error; // Hata
         });
-      }
-     
-    };
-
+    }
+  };
+  
   useEffect(() => {
     fetchCategoryList();
   }, []);
