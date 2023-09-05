@@ -34,7 +34,7 @@ const Contact = () => {
 
   return (
     <div className="contact-page mobile-generic-css">
-      <h1 className="contact-heading">İletişim</h1>
+      <h2 className="contact-heading">İletişim</h2>
       <div style={{padding:"3% 2% 2% 2%"}}>
         <h2 className="contact-subheading" style={{paddingBottom:"2%"}}>Adres</h2>
         <p>DSM Grup Danışmanlık İletişim ve Satış Ticaret A.Ş. Maslak Mahallesi Saat Sokak Spine Tower No:5 İç Kapı No:19 Sarıyer/İstanbul</p>

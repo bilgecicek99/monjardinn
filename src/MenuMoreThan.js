@@ -34,7 +34,7 @@
         </div>
         <div className="right-panel">
           <h2 style={{textAlign:"center"}}>{listItems[selectedItem].title}</h2>
-          <p style={{textAlign:"center"}}>{listItems[selectedItem].description}</p>
+          <p style={{textAlign:"left"}}>{listItems[selectedItem].description}</p>
         </div>
       </div>
 
