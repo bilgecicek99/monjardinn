@@ -102,14 +102,15 @@ const ProductInfo = (props) => {
     return (
       <span className="quantity-selector">
         <span onClick={onDecrement}  style={{padding:"10px"}}> 
-          <img src="/images/minussignicon.png" alt="Increase" width={20}/></span>
+          <img src="/images/minussignicon.png" alt="Increase" width={10}/></span>
         <span  style={{padding:"10px"}}>{value}</span>
-        <span onClick={onIncrement}  style={{padding:"10px"}}>
-          <img src="/images/plusicon.png" alt="Increase" width={20} height={20}/>
+        <span onClick={onIncrement}  style={{padding:"5px"}}>
+          <img src="/images/plusicon.png" alt="Increase" width={10} height={10}/>
         </span>
       </span>
     );
   };
+  
 
   const handleSelectDistrict = (event) => {
     const selectedDistrict = event.target.value;
@@ -393,6 +394,17 @@ const handleSelectQuarterChange = (event) => {
         const value = updatedAddress[field];
         return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
       });
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(updatedAddress.email)) {
+    toast.error('Lütfen geçerli bir email adresi giriniz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return;
+  }
         
       if (isEmptyField) {
         toast.error('Lütfen Tüm Alanları Doldurunuz.', {

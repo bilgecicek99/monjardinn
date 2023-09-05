@@ -93,6 +93,7 @@ const Search = () => {
 
         
         </form>
+        
         <div className="recommended-products">
   
         <div className="product-grid row">

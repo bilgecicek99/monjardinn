@@ -1132,4 +1132,7 @@ li.selected {
   font-style: italic ;
   font-family: 'Times New Roman', Times, serif;
 }
-
+.react-datepicker__tab-loop {
+  display:inline-block !important;
+  }
+  

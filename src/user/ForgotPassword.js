@@ -24,11 +24,16 @@ const ForgotPassword = () => {
     return () => clearInterval(interval);
   }, [mailGeldiMi, counter]);
   */
+  function isValidEmail(email) {
+   
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+  
   const handleCode = (e) => {
     setCode(e.target.value);
   };
@@ -49,7 +54,8 @@ const ForgotPassword = () => {
   };
 
   const handleGonderClick = async () => {
-    if ( !email) {
+    
+    if (!email) {
       toast.error('Lütfen Tüm Alanları Doldurunuz.', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
@@ -57,7 +63,18 @@ const ForgotPassword = () => {
         closeOnClick: true,
         pauseOnHover: true,
       });
-      return; 
+      return;
+    }
+  
+    if (!isValidEmail(email)) {
+      toast.error('Geçerli bir e-posta adresi giriniz.', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
     }
 
    setSend(false);
@@ -77,11 +94,14 @@ const ForgotPassword = () => {
           console.log("jhjkh");
           toast.error(data.message, {
             position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
           });
+          setTimeout(() => {
+            window.location.reload();
+          },1000);
         
           
         return;
@@ -161,6 +181,7 @@ const ForgotPassword = () => {
           />
         <div style={{marginTop:"20px"}} >
           <button onClick={handleGonderClick} disabled={mailGeldiMi} className="save-button">
+            
             Gönder
           </button>
         </div> 
