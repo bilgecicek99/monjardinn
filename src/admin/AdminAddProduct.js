@@ -5,6 +5,8 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AdminAddProduct() {
   const navigate = useNavigate();
@@ -97,7 +99,13 @@ export default function AdminAddProduct() {
          
       if (isEmptyField) {
      
-        alert('Lütfen Tüm Alanları Doldurunuz.');
+       toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
       } else {
 
         let downloadURL = "";
@@ -143,8 +151,13 @@ export default function AdminAddProduct() {
       })
         .then((data) => {
           console.log("dd",data);
-
-          alert("Değişiklikler başarıyla kaydedilmiştir.")
+          toast.error('Değişiklikler başarıyla kaydedilmiştir.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
           navigate('/AdminProductList');
          
 
@@ -172,7 +185,13 @@ export default function AdminAddProduct() {
 
         })
         .catch((error) => { 
-          alert("Lütfen daha sonra tekrar deneyiniz.");
+          toast.error('Lütfen daha sonra tekrar deneyiniz.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
           throw error; // Hata 
        
         });
@@ -190,10 +209,12 @@ export default function AdminAddProduct() {
 
 
   return(
+  
     <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>
        <h1  className='baslik'>Mon Jardin</h1>
       <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
       <>
+      <ToastContainer />
         <div style={{display:"flex"}}>
             <div >
               <input type="file" onChange={handleImageUpload} />

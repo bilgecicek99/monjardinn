@@ -4,6 +4,8 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getUser,getToken,resetUserSession,getUserInfo } from "../service/AuthService";
 import { baseUrl } from '../config/Constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Admincard( { cards }) {
@@ -84,7 +86,14 @@ function Admincard( { cards }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        alert("Değişiklikler başarıyla kaydedilmiştir.")
+        toast.error('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+       
         console.log(data);
       })
       .catch((error) => {
@@ -112,6 +121,7 @@ function Admincard( { cards }) {
      
       
       return (
+        
         <div key={id} style={styles.card}>
       {isEditing ? (
         // Düzenleme popup'ı
@@ -119,6 +129,7 @@ function Admincard( { cards }) {
           <span className="close" onClick={handleCancelClick} style={{color:"white"}}>
               &times;
             </span>
+            <ToastContainer />
           <input
             type="text"
             value={editedName}
