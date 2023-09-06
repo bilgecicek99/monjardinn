@@ -19,6 +19,7 @@ import AdminAllBlog from './admin/AdminAllBlog';
 import EditProduct from './admin/EditProduct';
 import EditBlog from './admin/EditBlog';
 import EditCategory from './admin/EditCategory';
+import EditSlider from './admin/EditSlider';
 import AdminpanelWrapper from './admin/AdminpanelWrapper';
 
 
@@ -60,7 +61,6 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/adminpanel" element={<AdminpanelWrapper />} />
-    
         <Route path="/productlist" element={<ProductList/>} />
         <Route path="/list" element={<List/>} />
         <Route path="/list/:categoryId" element={<List/>} />
@@ -93,6 +93,7 @@ function App() {
         <Route path="/editaddres/:id" element={<EditUserAddress />} />
         <Route path="/Morethan" element={<MenuMoreThan />} />
          <Route path="/Contact" element={<Contact />} /> 
+         <Route path="/editslider" element={<EditSlider/>} />
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
