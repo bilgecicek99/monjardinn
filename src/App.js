@@ -48,6 +48,7 @@ import Navbars from './Navbars';
 import ProductListByCategory from './ProductListByCategory';
 import MenuMoreThan from './MenuMoreThan';
 import Contact from './Contact';
+import AddBlog from './admin/AddBlog';
 
 
 function App() {
@@ -87,6 +88,7 @@ function App() {
         <Route path="/blogdetail/:id" element={<BlogDetail/>} />
         <Route path="/editproduct" element={<EditProduct/>} />
         <Route path="/editblog/:blog" element={<EditBlog/>} />
+        <Route path="/adminaddblog" element={<AddBlog/>} />
         <Route path="/editcategory" element={<EditCategory/>} /> 
         <Route path="/editproduct/:product" element={<EditProduct />} />
         <Route path="/addaddress" element={<AddUserAddress />} />
