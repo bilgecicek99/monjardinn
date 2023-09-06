@@ -143,33 +143,42 @@ useEffect(() => {
         });
       
         if (selectedImage) {
-        
-          fetch(baseUrl+"api/BlogDetail/UpdateBlogDetail", {
-          method: "PUT",
-          headers: {
-          Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        
-          body: JSON.stringify({ id:blog.fileResponses[0].id,blogId:blog.id, fileUrl: downloadURL }),
-        })
-          .then((response) => response.json())
-          .then((responseData) => {
-            toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-            });
+          if(blog.fileResponses.length>0)
+          {
+            fetch(baseUrl+"api/BlogDetail/UpdateBlogDetail", {
+              method: "PUT",
+              headers: {
+              Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            
+              body: JSON.stringify({ id:blog.fileResponses[0].id,blogId:blog.id, fileUrl: downloadURL }),
+            })
+              .then((response) => response.json())
+              .then((responseData) => {
+
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          }
+         else{
+          fetch(baseUrl + "api/BlogDetail/CreateBlogDetail", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ blogId: blog.id, fileUrl: downloadURL }),
           })
-          .catch((error) => {
-            console.error(error);
-          });
-          
-        }
-        else{
-          console.log("Yeni foto yok")
+            .then((response) => response.json())
+            .then(responseData => {
+             
+            })
+            .catch((error) => {
+            }); 
+         }
+           
         }
       })
       .catch((error) => {
