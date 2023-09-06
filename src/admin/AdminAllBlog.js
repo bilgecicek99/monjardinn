@@ -26,7 +26,7 @@ const Navbar = ({ onSearch }) => {
         onChange={handleSearch}
       />
       <img
-        src="/images/blogsearch.png" // Replace with the actual image path
+        src="/images/blogsearch.png" 
         alt="Search"
         style={{ marginLeft: "10px", cursor: "pointer", width: "20px", height: "20px" }}
       />         
@@ -116,11 +116,34 @@ const AdminAllBlog = () => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
 
+  const gotoBlogSavePage = () => {
+    navigate('/adminaddblog');
+  }
+
   return (
     <div  style={{ margin: "50px" }}>
       <h1  className='baslik'>Mon Jardin</h1>
       <button onClick={handleGoBack} className='back-button'><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
+      <button
+      style={{
+        height: "40px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0 10px",
+        borderRadius: "5px",
+        backgroundColor: "#893694",
+        border: "1px solid gray",
+        boxShadow: "2px 2px 5px rgba(0,0,0,0.3)",
+        position: "fixed",
+        right: "20px",
+        zIndex: "999",
+      }}
+      onClick={gotoBlogSavePage}
+    >
+      <i className="fas fa-edit" style={{ marginRight: "5px" }}></i> Blog Ekle
+    </button>
     <div style={{margin:"40px"}}>
      
     <Navbar onSearch={handleSearch} />
@@ -139,9 +162,10 @@ const AdminAllBlog = () => {
             
           />
           
-                </div>
+        </div>
                 
         )))}
+       
         </div>
       </div>
     </div>

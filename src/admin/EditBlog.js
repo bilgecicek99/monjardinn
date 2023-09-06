@@ -44,6 +44,8 @@ useEffect(() => {
           console.log("data", data.data);
           const productData = data.data;
           setBlog(productData);
+          console.log(data.data);
+          console.log(blog);
         } else {
           throw new Error("Sunucudan geçersiz bir yanıt alındı.");
         }
@@ -114,25 +116,23 @@ useEffect(() => {
         console.log(data);
         if (selectedImage) {
         
-        /*  fetch(baseUrl+"api/ProductFile/CreateProductFile", {
-          method: "POST",
+          fetch(baseUrl+"api/BlogDetail/UpdateBlogDetail", {
+          method: "PUT",
           headers: {
           Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         
-          body: JSON.stringify({ productId:product.id, fileUrl: downloadURL }),
+          body: JSON.stringify({ id:blog.fileResponses[0].id,blogId:blog.id, fileUrl: downloadURL }),
         })
           .then((response) => response.json())
           .then((responseData) => {
-            // İsteğin sonucunu kullanma
             console.log("foto gitti",responseData);
           })
           .catch((error) => {
-            // Hata durumunu işleme
             console.error(error);
           });
-          */
+          
         }
         else{
           console.log("Yeni foto yok")
