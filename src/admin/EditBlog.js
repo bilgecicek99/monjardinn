@@ -50,7 +50,7 @@ useEffect(() => {
           throw new Error("Sunucudan geçersiz bir yanıt alındı.");
         }
       } catch (error) {
-        console.error("fetchLastProduct hatası:", error);
+        console.error("fetch hatası:", error);
         // Kullanıcıya hata mesajını göstermek veya uygun bir işlem yapmak için gerekli kodları burada ekleyebilirsiniz
       }
     };
@@ -63,7 +63,36 @@ useEffect(() => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
 
+  function showToast(message, duration = 3000) {
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: duration,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  }
+
   const handleKaydet =async () => {
+
+    const requiredFields = ['title', 'description'];
+
+    const isNonBlogEmpty = requiredFields.some((field) => {
+      const value = blog[field];
+      return value === undefined || value === null || value === '' || (typeof value === 'number' && isNaN(value));
+    });
+
+    if (isNonBlogEmpty) {
+      showToast('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
+      return;
+    }
+
+    const descriptionValue = blog['description'];
+    if (typeof descriptionValue === 'string' && descriptionValue.length < 200) {
+      showToast('Açıklama alanı en az 200 karakter olmalıdır.');
+      return;
+    }
+
     let downloadURL = "";
     if (selectedImage) {
       const storageRef = ref(storage, "images/" + selectedImage.name);
@@ -104,7 +133,7 @@ useEffect(() => {
     })
       .then((response) => response.json())
       .then((data) => {
-        //navigate('/AdminProductList');
+        navigate('/adminallblog');
         toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
@@ -113,7 +142,6 @@ useEffect(() => {
           pauseOnHover: true,
         });
       
-        console.log(data);
         if (selectedImage) {
         
           fetch(baseUrl+"api/BlogDetail/UpdateBlogDetail", {
@@ -127,7 +155,13 @@ useEffect(() => {
         })
           .then((response) => response.json())
           .then((responseData) => {
-            console.log("foto gitti",responseData);
+            toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -139,7 +173,6 @@ useEffect(() => {
         }
       })
       .catch((error) => {
-        //console.error(error)
        const errorMessage = handleFetchError(error);
         console.log(errorMessage);
       });
@@ -164,7 +197,7 @@ useEffect(() => {
 
   return (
     <div style={{margin:"100px"}}>
-       <ToastContainer />
+     <ToastContainer />
   <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
       <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>

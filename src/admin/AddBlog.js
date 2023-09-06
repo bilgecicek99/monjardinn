@@ -11,7 +11,7 @@ import { baseUrl } from '../config/Constants';
     const navigate = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
-    const [blog, setBlog] = useState({});
+    const [blog, setBlog] = useState("");
     const firebaseConfig = {
       apiKey: "AIzaSyBVljeCIm_rhZBx0522TXkNa4G4ufKoMLY",
       authDomain: "monjardin-7cc13.firebaseapp.com",
@@ -27,16 +27,44 @@ import { baseUrl } from '../config/Constants';
     const handleGoBack = () => {
       navigate(-1); 
     };
+
+    function showToast(message, duration = 3000) {
+      toast.error(message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: duration,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    }
+
     const handleKaydet =async () => {
+
+      const requiredFields = ['title', 'description'];
+
+      const isNonBlogEmpty = requiredFields.some((field) => {
+        const value = blog[field];
+        return value === undefined || value === null || value === '' || (typeof value === 'number' && isNaN(value));
+      });
+
+      if (isNonBlogEmpty) {
+        showToast('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
+        return;
+      }
+
+      const descriptionValue = blog['description'];
+      if (typeof descriptionValue === 'string' && descriptionValue.length < 200) {
+        showToast('Açıklama alanı en az 200 karakter olmalıdır.');
+        return;
+      }
+     
+
       let downloadURL = "";
       if (selectedImage) {
         const storageRef = ref(storage, "images/" + selectedImage.name);
-         // Deği
         try {
-          // Resmi Storage'e yükleyin
           const snapshot = await uploadBytes(storageRef, selectedImage);
       
-          // Resmin URL'sini alın
           downloadURL = await getDownloadURL(snapshot.ref);
           console.log("Resim başarıyla yüklendi. URL:", downloadURL);
         } catch (error) {
@@ -85,13 +113,13 @@ import { baseUrl } from '../config/Constants';
               console.error(error);
             });
         }           
-        // toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
-        //   position: toast.POSITION.TOP_CENTER,
-        //   autoClose: 3000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        // });
+        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         navigate("/adminallblog");
       })
       .catch((error) => {
@@ -124,6 +152,8 @@ import { baseUrl } from '../config/Constants';
     };
     return (
         <div style={{margin:"100px"}}>
+                 <ToastContainer />
+
    <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
  
        <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>
