@@ -1197,3 +1197,10 @@ li.selected {
 
 
 
+
+
+.carousel-caption {
+    right: auto !important;
+    left: 10% !important;
+    bottom:5rem !important;
+}

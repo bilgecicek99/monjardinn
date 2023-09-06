@@ -43,6 +43,7 @@ function EditSlider() {
       }
       const data = await response.json();
       const noticeData = data.data;
+      console.log("notice",noticeData);
       setNoticeData(noticeData);
     } catch (error) {
       console.error(error);
@@ -63,7 +64,7 @@ function EditSlider() {
 
   function Admincard( { cards }) {
   
-    const Cardx = ({ fileUrl, title, id, data, click,description }) => {
+    const Cardx = ({ imageUrl, title, id, data, click,description }) => {
       const [isEditing, setIsEditing] = useState(false);
       const [editedtitle, setTitle] = useState(title);
       const [editedDescription, setDescription] = useState(description);
@@ -75,7 +76,7 @@ function EditSlider() {
       
       const handleEditClick = () => {
         setIsEditing(true);
-        console.log("item",fileUrl);
+        console.log("item",imageUrl);
 
       };
       const handleDeleteClick = async (id) =>  {
@@ -130,7 +131,7 @@ function EditSlider() {
       };
     
       const handleSaveClick =async (event) => {
-        console.log("kaydetttt",title,description);
+        console.log("kaydetttt",title,description,id);
     
         let updatedProduct = "";    
         if(previewImageEdit){
@@ -163,7 +164,7 @@ function EditSlider() {
             imageUrl:downloadURL,
            
           };
-          console.log("pro",updatedProduct);
+          console.log("prodeğişti",updatedProduct);
          
         }
         else{
@@ -172,9 +173,9 @@ function EditSlider() {
             description: editedDescription,
             id: id,
             title: editedtitle,
-            imageUrl:fileUrl
+            imageUrl:imageUrl
           };
-          console.log("pro",updatedProduct);
+          console.log("prodeğişmedi",updatedProduct);
         }
         setIsEditing(false);
 
@@ -266,7 +267,7 @@ function EditSlider() {
           </div>
         
           <div style={styles.cardImageContainer}>
-            <img style={styles.cardImage} src={fileUrl} alt={title} />
+            <img style={styles.cardImage} src={imageUrl} alt={title} />
           </div>
           <div style={styles.editIconContainer} onClick={handleEditClick} className="editIconContainer" >
             <img src="/images/edit.png" alt="" width={28} height={28} />
@@ -323,7 +324,7 @@ return (
           {cards.slice(0, Math.ceil(cards.length / 2)).map((card) => (
             <Cardx
               key={card.id}
-              fileUrl={card.imageUrl}
+              imageUrl={card.imageUrl}
               title={card.title}
               description={card.description}
               width="400px"
@@ -339,7 +340,7 @@ return (
           {cards.slice(Math.ceil(cards.length / 2), cards.length).map((card) => (
             <Cardx
               key={card.id}
-              fileUrl={card.imageUrl}
+              imageUrl={card.imageUrl}
               title={card.title}
               description={card.description}
               width="400px"
@@ -430,9 +431,6 @@ return (
       .then(response => response.json())
       .then(savednotice => {
         setSavedNotice(savednotice);
-
-        
-
        fetchSliderList(); // Kategori listesini güncellemek için yeniden verileri çekin
         console.log("günce", noticelist)
       })
