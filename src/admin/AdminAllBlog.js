@@ -133,7 +133,7 @@ const AdminAllBlog = () => {
             key={post.title}
             title={post.title}
             id={post.id}
-            image={post.image}
+            image={post.blogDetailFileUrl}
             caption={post.description}
             likes={post.likes}
             
