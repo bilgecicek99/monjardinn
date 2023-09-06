@@ -11,7 +11,7 @@ import { baseUrl } from '../config/Constants';
     const navigate = useNavigate();
     const [selectedImage, setSelectedImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
-    const [blog, setBlog] = useState({});
+    const [blog, setBlog] = useState("");
     const firebaseConfig = {
       apiKey: "AIzaSyBVljeCIm_rhZBx0522TXkNa4G4ufKoMLY",
       authDomain: "monjardin-7cc13.firebaseapp.com",
@@ -28,15 +28,33 @@ import { baseUrl } from '../config/Constants';
       navigate(-1); 
     };
     const handleKaydet =async () => {
+
+      const requiredFields = ['title', 'description'];
+
+      const isNonBlogEmpty = requiredFields.some((field) => {
+        const value = blog[field];
+        return value === undefined || value === null || value === '' || (typeof value === 'number' && isNaN(value));
+      });
+
+      if (isNonBlogEmpty) {
+        toast.error('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        
+        return;
+      }
+     
+
       let downloadURL = "";
       if (selectedImage) {
         const storageRef = ref(storage, "images/" + selectedImage.name);
-         // Deği
         try {
-          // Resmi Storage'e yükleyin
           const snapshot = await uploadBytes(storageRef, selectedImage);
       
-          // Resmin URL'sini alın
           downloadURL = await getDownloadURL(snapshot.ref);
           console.log("Resim başarıyla yüklendi. URL:", downloadURL);
         } catch (error) {
@@ -85,13 +103,13 @@ import { baseUrl } from '../config/Constants';
               console.error(error);
             });
         }           
-        // toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
-        //   position: toast.POSITION.TOP_CENTER,
-        //   autoClose: 3000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        // });
+        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
         navigate("/adminallblog");
       })
       .catch((error) => {
