@@ -1204,3 +1204,8 @@ li.selected {
     left: 10% !important;
     bottom:5rem !important;
 }
+
+.carousel-item img {
+  max-height: 400px !important;
+  object-fit: cover;
+}
