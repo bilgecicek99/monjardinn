@@ -27,6 +27,17 @@ import { baseUrl } from '../config/Constants';
     const handleGoBack = () => {
       navigate(-1); 
     };
+
+    function showToast(message, duration = 3000) {
+      toast.error(message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: duration,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    }
+
     const handleKaydet =async () => {
 
       const requiredFields = ['title', 'description'];
@@ -37,14 +48,13 @@ import { baseUrl } from '../config/Constants';
       });
 
       if (isNonBlogEmpty) {
-        toast.error('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-        
+        showToast('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
+        return;
+      }
+
+      const descriptionValue = blog['description'];
+      if (typeof descriptionValue === 'string' && descriptionValue.length < 200) {
+        showToast('Açıklama alanı en az 200 karakter olmalıdır.');
         return;
       }
      
@@ -142,6 +152,8 @@ import { baseUrl } from '../config/Constants';
     };
     return (
         <div style={{margin:"100px"}}>
+                 <ToastContainer />
+
    <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
  
        <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>
