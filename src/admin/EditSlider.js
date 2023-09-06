@@ -138,7 +138,7 @@ function EditSlider() {
           let downloadURL = "";     
          
           if (selectedImageEdit) {  
-          const storageRef = ref(storage, "images/" + selectedImageEdit.title);    
+          const storageRef = ref(storage, "images/" + selectedImageEdit.name);    
           try {
             // Resmi Storage'e yükleyin
             const snapshot = await uploadBytes(storageRef, selectedImageEdit);
@@ -394,7 +394,7 @@ return (
    
     let downloadURL = "";
     if (selectedImage) {
-      const storageRef = ref(storage, "images/" + selectedImage.title);
+      const storageRef = ref(storage, "images/" + selectedImage.name);
   
       try {
         const snapshot = await uploadBytes(storageRef, selectedImage);
