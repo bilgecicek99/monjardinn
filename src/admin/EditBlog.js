@@ -168,13 +168,15 @@ useEffect(() => {
   <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
       <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>
-        <h1 style={{float:"left",fontSize:"40px", fontWeight:"bold", fontFamily:"Times New Roman", border:"1px solid black"}}>
+      <h1 style={{float:"left",fontSize:"40px", fontWeight:"bold", fontFamily:"Times New Roman", border:"1px solid black"}}>
         <input
                 type="text"
                 name="title"
                 value={blog.title}
                 onChange={handleInputChange}
                 className="edit-input-area"
+                style={{background:"transparent"}}
+
               />
           
         </h1>
@@ -195,17 +197,14 @@ useEffect(() => {
           <img src="/images/blogduzen.png" alt="Blogduzen alt" width={200} height={200}/> 
           <img src="/images/cam.png" alt="Blogduzen ust" style={{position:"absolute", top:"50%", left:"35%" , transform:"translate(-50%, -50%)"}}/> 
         </div>
-        <div style={{border:"2px solid black", padding:"20px", width:"72%", height:"150px"}}>
-        <p> 
-          <input
-                type="text"
+          <textarea
                 name="description"
+                style={{width: "100%", maxWidth:"1250px",height:"auto",height: "150px", border: "2px solid black", background: "transparent", marginTop: "25px"}}
+                rows="10"
+                cols="40"
                 value={blog.description}
                 onChange={handleInputChange}
-                className="edit-input-area"
               />
-          </p>
-        </div>
       </div>
       <button onClick={handleKaydet} className="save-button" style={{float:"right", marginTop:"30px"}}>Kaydet</button>
 
