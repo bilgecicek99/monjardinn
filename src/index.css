@@ -98,7 +98,7 @@ button {
   text-decoration: none;
   color: white;
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 10px;
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
 }
@@ -455,7 +455,7 @@ tr:hover {
   }
   .navbar-left{
    position: absolute !important;
-   left:20px !important;
+   left:0px !important;
   }
   .navbar-logo-action{
    position: relative;
@@ -535,6 +535,17 @@ nav li {
   text-decoration: none;
 }
 
+.nav-baradminblog{
+  background-color: #893694;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
 .input-action{
   padding: 10px;
   border: 1px solid #893694;
@@ -602,7 +613,10 @@ nav li {
 
 
 .address-radio{
-  margin-left: 25%;
+  margin-left: 30%;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  
 }
 .product-info-img {
   width: 200px;
@@ -625,8 +639,7 @@ nav li {
 
 .product-info-detay{
   margin-top: 2%;
- 
-  
+  font-family: 'Times New Roman', Times, serif;
 }
 .basket-no-product{
   font-size: 150%;
@@ -753,6 +766,7 @@ input[type='radio'] {
   padding-bottom: 400px;
   padding-top: 40px;
   width: 350px;
+  padding-left: 20px;
 }
 
 .menu-items-admin-link {
@@ -845,6 +859,7 @@ input[type='radio'] {
   font-weight: 600;
   font-style: italic;
   font-family: 'Times New Roman', Times, serif;
+ 
 }
 
 .search-button{

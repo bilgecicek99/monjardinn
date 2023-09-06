@@ -677,18 +677,23 @@ const handleSelectQuarterChange = (event) => {
               <div > <p>{props.fiyat} TL</p></div>
               <FlowerRating puan={props.puan} />
                
-                  <div className="detay-buton" onClick={()=>handleAddToFavorites()}>
-                    <img width={40} height={40}
-                      src = {favorited ? "/images/selectedfavorite.png" : "/images/fav.png"}
-                      alt="Favori İkonu"
-                      style={{ cursor: "pointer" }}
-                    />
-                  {favorited ? "" : "Favorile"}
+              <div className="detay-buton" onClick={() => handleAddToFavorites()}>
+                  <img
+                    width={40}
+                    height={40}
+                    src={favorited ? "/images/selectedfavorite.png" : "/images/fav.png"}
+                    alt="Favori İkonu"
+                    style={{ cursor: "pointer" }}
+                  />
+                  {favorited ? (
+                    ""
+                  ) : (
+                    <span style={{  fontFamily: "times", fontSize:"12px" }}>
+                      Favorile
+                    </span>
+                  )}
+              </div>
 
-          
-                  </div>
-             
-                
             </div>
             </div>
           </div>

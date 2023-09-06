@@ -69,14 +69,10 @@ const Home = () => {
     
     
     const styles = {
-     
-     
       cardContent: {
         width: "50%",
         textAlign: "center",
-        fontStyle: "italic",
-        
-  
+        fontStyle: "italic"
       },
       link: {
         textDecoration: 'none',
