@@ -299,7 +299,9 @@ const Profile = () => {
         await fetch(baseUrl + `api/UserAddress/DeleteUserAddress?id=${id}`, requestOptions)
           .then((response) => response.json())
           .then((data) => {
-            fetchUserAddress();
+            if(data.success)
+            {
+               fetchUserAddress();
             toast.success('Adres Başarıyla Silinmiştir', {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 2000,
@@ -307,6 +309,17 @@ const Profile = () => {
               closeOnClick: true,
               pauseOnHover: true,
             });
+            }
+            else{
+              toast.error(data.message ?? 'Lütfen daha sonra tekrar deneyiniz.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+            }
+           
           })
           .catch((error) => {
             // Hata durumunda burada hata işleme yapabilirsiniz
