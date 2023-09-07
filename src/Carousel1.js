@@ -44,9 +44,9 @@ function Carousel1() {
           alt={item.title}
         />
         <Carousel.Caption>
-          <h1 style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic" }}>{item.title}</h1>
-          <h3 style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic", marginTop: "50px" }}>{item.description}</h3>
         </Carousel.Caption>
+        <h1 className="carousel-title" style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic",fontSize:"55px" }}>{item.title}</h1>
+          <h3 className="carousel-desc" style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic", marginTop: "20px",fontSize:"24px" }}>{item.description}</h3>
       </Carousel.Item>
     ))}
   </Carousel>

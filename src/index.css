@@ -1130,6 +1130,27 @@ li.selected {
   max-width : "100%";
   max-height: "200px";
   }
+  .carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 1rem !important;
+    height: 2rem !important;
+}
+.carousel-title{
+  font-size: 35px !important;
+}
+.carousel-desc{
+font-size: 15px !important;
+}
+.carousel-control-prev-icon{
+  background-image: url('./images/prev-icon.png') !important; 
+  position: relative !important;
+  left: 0px !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url('./images/next-icon.png') !important;
+position: relative;
+left: 0px;
+}
 }
 
 
@@ -1192,13 +1213,6 @@ li.selected {
   }
   
 
-
-
-
-
-
-
-
 .carousel-caption {
     right: auto !important;
     left: 10% !important;
@@ -1210,19 +1224,25 @@ li.selected {
   object-fit: cover;
 }
 
-.carousel-control-next-icon, .carousel-control-prev-icon{
-  width: 2rem !important;
-  height: 4rem !important;
-}
 
-.carousel-control-prev-icon{
-  background-image: url('./images/prev-icon.png') !important; 
-  position: relative;
-  left: -30px;
-}
 
-.carousel-control-next-icon {
-  background-image: url('./images/next-icon.png') !important;
-position: relative;
-left: 30px;
+.carousel-control-next, .carousel-control-prev {
+  bottom: 110px !important;
+}
+@media only screen and (min-width: 768px) {
+  .carousel-control-next-icon, .carousel-control-prev-icon{
+    width: 2rem !important;
+    height: 4rem !important;
+  }
+
+  .carousel-control-prev-icon{
+    background-image: url('./images/prev-icon.png') !important; 
+    position: relative !important;
+    left: -30px !important;
+  }
+  .carousel-control-next-icon {
+    background-image: url('./images/next-icon.png') !important;
+  position: relative !important;
+  left: 30px !important;
+  }
 }
