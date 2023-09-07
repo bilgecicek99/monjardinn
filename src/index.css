@@ -1209,3 +1209,20 @@ li.selected {
   max-height: 300px !important;
   object-fit: cover;
 }
+
+.carousel-control-next-icon, .carousel-control-prev-icon{
+  width: 2rem !important;
+  height: 4rem !important;
+}
+
+.carousel-control-prev-icon{
+  background-image: url('./images/prev-icon.png') !important; 
+  position: relative;
+  left: -30px;
+}
+
+.carousel-control-next-icon {
+  background-image: url('./images/next-icon.png') !important;
+position: relative;
+left: 30px;
+}
