@@ -13,13 +13,13 @@ const Home = () => {
     try {
       const response = await fetch(baseUrl+`api/Category/GetMainCategories`);
       if (!response.ok) {
-        toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
+       /* toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-        });
+        });*/
         return;
       }
       const data = await response.json();
@@ -27,7 +27,7 @@ const Home = () => {
       setCategoryList(categoryData);
     } catch (error) {
       console.error(error);
-      toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
+     toast.error('Lütfen Daha Sonra Tekrar Deneyiniz', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
         hideProgressBar: false,

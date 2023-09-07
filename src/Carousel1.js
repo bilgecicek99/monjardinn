@@ -20,13 +20,13 @@ function Carousel1() {
       setNoticeData(noticeData);
     } catch (error) {
       console.error(error);
-      toast.error('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', {
+      /*toast.error('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-      });
+      });*/
     }
   };
 
