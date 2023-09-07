@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function EditBlog() {
 
   const location = useLocation();
-  console.log("blogxx", location.state.blog);
   const [blog, setBlog] = useState(location.state.blog);
   
   const firebaseConfig = {
@@ -41,16 +40,15 @@ useEffect(() => {
         // Başarılı yanıtın kontrolü
         if (response.ok) {
           const data = await response.json();
-          console.log("data", data.data);
           const productData = data.data;
           setBlog(productData);
-          console.log(data.data);
-          console.log(blog);
         } else {
-          throw new Error("Sunucudan geçersiz bir yanıt alındı.");
+          showToastError("Sunucudan geçersiz bir yanıt alındı.")
+          // throw new Error("Sunucudan geçersiz bir yanıt alındı.");
         }
       } catch (error) {
-        console.error("fetch hatası:", error);
+        showToastError("Sunucudan geçersiz bir yanıt alındı.")
+        // console.error("fetch hatası:", error);
         // Kullanıcıya hata mesajını göstermek veya uygun bir işlem yapmak için gerekli kodları burada ekleyebilirsiniz
       }
     };
@@ -63,8 +61,18 @@ useEffect(() => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
 
-  function showToast(message, duration = 3000) {
+  function showToastError(message, duration = 3000) {
     toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: duration,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  }
+
+  function showToastSuccess(message, duration = 2000) {
+    toast.success(message, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: duration,
       hideProgressBar: false,
@@ -83,13 +91,13 @@ useEffect(() => {
     });
 
     if (isNonBlogEmpty) {
-      showToast('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
+      showToastError('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
       return;
     }
 
     const descriptionValue = blog['description'];
     if (typeof descriptionValue === 'string' && descriptionValue.length < 200) {
-      showToast('Açıklama alanı en az 200 karakter olmalıdır.');
+      showToastError('Açıklama alanı en az 200 karakter olmalıdır.');
       return;
     }
 
@@ -103,16 +111,11 @@ useEffect(() => {
     
         // Resmin URL'sini alın
         downloadURL = await getDownloadURL(snapshot.ref);
-        console.log("Resim başarıyla yüklendi. URL:", downloadURL);
       } catch (error) {
-        console.error("Resim yükleme hatası:", error);
+        showToastError('Resim yüklenirken hata ile karşılaşıldı.');
+
     }
   } 
-  else {
-    console.log("selectedImage boş veya tanımsız.");
-  }
-
- 
 
   function handleFetchError(error) {
     if (error.response && error.response.status === 500) {
@@ -133,15 +136,11 @@ useEffect(() => {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigate('/adminallblog');
-        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-      
+        showToastSuccess('Değişiklikler başarıyla kaydedilmiştir.');
+        setTimeout(() => {
+          navigate("/adminallblog");
+        }, 2000);
+
         if (selectedImage) {
           if(blog.fileResponses.length>0)
           {
@@ -159,7 +158,7 @@ useEffect(() => {
 
               })
               .catch((error) => {
-                console.error(error);
+                showToastError('Resim yüklenirken hata ile karşılaşıldı.');
               });
           }
          else{
@@ -176,6 +175,7 @@ useEffect(() => {
              
             })
             .catch((error) => {
+              showToastError('Resim yüklenirken hata ile karşılaşıldı.');
             }); 
          }
            
@@ -183,7 +183,6 @@ useEffect(() => {
       })
       .catch((error) => {
        const errorMessage = handleFetchError(error);
-        console.log(errorMessage);
       });
   };
   const handleInputChange = (e) => {
@@ -206,7 +205,7 @@ useEffect(() => {
 
   return (
     <div style={{margin:"100px"}}>
-     <ToastContainer />
+            <ToastContainer />
   <button onClick={handleGoBack} className='back-button' style={{marginBottom:"30px"}}><img src="/images/back-button.png" alt="" width={40} height={30}/></button>
 
       <div style={{ backgroundColor: "#E7D1EA", padding: "40px" }}>

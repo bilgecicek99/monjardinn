@@ -28,8 +28,18 @@ import { baseUrl } from '../config/Constants';
       navigate(-1); 
     };
 
-    function showToast(message, duration = 3000) {
+    function showToastError(message, duration = 3000) {
       toast.error(message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: duration,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    }
+
+    function showToastSuccess(message, duration = 2000) {
+      toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: duration,
         hideProgressBar: false,
@@ -48,13 +58,13 @@ import { baseUrl } from '../config/Constants';
       });
 
       if (isNonBlogEmpty) {
-        showToast('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
+        showToastError('Lütfen Başlık ve Açıklama Alanlarını Doldurunuz.');
         return;
       }
 
       const descriptionValue = blog['description'];
       if (typeof descriptionValue === 'string' && descriptionValue.length < 200) {
-        showToast('Açıklama alanı en az 200 karakter olmalıdır.');
+        showToastError('Açıklama alanı en az 200 karakter olmalıdır.');
         return;
       }
      
@@ -66,14 +76,10 @@ import { baseUrl } from '../config/Constants';
           const snapshot = await uploadBytes(storageRef, selectedImage);
       
           downloadURL = await getDownloadURL(snapshot.ref);
-          console.log("Resim başarıyla yüklendi. URL:", downloadURL);
         } catch (error) {
-          console.error("Resim yükleme hatası:", error);
+        showToastError('Resim yüklenirken hata ile karşılaşıldı.');
       }
     } 
-    else {
-      console.log("selectedImage boş veya tanımsız.");
-    }
 
     function handleFetchError(error) {
       if (error.response && error.response.status === 500) {
@@ -107,20 +113,15 @@ import { baseUrl } from '../config/Constants';
           })
             .then((response) => response.json())
             .then(responseData => {
-                console.log("toast");
             })
             .catch((error) => {
-              console.error(error);
+              showToastError('Resim yüklenirken hata ile karşılaşıldı.');
             });
         }           
-        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-        navigate("/adminallblog");
+        showToastSuccess('Değişiklikler başarıyla kaydedilmiştir.');
+        setTimeout(() => {
+          navigate("/adminallblog");
+        }, 2000);
       })
       .catch((error) => {
         toast.error(error.message, {
