@@ -101,6 +101,15 @@ const List = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data && data.data) {
+            data.data.sort((a, b) => {
+              if (a.stock === 0 && b.stock !== 0) {
+                return 1; 
+              } else if (a.stock !== 0 && b.stock === 0) {
+                return -1; 
+              } else {
+                return 0; 
+              }
+            });
             const allProducts = data.data.map(product => ({
               ...product,
               stock: product.stock || 0, // Add stock property, default to 0
