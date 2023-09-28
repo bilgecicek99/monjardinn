@@ -848,6 +848,7 @@ input[type='radio'] {
 .menu-items-container {
   max-height: 500px; /* Adjust the height as needed */
   overflow-y: auto;
+  margin-top: 50px;
 }
 
 .back-button{
@@ -1196,6 +1197,34 @@ left: 0px;
   font-family: 'Times New Roman', Times, serif;
   border:1px solid black;
 }
+
+.address-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.address-detail-box {
+  background-color: white;
+  color: black;
+  padding: 35px;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  border:1px solid black;
+}
+.address-detail-box-text{
+  font-style: italic
+}
+
 
 .delete-confirmation-box button {
   margin: 10px;
