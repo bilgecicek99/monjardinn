@@ -111,7 +111,6 @@ useEffect(() => {
                 
                {user && (
                   <div className="text-center">
-                    <img src="/images/usericon.png" alt="" width={"45"} height={"45"}  style={{marginBottom:"5px"}}/>
                     <p className='menu-items-admin-link'>{userAllInfo.firstName} {userAllInfo.lastName} </p>
                     <p className='menu-items-admin-link'>{user.email}</p>
                   </div>
@@ -166,7 +165,6 @@ useEffect(() => {
                 
                {user && (
                   <div className="text-center">
-                    <img src="/images/usericon.png" alt="" width={"45"} height={"45"}  style={{marginBottom:"5px"}}/>
                     <p className='menu-items-admin-link'>{userAllInfo.firstName} {userAllInfo.lastName} </p>
                     <p className='menu-items-admin-link'>{user.email}</p>
                   </div>
@@ -175,6 +173,12 @@ useEffect(() => {
                 <div className="menu-items-container">
                   <NavLink className="menu-items-link" to='/'>Anasayfa</NavLink>
                   <hr />
+                  {user ? (
+                    <>
+                      <NavLink className="menu-items-link" to='/Profile'>Profil</NavLink>
+                      <hr />
+                    </>
+                  ) : null}
                   <NavLink className="menu-items-link" to='/Search'>Arama</NavLink>
                   <hr />
                   {/* <NavLink className="menu-items-link" to='/CreateYourself'>Kendin Yarat</NavLink>

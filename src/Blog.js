@@ -122,10 +122,10 @@ const Blog = () => {
         }
       };
   return (
-    <div className="mobile-generic-css" >
+    <div className="mobile-blog-list" >
               <ToastContainer />
 
-    <div style={{ margin: "5%"}}>
+    <div style={{ margin: "8%"}}>
   
     <Navbar onSearch={handleSearch} />
       <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center", background: "#D2ADD7", padding:"10px", borderRadius:"10px", maxWidth: "1200px", margin: "0 auto"}}>

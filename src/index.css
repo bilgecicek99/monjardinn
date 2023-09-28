@@ -694,7 +694,12 @@ nav li {
 }
 .mobile-generic-css
 {
- margin: 15% 5% !important;
+ margin: 15% 4% !important;
+}
+.mobile-blog-list
+{
+  margin-top: 22%;
+  margin-left: 3%;
 }
 .basket-no-product-button{
   width: 80%;
