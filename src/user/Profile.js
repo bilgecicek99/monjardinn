@@ -286,7 +286,8 @@ const Profile = () => {
 
     const Address = ({ description, title, corporate, district, quarter, id }) => {
       const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
-    
+      const [isAdsressDetailVisible, setIsAdsressDetailVisible] = useState(false);
+      const [address, setAddress] = useState({});
       const handleDelete = async () => {
         // Silme işlemi burada yapılacak
         const requestOptions = {
@@ -333,12 +334,55 @@ const Profile = () => {
       const handleEdit = (id) => {
         navigate(`/editaddres/${id}`, { state: { id } });
       };
+
+      const handleDivClick = async (id) => {
+        const requestOptions = {
+         
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        };
+         await fetch(baseUrl+`api/UserAddress/GetUserAddressDetailById?id=${id}`,requestOptions)
+         .then(response => response.json())
+         .then(data => {  
+          if(data.success === true){  
+            console.log(data.data);  
+            setAddress(data.data);
+            setIsAdsressDetailVisible(true);
+          }
+          else{
+            toast.error('Lütfen daha sonra tekrar deneyiniz.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+          }
+        })
+        .catch((error) => {
+          toast.error('Lütfen daha sonra tekrar deneyiniz.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+        });;
+      };
+      const handleClosePopup = () => {
+        setIsAdsressDetailVisible(false);
+      };
     
       return (
-        <div style={styles.card}>
+        <div>
+        <div 
+        style={styles.card}
+       >
           <div style={{ ...styles.cardContent, padding: "20px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "times" }}>
-              <div>
+              <div  onClick={()=>handleDivClick(id)} style={{cursor:"pointer"}}>
                 <h4 style={{ fontStyle: "normal", fontWeight: "bold" }}>{title}</h4>
                 <p style={{ color: "#6F6D6D", fontSize: "18px", fontStyle: "italic" }}>{quarter} - {district}/İzmir</p>
               </div>
@@ -354,8 +398,7 @@ const Profile = () => {
                   >
                     <img src={"/images/delete.png"} alt="" width={13} height={13} />
                   </a>
-    
-                 
+     
                   {isDeleteConfirmationVisible && (
                     <div className="delete-confirmation-overlay">
                       <div className="delete-confirmation-box">
@@ -368,7 +411,33 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+          </div>     
+        </div>
+        {isAdsressDetailVisible && (
+        <div className="address-detail-overlay">
+          <div className="address-detail-box">
+                   <a
+                    style={{cursor: "pointer",float:"right",marginTop: "-10px", marginRight: "-4px" }}
+                    onClick={handleClosePopup}
+                  >
+                    <img src={"/images/delete.png"} alt="" width={15} height={15} />
+                  </a>
+            <p style={{ fontSize: "21px",fontWeight: "bold",marginTop:"25px",fontFamily: "'Times New Roman', Times, serif"}}>{address.addressTitle}</p>
+            <p className="address-detail-box-text">{address.nameSurname}</p>
+            <p className="address-detail-box-text">{address.phone}</p>
+            <p className="address-detail-box-text">{quarter} - {district}/İzmir</p>
+            <p className="address-detail-box-text">{address.address}</p>
+             {address.corporate && (
+              <> 
+                 <p className="address-detail-box-text">{address.corparateResponseModel.email}</p>
+                 <p className="address-detail-box-text">Firma Adı: {address.corparateResponseModel.companyName}</p>
+                 <p className="address-detail-box-text">Vergi No: {address.corparateResponseModel.taxIdentificationNumber}</p>
+                 <p className="address-detail-box-text">Vergi Daire: {address.corparateResponseModel.taxOffice}</p>
+              </>
+             )}
           </div>
+        </div>
+      )}
         </div>
       );
     };
@@ -385,7 +454,7 @@ const Profile = () => {
       borderRadius: "12px",
       marginBottom:"30px",
       border:"1px solid #D9D9D9",
-      boxShadow: "20px 20px 20px rgba(0,0,0,0.25)"
+      boxShadow: "20px 20px 20px rgba(0,0,0,0.25)",
     },
     cardContent: {
       width: "100%",
