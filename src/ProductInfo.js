@@ -698,6 +698,7 @@ const handleSelectQuarterChange = (event) => {
             </div>
           </div>
           <p  className="product-info-detay">{props.detay}</p>
+          {token ? (<>
           <div className="address-radio">
                   <input
                     type="radio"
@@ -718,6 +719,7 @@ const handleSelectQuarterChange = (event) => {
                   />
                   Yeni Adres Gir
           </div>
+          
           <div>
                   {isExistingAddress && (
                     <div>
@@ -778,18 +780,18 @@ const handleSelectQuarterChange = (event) => {
                             placeholder="Adınız Soyadınız"
                           />
                        <input
-  type="text"
-  name="phone"
-  value={address.districtId}
-  onChange={handleInputChange}
-  onKeyPress={(e) => {
-    if (isNaN(String.fromCharCode(e.charCode))) {
-      e.preventDefault();
-    }
-  }}
-  className="product-detail-form"
-  placeholder="Telefon Numaranız"
-/>
+                        type="text"
+                        name="phone"
+                        value={address.districtId}
+                        onChange={handleInputChange}
+                        onKeyPress={(e) => {
+                          if (isNaN(String.fromCharCode(e.charCode))) {
+                            e.preventDefault();
+                          }
+                        }}
+                        className="product-detail-form"
+                        placeholder="Telefon Numaranız"
+                      />
                           <select
                             name="districtId"
                             value={address.districtId}
@@ -839,7 +841,7 @@ const handleSelectQuarterChange = (event) => {
                     
                   
 
-<QuantitySelector
+                    <QuantitySelector
                       value={selectedPiece}
                       onIncrement={handleIncrement}
                       onDecrement={handleDecrement}
@@ -942,7 +944,9 @@ const handleSelectQuarterChange = (event) => {
                       )}
                     </div>
                   )}
-          </div>  
+          </div> </> ):null}
+
+
          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" ,paddingRight:"17%" }}>
           <button 
                 onClick={addToBasket}

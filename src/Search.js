@@ -20,6 +20,15 @@ const Search = () => {
       const response = await fetch(baseUrl + 'api/Product/GetAllProducts');
       const data = await response.json();
       const productData = data.data;
+      productData.sort((a, b) => {
+        if (a.stock === 0 && b.stock !== 0) {
+          return 1; 
+        } else if (a.stock !== 0 && b.stock === 0) {
+          return -1; 
+        } else {
+          return 0; 
+        }
+      });
       setProductList(productData);
       setFilteredProducts(productData);
     } catch (error) {
@@ -81,16 +90,18 @@ const Search = () => {
                   verticalAlign: 'middle', }} 
                   onClick={handleSearch} />    
         </form>
-        
+        {filteredProducts.length === 0 ? (
+      <div style={{justifyContent:"center", textAlign: "center", marginTop: "15%", fontSize: "18px", fontFamily:"sans-serif", textSizeAdjust:"bold" }}>
+        Ürün bulunamadı.</div> ):
         <div className="recommended-products">
           <div className="product-grid row">
           <div className="product-list">
-  {filteredProducts.map((product) => (
-    <div key={product.id} className="product-item">
-      <Link
-        to={`/productinfo/${product.id}`}
-        style={{ textDecoration: 'none', color: 'black' }}
-      >
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="product-item">
+              <Link
+                to={`/productinfo/${product.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
         <div className="product-card">
           <img
             className="product-image"
@@ -123,7 +134,7 @@ const Search = () => {
 </div>
 
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );
