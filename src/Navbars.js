@@ -17,6 +17,9 @@ function Navbars() {
   const [activeMenufav, setActiveMenufav] = useState(false);
   const [activeMenubasket, setActiveMenubasket] = useState(false);
   const [activeMenuprofile, setActiveMenuprofile] = useState(false);
+  const [activeMenuBlog, setActiveMenuBlog] = useState(false);
+  const [activeMenuSearch, setActiveMenuSearch] = useState(false);
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
 
   const navigate = useNavigate();
@@ -34,12 +37,16 @@ function Navbars() {
     setActiveMenufav(currentLocation.pathname);
     setActiveMenubasket(currentLocation.pathname);
     setActiveMenuprofile(currentLocation.pathname);
+    setActiveMenuBlog(currentLocation.pathname);
+    setActiveMenuSearch(currentLocation.pathname);
   }, [currentLocation.pathname]);
 
   const handleMenuClick = (menu) => {
     setActiveMenufav(menu);
     setActiveMenubasket(menu);
     setActiveMenuprofile(menu);
+    setActiveMenuBlog(menu);
+    setActiveMenuSearch(menu);
   };
 
 console.log("userall",userAllInfo);
@@ -145,8 +152,7 @@ useEffect(() => {
               </div>
             )} */}
           {/* </Nav> */}
-          <Navbar.Brand style={{ margin:"auto" }}>
-            
+          <Navbar.Brand style={{ margin:"auto" }}>          
           <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
         </Navbar.Brand>
       </Container>
@@ -201,9 +207,28 @@ useEffect(() => {
               </div>
             )} */}
           {/* </Nav> */}
-        
+            <NavLink
+                  className={`menu-items-icon ${activeMenuprofile === '/search' ? 'active' : ''}`}
+                  to='/search'
+                  onClick={() => setActiveMenufav('/search')}
+                  style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
+                >
+                  <img src={activeMenufav === '/search' ? "/images/searchpage.png" : "/images/searchpage.png"} alt="" width={30} height={30} />
+                  <p className='nav-icon-text' style={{textAlign:"center"}}>Arama</p>
+              </NavLink>
+            <NavLink
+               className={`menu-items-icon ${activeMenuprofile === '/Blog' ? 'active' : ''}`}
+                to='/Blog'
+                onClick={() => setActiveMenufav('/Blog')}
+                style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
+              >
+                <img src={activeMenufav === '/Blog' ? "/images/blogicon.png" : "/images/blogicon.png"} alt="" width={35} height={30} />
+                <p className='nav-icon-text' style={{textAlign:"center"}}>Blog</p>
+
+            </NavLink>
 
         <Navbar.Brand style={{ margin: "auto" }}>
+            
           <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
         </Navbar.Brand>
 

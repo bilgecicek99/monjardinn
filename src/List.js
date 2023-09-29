@@ -158,113 +158,129 @@ const List = () => {
   return (
     <div className="kategori1">
    <div style={{ display: "flex", alignItems: "center",float:"right", marginRight:"8%",marginBottom:"2%" }}>
-  {isCategoryVisible && 
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",marginRight: "45px" }}>
-      <label className="kategori" htmlFor="categoryFilter">Kategori</label>
-      <div style={{ margin: "8px", cursor: "pointer" }} onClick={handleCategoryFilterToggle}>
-      <img
-        src={"/images/downarrow.png"} 
-        alt="Arrow Icon"
-        style={{ width: "15px", height: "8px" }} 
-      />
-    </div> 
-    </div>
-  }
-  {categoryFilterOpen && (
-    <div style={{marginTop:"5px"}}>
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-        <input type="checkbox" id="all" name="all" value="" onChange={handleCategoryFilterChange} style={{marginRight:"5px"}}/>
-        Tümü
-      </label>
-              
-      {categories.map((category) => (
-        <label key={category.id} style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+   {isCategoryVisible && <div class="dropdown">
+      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+        <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Kategori</label>
+        <div style={{ cursor: "pointer" }}>
+        <img
+          src={"/images/downarrow.png"} 
+          alt="Arrow Icon"
+          style={{ width: "15px", height: "8px",marginLeft:"25px",marginTop:"5px" }} 
+        />
+      </div> 
+      </button>
+      <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)",width:"210px"}}>
+ 	    {categories.map((category) => (
+        <li style={{lineHeight:"1px"}}>
+          <label key={category.id} style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
           <input type="checkbox" id={`kategori${category.id}`} name={`kategori${category.id}`} value={category.id} onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
           {category.name}
         </label>
-      ))}
-    </div>   
-  )}
-  {isCategoryVisible && <hr/>}
-    <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between", marginRight: "45px" }}>
-    <label className="kategori" htmlFor="colorFilter">Renk</label>
-    <div style={{ margin: "8px", cursor: "pointer" }} onClick={handleColorFilterToggle}>
-      <img
-        src={"/images/downarrow.png"} 
-        alt="Arrow Icon"
-        style={{ width: "15px", height: "8px" }} 
-      />
-    </div>   
-  </div>
-  {showColorFilter && ( 
-  <div style={{marginTop:"5px"}}>
-    <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+        <hr/>
+	</li>))}
+      </ul>
+    </div>}
+    {isCategoryVisible && <hr/>}
+  <div class="dropdown">
+      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+        <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Renk</label>
+        <div style={{ cursor: "pointer" }}>
+        <img
+          src={"/images/downarrow.png"} 
+          alt="Arrow Icon"
+          style={{ width: "15px", height: "8px",marginLeft:"25px",marginTop:"5px" }} 
+        />
+      </div> 
+      </button>
+      <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)"}}>
+  	<li style={{lineHeight:"1px"}}>
+       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
       <input type="checkbox" id="all" name="all" value="" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
       Tümü
     </label>
-    
+     <hr/>
+      </li>
+  <li style={{lineHeight:"1px"}}>
     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
       <input type="checkbox" id="Mor" name="Mor" value="Mor" onChange={handleColorFilterChange} style={{marginRight:"5px"}} />
       Mor
     </label>
+	<hr/>
+      </li>
     
+  <li style={{lineHeight:"1px"}}>
     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
       <input type="checkbox" id="Pembe" name="Pembe" value="Pembe" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
       Pembe
     </label>
+   <hr/>
+      </li>
     
+  <li style={{lineHeight:"1px"}}>
     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
       <input type="checkbox" id="Lila" name="Lila" value="Lila" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
       Lila
     </label>
-    
+ 	<hr/>
+      </li>
+
+      <li style={{lineHeight:"1px"}}>
     <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
       <input type="checkbox" id="Sarı" name="Sarı" value="Sarı" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
       Sarı
     </label>
-  </div>
-)}
-  <hr />
-  
-  <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between",marginRight: "45px" }}>
-    <label className="kategori" htmlFor="priceFilter">Fiyat</label>
-    <div style={{ margin: "8px", cursor: "pointer" }} onClick={togglePriceOptions}>
-      <img
-        src={"/images/downarrow.png"} 
-        alt="Arrow Icon"
-        style={{ width: "15px", height: "8px" }} 
-      />
-    </div> 
-  </div>
-  
-  {showPriceOptions && (
-    <div style={{marginTop:"5px"}}>
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-        <input type="checkbox" id="all" name="all" value="" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
-        Tümü
-      </label>
-      
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+      </li>
+      </ul>
+    </div>
+  <hr/>
+      <div class="dropdown" >
+      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+        <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Fiyat</label>
+        <div style={{ cursor: "pointer" }}>
+        <img
+          src={"/images/downarrow.png"} 
+          alt="Arrow Icon"
+          style={{ width: "15px", height: "8px",marginLeft:"25px",marginTop:"5px" }} 
+        />
+      </div> 
+      </button>
+      <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)"}}>
+        <li style={{lineHeight:"1px"}}>
+          <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+          <input type="checkbox" id="all" name="all" value="" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+            Tümü
+        </label>
+        <hr/>
+      </li>
+      <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
         <input type="checkbox" id="0-100" name="0-100" value="0-100" onChange={handlePriceFilterChange} style={{marginRight:"5px"}} />
         0 TL - 100 TL
       </label>
+      <hr/>
+      </li>
       
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+      <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
         <input type="checkbox" id="100-200" name="100-200" value="100-200" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
         100 TL - 200 TL
       </label>
+      <hr/>
+      </li>
       
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+      <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
         <input type="checkbox" id="200-500" name="200-500" value="200-500" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
         200 TL - 500 TL
       </label>
+      <hr/>
+      </li>
 
-      <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+      <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
         <input type="checkbox" id="500+" name="500+" value="500+" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
         500 TL +
       </label>
+      </li>
+      </ul>
     </div>
-  )}
+  
 </div>
     <div style={{ flex: "0 0 100%" }}>
   <div className="container" style={{margin:"8%"}}>
@@ -273,7 +289,7 @@ const List = () => {
         Ürün bulunmamaktadır.
       </div>
     ) : (
-      <div className="row">
+      <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         {filteredProducts.map((product, index) => (
           <div key={product.id} className="col-md-3">
             <li style={{ listStyle: "none" }}>
