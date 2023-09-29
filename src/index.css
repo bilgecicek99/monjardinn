@@ -1157,6 +1157,43 @@ font-size: 15px !important;
 position: relative;
 left: 0px;
 }
+
+.footer-text{
+  font-family:"Times New Roman";
+  margin:0;
+  text-decoration: none;
+  color: black;
+}
+.footer-sub-title{
+  font-family:"Times New Roman";
+  font-weight:bold;
+  font-size:17px
+}
+.footer-title{
+  width:100px !important;
+  height:34px !important;
+  font-size:17px !important;
+}
+.footer-url{
+  font-size:9px !important
+}
+.footer-url-image{
+  width:12px !important;
+  height:12px !important;
+}
+.mobile-footer{
+  width: 130px !important;
+  margin-left: 10px !important;
+}
+.footer-text {
+  font-size: 12px !important;
+}
+.footer-sub-title{
+  font-size: 12px !important;
+}
+.mobile-footer-div{
+  margin-left: 2% !important;
+}
 }
 
 
@@ -1279,4 +1316,39 @@ left: 0px;
   position: relative !important;
   left: 30px !important;
   }
+}
+
+.nav-icon-text{
+  font-size:11px;
+  font-family: 'Times New Roman';
+  margin-top:3px;
+}
+
+.footer-text{
+  font-family:"Times New Roman";
+  margin:0;
+  text-decoration: none;
+  color: black;
+}
+.footer-sub-title{
+  font-family:"Times New Roman";
+  font-weight:bold;
+  font-size:17px
+}
+.footer-title{
+  width:310px;
+  height:74px;
+  font-weight:700;
+  font-style:italic;
+  font-size:45px;
+  font-family:"Times New Roman"
+}
+.footer-url{
+  font-family:"Times New Roman";
+  font-size:16px
+}
+.footer-url-image{
+  width:22px;
+  height:22px;
+  margin-bottom:4px;
 }

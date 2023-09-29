@@ -91,7 +91,12 @@ const Search = () => {
                   onClick={handleSearch} />    
         </form>
         {filteredProducts.length === 0 ? (
-      <div style={{justifyContent:"center", textAlign: "center", marginTop: "15%", fontSize: "18px", fontFamily:"sans-serif", textSizeAdjust:"bold" }}>
+      <div style={{justifyContent:"center", 
+      textAlign: "center", 
+      marginTop: "15%", fontSize: "18px", 
+      fontFamily:"sans-serif", 
+      textSizeAdjust:"bold",
+      marginBottom:"15%" }}>
         Ürün bulunamadı.</div> ):
         <div className="recommended-products">
           <div className="product-grid row">
