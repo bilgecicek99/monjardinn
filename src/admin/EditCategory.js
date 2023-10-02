@@ -84,6 +84,7 @@ function EditCategory() {
       const handleSaveClick =async (event) => {
     
         let updatedProduct = "";    
+
         if(previewImageEdit){
           let downloadURL = "";     
          
@@ -100,9 +101,15 @@ function EditCategory() {
             console.error("Resim yükleme hatası:", error);
           }
           } 
-          else {
-        
-            console.log("selectedImage boş veya tanımsız.");
+          else {                
+            toast.error("Lütfen resim ekleyiniz.", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return null;
           }
       
           
@@ -319,6 +326,20 @@ return (
   const handleSave = async(event) => {
     event.preventDefault(); 
     let downloadURL = "";
+
+    if(!selectedImage)
+        {
+          toast.error("Lütfen resim ekleyiniz.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return null;
+        }
+
+
     if (selectedImage) {
       const storageRef = ref(storage, "images/" + selectedImage.name);
   
