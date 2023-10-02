@@ -101,7 +101,6 @@ function App() {
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
       </Routes>
-       <Footer/> 
 
     </Router>
   );
