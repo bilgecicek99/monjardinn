@@ -49,6 +49,7 @@ import ProductListByCategory from './ProductListByCategory';
 import MenuMoreThan from './MenuMoreThan';
 import Contact from './Contact';
 import AddBlog from './admin/AddBlog';
+import Footer from './footer';
 
 
 function App() {
@@ -100,6 +101,8 @@ function App() {
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
       </Routes>
+       <Footer/> 
+
     </Router>
   );
 } 

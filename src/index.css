@@ -443,9 +443,6 @@ tr:hover {
   padding-bottom: 30px;
 }
 
- 
-
-
 
 
 @media screen and (min-width: 993px)  {
@@ -461,6 +458,8 @@ tr:hover {
    position: relative;
    left: 600px; 
   }  
+
+  
 }
 
 
@@ -570,7 +569,19 @@ nav li {
   width: 150px;
 }
 .carousel-indicators [data-bs-target]{
+  background-color: transparent !important;
+  border-radius: 50% !important;
+  width: 10px !important;
+  height: 10px !important;
+  margin-bottom: 2.5rem !important;
+  border: 1px solid black !important;
+  opacity: inherit !important;
+}
+.carousel-indicators .active {
   background-color: gray !important;
+  border: none !important; /* Remove the border for the active indicator */
+  width: 13px !important;
+  height: 13px !important;
 }
 
 .profile-text{
@@ -696,13 +707,24 @@ nav li {
 {
  margin: 15% 4% !important;
 }
+
+.contact-page-mobile-css
+{
+ margin: 20% 4% !important;
+}
 .mobile-blog-list
 {
-  margin-top: 22%;
+  margin-top: 25%;
   margin-left: 3%;
 }
 .basket-no-product-button{
   width: 80%;
+}
+.mobile-search-filter{
+  width: 118px;
+}
+.mobile-list{
+  margin:0 !important
 }
 }
 
@@ -876,7 +898,7 @@ input[type='radio'] {
   
 }
 
-.save-button{
+/* .save-button{
   background-color: #893694;
   width: auto;
   height: auto;
@@ -884,6 +906,18 @@ input[type='radio'] {
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   border-radius: 5px;
+} */
+
+.save-button{
+  background-color: transparent;
+  width: auto;
+  height: auto;
+  padding:10px 30px;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  border-radius: 5px;
+  color: #893694;
+  font-weight: 600;
 }
 
 .popup-container {
@@ -1007,14 +1041,32 @@ input[type='radio'] {
   }
   
  .product-image{
+  width: 290px !important;
+  height: 200px !important;
+ }
+ .search-product-image{
   width: 150px !important;
   height: 200px !important;
  }
+
  .product-name {
   width: 150px !important;
   }
   .search-tukendi{
     width: 150px !important;
+  }
+  .list-tukendi{
+    width: 140px !important;
+  }
+  .list-product-image{
+    width: 140px !important;
+  height: 200px !important;
+  }
+
+  .textcard{
+    left: 35px !important;
+    font-size: 25px !important;
+    bottom: 20% !important;
   }
   
 }
@@ -1068,7 +1120,7 @@ li.selected {
 
 
 .contact-page {
-  padding: 7% 8% 10% 8%;
+  padding: 8% 8% 10% 8%;
   
 }
 
@@ -1079,7 +1131,7 @@ li.selected {
 }
 
 .contact-section {
-  padding: 0 2% 0 2%;
+  padding: 2% 2% 0 2%;
   display: flex;
 }
 
@@ -1087,6 +1139,7 @@ li.selected {
   font-size: 100%;
   margin-bottom: 10px;
   font-weight: bold;
+  width: 140px;
 }
 
 .contact-section p {
@@ -1137,25 +1190,83 @@ li.selected {
   max-height: "200px";
   }
   .carousel-control-next-icon, .carousel-control-prev-icon {
-    width: 1rem !important;
-    height: 2rem !important;
+    background-image: none !important;
+    visibility: hidden !important;
+    /* width: 1rem !important; */
+    /* height: 2rem !important; */
+    width: auto;
 }
 .carousel-title{
-  font-size: 35px !important;
+  font-size: 15px !important;
+  width: 45px !important;
+  text-align: left;
 }
 .carousel-desc{
-font-size: 15px !important;
-}
+font-size: 10px !important;
+width: 95px !important;
+text-align: left;
+margin-top: 5px !important;
+ top: unset !important}
+ .mobile-carousel{
+  position: relative !important;
+  margin-top: 25px;
+ }
 .carousel-control-prev-icon{
-  background-image: url('./images/prev-icon.png') !important; 
+  background-image: none !important;
+  /* background-image: url('./images/prev-icon.png') !important;  */
   position: relative !important;
   left: 0px !important;
 }
 
 .carousel-control-next-icon {
-  background-image: url('./images/next-icon.png') !important;
-position: relative;
-left: 0px;
+  background-image: none !important;
+  /* background-image: url('./images/next-icon.png') !important; */
+}
+
+.footer-text{
+  font-family:"Times New Roman";
+  margin:0;
+  text-decoration: none;
+  color: black;
+}
+.footer-sub-title{
+  font-family:"Times New Roman";
+  font-weight:bold;
+  font-size:17px
+}
+.footer-title{
+  width:100px !important;
+  height:34px !important;
+  font-size:17px !important;
+}
+.footer-url{
+  font-size:9px !important
+}
+.footer-url-image{
+  width:12px !important;
+  height:12px !important;
+}
+.mobile-footer{
+  width: 130px !important;
+  margin-left: 10px !important;
+}
+.footer-text {
+  font-size: 11px !important;
+}
+.footer-sub-title{
+  font-size: 11px !important;
+}
+.footer-site-mobile{
+  margin-left: 9px;
+}
+.mobile-footer-div{
+  margin-left: 2% !important;
+}
+.contact-subheading {
+  font-size: 100%;
+  margin-bottom: 10px;
+  font-weight: bold;
+  width: 100px;
 }
 }
 
@@ -1261,15 +1372,17 @@ left: 0px;
 
 
 .carousel-control-next, .carousel-control-prev {
+  background-image: none !important;
   bottom: 110px !important;
 }
 @media only screen and (min-width: 768px) {
-  .carousel-control-next-icon, .carousel-control-prev-icon{
+  
+  /* .carousel-control-next-icon, .carousel-control-prev-icon{
     width: 2rem !important;
     height: 4rem !important;
-  }
+  } */
 
-  .carousel-control-prev-icon{
+  /* .carousel-control-prev-icon{
     background-image: url('./images/prev-icon.png') !important; 
     position: relative !important;
     left: -30px !important;
@@ -1278,5 +1391,63 @@ left: 0px;
     background-image: url('./images/next-icon.png') !important;
   position: relative !important;
   left: 30px !important;
+  } */
+}
+
+.nav-icon-text{
+  font-size:11px;
+  font-family: 'Times New Roman';
+  margin-top:3px;
+}
+
+.footer-text{
+  font-family:"Times New Roman";
+  margin:0;
+  text-decoration: none;
+  color: black;
+}
+.footer-sub-title{
+  font-family:"Times New Roman";
+  font-weight:bold;
+  font-size:17px
+}
+.footer-title{
+  width:310px;
+  height:74px;
+  font-weight:700;
+  font-style:italic;
+  font-size:45px;
+  font-family:"Times New Roman"
+}
+.footer-url{
+  font-family:"Times New Roman";
+  font-size:16px
+}
+.footer-url-image{
+  width:22px;
+  height:22px;
+  margin-bottom:4px;
+}
+
+@media (max-width: 767px) { /* Adjust the max-width as needed for your mobile view */
+  .carousel-caption div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center; /* Center text for mobile view */
+  }
+  
+  .carousel-title,
+  .carousel-desc {
+    float: left; /* Remove float for mobile view */
+    margin: 0; /* Remove margin for mobile view */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .image-container{
+    height: 210px !important;
   }
 }

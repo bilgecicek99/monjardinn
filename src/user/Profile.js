@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WithNavbar from '../WithNavbar'; 
-import {getEmail, getToken, getUserInfo, setUserInfo} from "../service/AuthService";
+import {getEmail, getToken, getUserInfo, setUserInfo,resetUserSession} from "../service/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
 import { ToastContainer, toast } from 'react-toastify';
@@ -282,7 +282,10 @@ const Profile = () => {
     }
   };
   
-   
+  const logoutHandler = () => {
+    resetUserSession();
+    navigate("/");
+  };
 
     const Address = ({ description, title, corporate, district, quarter, id }) => {
       const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
@@ -531,8 +534,11 @@ const Profile = () => {
                 disabled={true}
               /> */}
       <hr className="profile-hr" />
-      <button className="save-button" onClick={updateUser}>Kaydet</button>
-      <div style={{ display:"flex", flexDirection: "column",marginTop:"3%"}} >
+      <div style={{float:"right"}}>
+        <button className="save-button"  onClick={logoutHandler}>Çıkış Yap</button>
+        <button className="save-button" onClick={updateUser}>Kaydet</button>
+      </div>
+      <div style={{ display:"flex", flexDirection: "column",marginTop:"15%"}} >
      <div> <p className="profile-text"> Mevcut Şifre: <input
           type="text"
           value={oldPassword}
