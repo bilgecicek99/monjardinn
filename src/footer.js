@@ -34,35 +34,37 @@ const Footer = () => {
   }, []);
 
   return (
-    <div style={{height:"270px"}}>   
-         <hr/>
-         <div style={{display:'flex', marginTop:"50px",marginBottom:"50px"}}>
-        <div className='mobile-footer-div' style={{marginLeft:"10%"}}>
-            <p className='footer-title'>Mon Jardin</p>
-            <p className='footer-url'><img src={"/images/footer.png"} className='footer-url-image'/> www.mjcicek.com</p>
-        </div>
-        <div className='mobile-footer' style={{ width: 400,marginLeft:"40px"}}>
-            <p className='footer-sub-title'>KURUMSAL</p>
-            <div style={{marginLeft:"7px"}}>
-              <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Hakkımızda</p></Link>
-              <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>KVKK Başvuru Formu</p></Link>
-              <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Mesafeli Satış Sözleşmesi</p></Link>
-              <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Gizlilik ve Güvenli Satış Sözleşmesi</p></Link>
-               <Link to={`/Blog`} className='footer-text'><p className='footer-text'>Blog</p></Link>
-               <Link to={`/Contact`} className='footer-text'><p className='footer-text'>İletişim</p></Link>
-            </div>
-        </div>
-        <div>
-            <p className='footer-sub-title'>SİTE</p>
-            <div style={{marginLeft:"7px"}}>
-                <Link to={`/`} className='footer-text'><p className='footer-text'>Ana Sayfa</p></Link>
-                {categoryList?.length>0 && categoryList.map((category)=>(
-                    <Link to={`/List/${category.id}`} className='footer-text'><p className='footer-text'>{category.name}</p></Link>
-                ))}
-            </div>
-        </div>
-        </div>
+    <div style={{ height: "270px",marginBottom:"50px" }}>
+  <hr />
+  <div style={{ display: 'flex', marginTop: "50px", marginBottom: "50px" }}>
+    <div className='mobile-footer-div' style={{ marginLeft: "10%" }}>
+      <p className='footer-title'>Mon Jardin</p>
+      <p className='footer-url'><img src={"/images/footer.png"} className='footer-url-image' /> www.mjcicek.com</p>
     </div>
+    <div className='mobile-footer' style={{ width: 400, marginLeft: "40px" }}>
+      <p className='footer-sub-title'>KURUMSAL</p>
+      <div style={{ marginLeft: "7px" }}>
+        <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Hakkımızda</p></Link>
+        <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>KVKK Başvuru Formu</p></Link>
+        <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Mesafeli Satış Sözleşmesi</p></Link>
+        <Link to={`/Morethan`} className='footer-text'><p className='footer-text'>Gizlilik ve Güvenli Satış Sözleşmesi</p></Link>
+        <Link to={`/Blog`} className='footer-text'><p className='footer-text'>Blog</p></Link>
+        <Link to={`/Contact`} className='footer-text'><p className='footer-text'>İletişim</p></Link>
+      </div>
+    </div>
+    <div>
+      <p className='footer-sub-title footer-site-mobile'>SİTE</p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: "7px" }}>
+        <Link to={`/`} className='footer-text' style={{width: '33.33%',}}><p className='footer-text'>Ana Sayfa</p></Link>
+        {categoryList?.length > 0 && categoryList.map((category, index) => (
+          <div key={category.id} style={{ width: '33.33%', boxSizing: 'border-box' }}>
+            <Link to={`/List/${category.id}`} className='footer-text'><p className='footer-text' style={{ textAlign: 'left', marginLeft: '0' }}>{category.name}</p></Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
   );
 }
 

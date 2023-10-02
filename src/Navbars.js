@@ -152,9 +152,68 @@ useEffect(() => {
               </div>
             )} */}
           {/* </Nav> */}
+          <NavLink
+                  className={`menu-items-icon ${activeMenuprofile === '/search' ? 'active' : ''}`}
+                  to='/search'
+                  onClick={() => setActiveMenufav('/search')}
+                  style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
+                >
+                  <img src={activeMenufav === '/search' ? "/images/searchpage.png" : "/images/searchpage.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
+                  <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Arama</p>
+              </NavLink>
+            <NavLink
+               className={`menu-items-icon ${activeMenuprofile === '/Blog' ? 'active' : ''}`}
+                to='/Blog'
+                onClick={() => setActiveMenufav('/Blog')}
+                style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
+              >
+                <img src={activeMenufav === '/Blog' ? "/images/blogicon.png" : "/images/blogicon.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
+                <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Blog</p>
+
+            </NavLink>
           <Navbar.Brand style={{ margin:"auto" }}>          
-          <NavLink className="logo-link" to='/'><h1 className='baslik'>Mon Jardin</h1></NavLink>
+          <NavLink className="logo-link" to='/'><h1 className='baslik' style={{fontSize:"29px",marginBottom:"6px"}}>Mon Jardin</h1></NavLink>
         </Navbar.Brand>
+            <NavLink
+              className={`menu-items-icon ${activeMenufav === '/Favorite' ? 'active' : ''}`}
+              to='/Favorite'
+              onClick={() => setActiveMenufav('/Favorite')}
+              style={{color:"black", textDecoration: 'none',marginTop: "4px"}}
+            >
+              <img src={activeMenufav === '/Favorite' ? "/images/selectedfavorite.png" : "/images/menu-icon1.png"} alt="" width={20} height={20} style={{marginTop:"20px"}}/>
+              <p className='nav-icon-text' style={{textAlign:"center",marginTop:"1px"}}>Favori</p>
+            </NavLink>
+            <NavLink
+              className={`menu-items-icon ${activeMenubasket === '/Basket' ? 'active' : ''}`}
+              to='/Basket'
+              onClick={() => setActiveMenubasket('/Basket')}
+              style={{color:"black", textDecoration: 'none'}}
+            >
+              <img src={activeMenubasket === '/Basket' ? "/images/selectedbasket.png" : "/images/menu-icon2.png"} alt="" width={20} height={25} style={{marginTop:"20px"}}/>
+              <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Sepet</p>
+            </NavLink>
+            {token ? 
+            <NavLink
+              className={`menu-items-icon ${activeMenuprofile === '/Profile' ? 'active' : ''}`}
+              to='/Profile'
+              onClick={() => setActiveMenuprofile('/Profile')}
+              style={{color:"black", textDecoration: 'none'}}
+            >
+              <img src={activeMenuprofile === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={20} height={25} style={{marginTop:"20px"}}/>
+              <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Profil</p>
+            </NavLink>
+            : 
+            <NavLink
+              className={`menu-items-icon ${activeMenuprofile === '/Profile' ? 'active' : ''}`}
+              to='/login'
+              onClick={() => setActiveMenuprofile('/Profile')}
+              style={{color:"black", textDecoration: 'none'}}
+            >
+              <img src={activeMenuprofile === '/Profile' ? "/images/selecteduser.png" : "/images/menu-icon3.png"} alt="" width={20} height={25} style={{marginTop:"20px"}}/>
+              <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Profil</p>
+            </NavLink>
+            }         
+
       </Container>
                   </> : 
                   <>

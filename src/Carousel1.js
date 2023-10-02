@@ -35,21 +35,23 @@ function Carousel1() {
   }, []); // Fetch the data when the component mounts
 
   return (
-    <Carousel>
-    {noticelist.map((item, index) => (
-      <Carousel.Item key={index}>
-        <img
-          className="d-block w-100"
-          src={item.imageUrl} // Use the correct property name: imageUrl
-          alt={item.title}
-        />
-        <Carousel.Caption>
-        </Carousel.Caption>
-        <h1 className="carousel-title" style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic",fontSize:"55px" }}>{item.title}</h1>
-          <h3 className="carousel-desc" style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic", marginTop: "20px",fontSize:"24px" }}>{item.description}</h3>
-      </Carousel.Item>
-    ))}
-  </Carousel>
+<Carousel controls={false}>
+  {noticelist.map((item, index) => (
+    <Carousel.Item key={index}>
+      <img
+        className="d-block w-100"
+        src={item.imageUrl}
+        alt={item.title}
+      />
+      <Carousel.Caption style={{ float: "left" }} className="mobile-carousel">
+        <div style={{ color: "black", textAlign: "left", fontFamily: "times", fontStyle: "italic", bottom: "0px", left: "0px"}}>
+          <h1 className="carousel-title" style={{ fontSize: "55px",float:"left" }}>{item.title}</h1><br/>
+          <h3 className="carousel-desc" style={{ marginTop: "20px", fontSize: "24px",float:"left",width: "280px" }}>{item.description}</h3>
+        </div>
+      </Carousel.Caption>
+    </Carousel.Item>
+  ))}
+</Carousel>
   
   );
 }

@@ -87,14 +87,27 @@ const Search = () => {
   const [categoryFilter, setCategoryFilter] = useState('');
 
   const handleCategoryFilterChange = (event) => {
+
+    setFilteredProducts(filteredProduct)
     setCategoryFilter(event.target.value);
   }
   const handlePriceFilterChange = (e) => {
+    setFilteredProducts(filteredProduct)
     setPriceFilter(e.target.value);
   };
   const handleColorFilterChange = (event) => {
+    setFilteredProducts(filteredProduct)
     setColorFilter(event.target.value);
   };
+
+  let filteredProduct = productList.filter((product) => {
+    return (
+      (categoryFilter === "" || product.categoryId === parseInt(categoryFilter)) &&
+      (colorFilter === "" || product.color === colorFilter) &&
+      (priceFilter === "" || product.price <= parseInt(priceFilter)) 
+    );
+  });
+
 
   return (
     <>
@@ -129,7 +142,7 @@ const Search = () => {
 
         <div style={{ display: "flex",float:"right",marginBottom:"5%",marginTop: "30px" }}>
     <div class="dropdown">
-      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+      <button type="button" className='mobile-search-filter' data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
         <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Kategori</label>
         <div style={{ cursor: "pointer" }}>
         <img
@@ -152,7 +165,7 @@ const Search = () => {
     </div>
      <hr/>
   <div class="dropdown">
-      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+      <button type="button" className='mobile-search-filter' data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
         <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Renk</label>
         <div style={{ cursor: "pointer" }}>
         <img
@@ -204,7 +217,7 @@ const Search = () => {
     </div>
   <hr/>
       <div class="dropdown" >
-      <button type="button" data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
+      <button type="button" className='mobile-search-filter' data-bs-toggle="dropdown"style={{background:"transparent",display:"flex",height:"50px"}}>
         <label className="kategori" htmlFor="priceFilter"style={{color:"black"}}>Fiyat</label>
         <div style={{ cursor: "pointer" }}>
         <img
@@ -271,7 +284,7 @@ const Search = () => {
               >
         <div className="product-card">
           <img
-            className="product-image"
+            className="search-product-image"
             style={{
               width: '250px',
               height: '300px',

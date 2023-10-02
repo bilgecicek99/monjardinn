@@ -283,7 +283,7 @@ const List = () => {
   
 </div>
     <div style={{ flex: "0 0 100%" }}>
-  <div className="container" style={{margin:"8%"}}>
+  <div className="container  mobile-list" style={{margin:"8%"}}>
     {filteredProducts.length === 0 ? (
       <div style={{marginLeft:"20%", justifyContent:"center", textAlign: "center", marginTop: "20%", fontSize: "18px", fontFamily:"sans-serif", textSizeAdjust:"bold" }}>
         Ürün bulunmamaktadır.
@@ -291,10 +291,11 @@ const List = () => {
     ) : (
       <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         {filteredProducts.map((product, index) => (
-          <div key={product.id} className="col-md-3">
+          <div key={product.id} className="col-md-4" style={{flexBasis: "25%", boxSizing: "border-box",marginRight:"0%"}}>
             <li style={{ listStyle: "none" }}>
               <Link to={`/productinfo/${product.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                 <img
+                  className="list-product-image"
                   style={{
                     borderRadius: "15px",
                     height: "250px",
@@ -305,7 +306,7 @@ const List = () => {
                   src={product?.fileResponseModel[0]?.fileUrl || process.env.PUBLIC_URL + '/images/monjardinlogo.png'}
                   alt={product.name}
                 />
-                {product.stock === 0 && <p style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter", width: "200px",  textAlign: "center" }}>Tükendi</p>}
+                {product.stock === 0 && <p className='list-tukendi' style={{ backgroundColor: "#893694", color: "white", borderRadius: "8px", padding: "4px 8px", fontFamily: "sans-serif", fontWeight: "lighter", width: "200px",  textAlign: "center" }}>Tükendi</p>}
                 <h3 style={{ fontStyle: "italic", fontWeight: "300", fontFamily: "Times New Roman" }}>{product.name}</h3>
                 <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.category}</p>
                 <p style={{ fontStyle: "italic", fontFamily: "Times New Roman" }}>{product.color}</p>

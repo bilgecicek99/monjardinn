@@ -1,54 +1,78 @@
 import React, { useState, useEffect } from "react";
 import WithNavbar from './WithNavbar'; 
-
+import GoogleMapReact from 'google-map-react';
 
 const contactSections = [
   {
-    title: 'Tel:',
+    title:'Adres',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore  '
+  },
+  {
+    title: 'Telefon Numarası',
     description: '0 212 331 0 200'
   },
   {
-    title: 'Maslak V.D.:',
+    title: 'Vergi Dairesi',
     description: '313 055 7669'
   },
   {
-    title: 'Ticaret Sicil No:',
+    title: 'Vergi Numarası',
     description: '711896'
   },
   {
-    title: 'Kep Adresi:',
+    title: 'Kep Adresi',
     description: 'dsm@hs02.kep.tr'
   },
   {
-    title: 'Mersis Numarası: ',
+    title: 'Mersis Numarası ',
     description: '0313055766900016'
   },
   {
-    title: 'Sorumlu Kişi:',
+    title: 'Sorumlu Kişi',
     description: 'Yasin Canki'
   }
 ];
 
 
 const Contact = () => {
+  const AnyReactComponent = ({ text }) => (
+    <div className="marker-container">
+      <i className="fa fa-map-marker marker-style" />
+      <div className="marker-text">{text}</div>
+    </div>
+  );
+
+  const defaultProps = {
+    center: {
+      lat: 38.433791,
+      lng: 27.140573,
+    },
+    zoom: 17,
+  };
 
   return (
-    <div className="contact-page mobile-generic-css">
+    <div className="contact-page contact-page-mobile-css">
       <h2 className="contact-heading">İletişim</h2>
-      <div style={{padding:"3% 2% 2% 2%"}}>
-        <h2 className="contact-subheading" style={{paddingBottom:"2%"}}>Adres</h2>
-        <p>DSM Grup Danışmanlık İletişim ve Satış Ticaret A.Ş. Maslak Mahallesi Saat Sokak Spine Tower No:5 İç Kapı No:19 Sarıyer/İstanbul</p>
-      </div>
+      <div className="map-container" style={{ width: '100%', height: '300px' }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyBhjpHEwaGz30W8C5zVHSWJd2T79LOQKwg' }}
+                    defaultCenter={defaultProps.center}
+                    defaultZoom={defaultProps.zoom}
+                  >
+                    <AnyReactComponent
+                      lat={38.433791}
+                      lng={ 27.140573}
+                      text="Mon Jardin Flowers & Event"
+                    />
+                  </GoogleMapReact>
+                </div>
+                <div style={{marginTop:"50px"}}>
       {contactSections.map((section, index) => (
         <div key={index} className="contact-section">
           <h2 className="contact-subheading">{section.title}</h2>
-            <p>{section.description}</p>
+            <p style={{marginLeft:"10%"}}>{section.description}</p>
         </div>
-      ))}
-
-      <p style={{padding:"2% 2% 0 2%"}}>Üyesi olduğumuz İstanbul Ticaret Odası’nın üyeleri için geçerli davranış kurallarına www.ito.org.tr adresinden ulaşılabilir.</p>
-      <p style={{padding:"0 2% 0 2%"}}>DSM Grup Danışmanlık İletişim ve Satış Tic. A.Ş.'ye yapılacak yasal bildirimler ve arabuluculuk başvuruları için Kayıtlı Elektronik Posta aracılığıyla dsm.hukuk@hs02.kep.tr adresine gönderimde bulunabilirsiniz.</p>
-
+      ))}</div>
     </div>
   );
 };
