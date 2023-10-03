@@ -296,7 +296,7 @@ const EditUserAddress = () => {
 
 
   return(
-    <div style={{ marginTop: "100px" }}>
+    <div style={{ marginTop: "100px",marginBottom:"150px" }}>
               <ToastContainer />
 
     <h2  style={{ textAlign: "center", fontStyle:"italic" ,fontFamily:"times"}}>Adres Güncelle</h2>
