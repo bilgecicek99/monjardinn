@@ -889,6 +889,24 @@ input[type='radio'] {
   font-family: 'Times New Roman', Times, serif;
  
 }
+.profile-edit-input-area{
+  border:none;
+  font-weight: 600;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+ 
+}
+.profile-edit-mail-area{
+  border:none;
+  font-weight: 600;
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+ 
+}
+.profile-edit-input-area:focus {
+  outline: none;
+  border: none;
+}
 
 .search-button{
   background-color: transparent;
@@ -898,7 +916,7 @@ input[type='radio'] {
   
 }
 
-/* .save-button{
+.save-button{
   background-color: #893694;
   width: auto;
   height: auto;
@@ -906,9 +924,9 @@ input[type='radio'] {
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   border-radius: 5px;
-} */
+}
 
-.save-button{
+.profile-save-button{
   background-color: transparent;
   width: auto;
   height: auto;

@@ -199,7 +199,7 @@ const AddUserAddress = () => {
     };
 
   return(
-    <div style={{ marginTop: "100px" }}>
+    <div style={{ marginTop: "100px",marginBottom:"150px" }}>
         <ToastContainer />
     <h2  style={{ textAlign: "center", fontStyle:"italic" ,fontFamily:"times"}}>Adres Ekle</h2>
     <div style={{ marginTop: "20px" ,textAlign: "center"}}>
