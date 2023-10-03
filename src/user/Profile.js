@@ -38,13 +38,7 @@ const Profile = () => {
     }));
   };
   
-  const handlePasswordChangeNew = (event) => {
-    setNewPassword(event.target.value);
-  };
 
-  const handlePasswordChangeOld = (event) => {
-    setOldPassword(event.target.value);
-  }; 
   const navigate = useNavigate();
   let userInfo= getUserInfo();
   let userID= userInfo?.userId;
@@ -125,83 +119,6 @@ const Profile = () => {
     fetchUserAddress();
   }, []);
 
-
-  const updatePassword = async() => {
-  try {
-    if (!oldPassword || !newPassword) {
-      toast.error('Lütfen mevcut şifre ve yeni şifre alanlarını doldurunuz.', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
-      return;
-    }
-    if (newPassword.length < 5) {
-      toast.error('Yeni şifre minimum 5 karakter olmalıdır.', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
-      return;
-    } 
-    const requestBody = {
-      userId: userInfo.userId,
-      newPassword: newPassword,
-      oldPassword: oldPassword
-    };
- 
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(requestBody)
-    };
-    
-    await fetch(baseUrl + `api/Auth/PasswordUpdate`, requestOptions)
-    .then(async (response) => {
-      const data = await response.json();
-      console.log("daa",data);
-      if (data.success === true) {
-        toast.success('Şifreniz başarıyla değiştirilmiştir.', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-      } else {
-        toast.error(data.message, {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-      }
-    })
-    .catch((error) => {
-      toast.error(error.message, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
-    });
-  
-  
-    
-  } 
-  catch (error) {
-    console.error("Profil verileri getirilirken hata oluştu: ", error);
-  }
-  };
 
   const updateUser = async () => {
     try {
@@ -496,6 +413,9 @@ const Profile = () => {
   const handleAddAddress = (userInfo) => {
     navigate("/addaddress");
   }
+  const handleChangePassword = ()=> {
+    navigate(`/changepassword`);
+  };
 
   return (
     <div style={{ marginTop: "100px" }}>
@@ -548,6 +468,13 @@ const Profile = () => {
       <p className="profile-text"><span style={{marginRight:"120px"}}>Mail Adresiniz: </span> 
   
        <span className="profile-edit-mail-area" style={{color:"#696969"}}>{user.email}  </span>     </p>
+       <hr className="profile-hr"  />
+      <p className="profile-text"><span style={{marginRight:"165px"}}>Şifreniz: </span> 
+  
+       <span className="profile-edit-mail-area" style={{color:"#696969"}}> ******  </span> 
+       <button className="profile-password" style={{marginLeft:"50px"}} onClick={()=>handleChangePassword()}>Şifreyi Değiştir</button>
+    
+       </p>
       {/* 
       <hr className="profile-hr" />
       <p className="profile-text">Doğum Tarihi:
@@ -567,7 +494,7 @@ const Profile = () => {
         <button className="profile-save-button profile-mobile-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
         <button className="save-button profile-mobile-button" onClick={updateUser}>Kaydet</button>
       </div>
-      <div style={{ display:"flex", flexDirection: "column",marginTop:"20%"}} >
+      {/* <div style={{ display:"flex", flexDirection: "column",marginTop:"20%"}} >
      <div> <p className="profile-text"> Mevcut Şifre: <input
           type="text"
           value={oldPassword}
@@ -587,14 +514,12 @@ const Profile = () => {
           placeholder="Yeni Şifre"
         /></p>
       </div>
-     <div> 
-      <button className="profile-password" onClick={updatePassword}>Şifreyi Değiştir</button>
-      </div>
-      </div>
+     <div> */}
+      {/* </div>
+      </div>  */}
 
-      <hr className="profile-hr" />
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0",marginBottom:"30px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0",marginBottom:"30px",marginTop:"90px" }}>
         <h3 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h3>
         <a
           style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer", fontFamily:"times", fontSize:"18px" }}
