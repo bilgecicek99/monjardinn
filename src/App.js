@@ -50,6 +50,7 @@ import MenuMoreThan from './MenuMoreThan';
 import Contact from './Contact';
 import AddBlog from './admin/AddBlog';
 import Footer from './footer';
+import ChangePassword from './user/ChangePassword';
 
 
 function App() {
@@ -72,6 +73,8 @@ function App() {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/newpassword" element={<NewPassword/>} />
         <Route path="/forgotpassword" element={<ForgotPassword/>} />
+        <Route path="/changepassword" element={<ChangePassword/>} />
+
 
         <Route path="/profile" element={<Profile/>} />
         <Route path="/search" element={<Search/>} />
