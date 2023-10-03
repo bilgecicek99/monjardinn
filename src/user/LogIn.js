@@ -162,7 +162,7 @@ return (
     <div style={{ marginLeft: "10px", marginRight: "10px", fontStyle: "italic", fontWeight: "300" }}>veya</div>
     <hr style={{ width: "20rem" }} />
     </div>
-    <p style={{ textAlign: "center", fontStyle: "italic", fontWeight: "300" }}>Hesabın yok mu?
+    <p style={{ textAlign: "center", fontStyle: "italic", fontWeight: "300",marginBottom:"50px" }}>Hesabın yok mu?
     <NavLink style={{ color: "#893694", textDecoration: "none", fontStyle: "italic", marginLeft: "20px" }} to='/signup'>Kayıt Ol</NavLink>
     </p>
     </form>
