@@ -563,11 +563,11 @@ const Profile = () => {
               /> */}
       <hr className="profile-hr" />
       <div style={{float:"right"}}>
-        <button className="profile-save-button"  onClick={logoutHandler}>Çıkış Yap</button>
-        <button className="profile-save-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
-        <button className="save-button" onClick={updateUser}>Kaydet</button>
+        <button className="profile-save-button profile-mobile-button"  onClick={logoutHandler}>Çıkış Yap</button>
+        <button className="profile-save-button profile-mobile-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
+        <button className="save-button profile-mobile-button" onClick={updateUser}>Kaydet</button>
       </div>
-      <div style={{ display:"flex", flexDirection: "column",marginTop:"15%"}} >
+      <div style={{ display:"flex", flexDirection: "column",marginTop:"20%"}} >
      <div> <p className="profile-text"> Mevcut Şifre: <input
           type="text"
           value={oldPassword}

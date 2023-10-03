@@ -1461,6 +1461,9 @@ margin-top: 5px !important;
     float: left; /* Remove float for mobile view */
     margin: 0; /* Remove margin for mobile view */
   }
+  .profile-mobile-button{
+    padding: 10px 10px !important;
+  }
 }
 
 
