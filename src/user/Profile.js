@@ -6,6 +6,15 @@ import { baseUrl } from '../config/Constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+function enableEditMode() {
+  const inputs = document.querySelectorAll('.profile-edit-input-area');
+  for (const input of inputs) {
+    input.removeAttribute('readonly');
+    input.style.border = '1px solid #ccc'; 
+  }
+}
+
+
 const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
@@ -260,15 +269,32 @@ const Profile = () => {
       // Veriyi gönder ve yanıtı işle
       const response = await fetch(baseUrl + 'api/Auth/UserUpdate', requestOptions);
       const data = await response.json();
-  
-      // Başarı mesajı göster
-      toast.success('Profil Başarıyla Güncellenmiştir', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      });
+      
+      if (data.success) {
+        // Başarı mesajı göster
+        toast.success('Profil Başarıyla Güncellenmiştir', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      
+        const inputs = document.querySelectorAll('.profile-edit-input-area');
+        for (const input of inputs) {
+          input.setAttribute('readonly', 'readonly');
+          input.style.border = "none"
+        }
+      } else {
+        // Başarısız mesajı göster
+        toast.error('Profil Güncelleme Başarısız. Lütfen Daha Sonra Deneyiniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      }
     } catch (error) {
       console.error("Profil güncellerken hata oluştu: ", error);
       toast.error('Lütfen Daha Sonra Deneyiniz.', {
@@ -471,7 +497,6 @@ const Profile = () => {
     navigate("/addaddress");
   }
 
-
   return (
     <div style={{ marginTop: "100px" }}>
               <ToastContainer />
@@ -479,47 +504,50 @@ const Profile = () => {
       <h2  style={{ textAlign: "center", fontStyle:"italic",fontFamily:"times"}}>Profilim</h2>
       <div style={{ display: "block", justifyContent: "center",textAlign:"center" }}>
     <div className="profile-card-area">
-      <p className="profile-text">Adı: 
+      <p className="profile-text"><span style={{marginRight:"180px"}}>Adınız:</span>
       <input
                 type="text"
                 name="firstName"
                 value={user.firstName}
                 onChange={handleInputChange}
-                className="edit-input-area"
+                className="profile-edit-input-area"
+                readOnly
               />
         </p>
       <hr className="profile-hr" />
-      <p className="profile-text">Soyadı: 
+      <p className="profile-text"><span style={{marginRight:"160px"}}>Soyadınız:</span>
       <input
                 type="text"
                 name="lastName"
                 value={user.lastName}
                 onChange={handleInputChange}
-                className="edit-input-area"
+                className="profile-edit-input-area"
+                readOnly
               />
             </p>
       <hr className="profile-hr" />
-      <p className="profile-text">Telefon: 
+      <p className="profile-text"><span style={{marginRight:"98px"}}>Telefon Numaranız: </span>
       <input
-  type="text"
-  name="phoneNumber"
-  value={user.phoneNumber}
-  onChange={(e) => {
-    const inputValue = e.target.value.replace(/\D/g, ''); // Sadece rakamları korur
-    handleInputChange({
-      target: {
-        name: 'phoneNumber',
-        value: inputValue,
-      },
-    });
-  }}
-  className="edit-input-area"
+      type="text"
+      name="phoneNumber"
+      value={user.phoneNumber}
+      onChange={(e) => {
+        const inputValue = e.target.value.replace(/\D/g, ''); // Sadece rakamları korur
+        handleInputChange({
+          target: {
+            name: 'phoneNumber',
+            value: inputValue,
+          },
+        });
+      }}
+      className="profile-edit-input-area"
+      readOnly
 />
             </p>
       <hr className="profile-hr"  />
-      <p className="profile-text">E-posta:  
+      <p className="profile-text"><span style={{marginRight:"120px"}}>Mail Adresiniz: </span> 
   
-       <span className="edit-input-area" style={{color:"#696969"}}>{user.email}  </span>     </p>
+       <span className="profile-edit-mail-area" style={{color:"#696969"}}>{user.email}  </span>     </p>
       {/* 
       <hr className="profile-hr" />
       <p className="profile-text">Doğum Tarihi:
@@ -535,7 +563,8 @@ const Profile = () => {
               /> */}
       <hr className="profile-hr" />
       <div style={{float:"right"}}>
-        <button className="save-button"  onClick={logoutHandler}>Çıkış Yap</button>
+        <button className="profile-save-button"  onClick={logoutHandler}>Çıkış Yap</button>
+        <button className="profile-save-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
         <button className="save-button" onClick={updateUser}>Kaydet</button>
       </div>
       <div style={{ display:"flex", flexDirection: "column",marginTop:"15%"}} >
