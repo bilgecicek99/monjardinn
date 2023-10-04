@@ -22,7 +22,6 @@ const handlePasswordChange = (e) => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  console.log("Form submitted with email:", email, "and password:", password);
 };
 
 
@@ -38,6 +37,18 @@ const handleLoginFormSubmit = () => {
       pauseOnHover: true,
     });
     return; 
+  }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    // Eğer email formatı doğru değilse hata mesajı göster
+    toast.error('Lütfen geçerli formatta bir email adresi giriniz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return; // İşlemi tamamlama
   }
 
   fetch(baseUrl+"api/auth/login", {
@@ -69,7 +80,6 @@ const handleLoginFormSubmit = () => {
     });
   })
   .then((data) => {
-    console.log("dataaa", data.claims);
     //console.log("data", data.data.token);
 
     setUserSession(data.token,email);
@@ -77,7 +87,6 @@ const handleLoginFormSubmit = () => {
       email: email,
       userId:data.userId
     }
-    console.log("updatedUser",updatedUser)
     setUserInfo(updatedUser);
     
     
@@ -91,21 +100,18 @@ const handleLoginFormSubmit = () => {
    
     if (data.claims.includes('admin')) {
       // Admin paneline yönlendirme işlemini gerçekleştirin
-      console.log("Yönlendirme: Admin Paneli");
        navigate('/adminpanel');
     } else if (data.claims.includes('user')) {
       // Kullanıcı sayfasına yönlendirme işlemini gerçekleştirin
-      console.log("Yönlendirme: Kullanıcı Sayfası");
       navigate('/');
     } else {
       // Herhangi bir yönlendirme yapılacaksa anasayfaya yönlendirme işlemini gerçekleştirin
-      console.log("Yönlendirme: Anasayfa");
       navigate('/');
     }
    
   })
   .catch((error) => {
-    toast.error( "Lütfen Daha Sonra Tekrar Deneyiniz.", {
+    toast.error(error.message?? "Lütfen Daha Sonra Tekrar Deneyiniz.", {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
       hideProgressBar: false,
@@ -114,7 +120,6 @@ const handleLoginFormSubmit = () => {
     });
    
     
-    console.error("Hata:", error);
   });
   
   
