@@ -108,20 +108,29 @@ const AddUserAddress = () => {
         return; // Corporate alanlar eksik, işlemi tamamlama
       }
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(address.email)) {
-    // Eğer email formatı doğru değilse hata mesajı göster
-    toast.error('Lütfen geçerli bir email adresi giriniz.', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
-    return; // İşlemi tamamlama
-  }
+      if (!emailPattern.test(address.email)) {
+        // Eğer email formatı doğru değilse hata mesajı göster
+        toast.error('Lütfen geçerli bir email adresi giriniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // İşlemi tamamlama
+      }
+      if (address.taxIdentificationNumber.length<10) {
+        toast.error('Lütfen vergi numarasını minimum 10 haneli olacak şekilde giriniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // İşlemi tamamlama
+      }
     }
   
-    // Tüm kontrolleri geçtiyse işlemi tamamla ve adresi ekle
     fetch(baseUrl + "api/UserAddress/CreateUserAddress", {
       method: "POST",
       headers: {
@@ -132,9 +141,7 @@ const AddUserAddress = () => {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log("data",data);
       setErrorMessage(data.message);
-  
       const requestBody = {
         userId: userInfo.userId,
         taxIdentificationNumber: address.taxIdentificationNumber,
@@ -143,7 +150,6 @@ const AddUserAddress = () => {
         userAddressId: data.data,
         email: address.email,
       };
-  
       const requestOptions = {
         method: 'POST',
         headers: {
@@ -152,26 +158,70 @@ const AddUserAddress = () => {
         },
         body: JSON.stringify(requestBody)
       };
-  
-      fetch(baseUrl + `api/CorparateAddress/CreateCorparateAddress`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setErrorMessage(data.message);
-        toast.success('Adres Başarıyla Eklenmiştir', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        });
-        setTimeout(() => {
-          navigate("/profile");
-        }, 2000);
-      })
+      if(address.corporate)
+      {
+        fetch(baseUrl + `api/CorparateAddress/CreateCorparateAddress`, requestOptions)
+        .then(response => response.json())
+        .then(responsedata => {
+          setErrorMessage(responsedata.message);
+          if(responsedata.success)
+          {
+          toast.success(responsedata.message, {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                  });
+            setTimeout(() => {
+            navigate("/profile");
+          }, 2000);
+          }
+          else{
+            {
+            toast.error((responsedata.message ?? responsedata.Errors[0].ErrorMessage) ?? "İşlem gerçekleşirken bir hata ile karşılaşıldı. Lütfen kayıt olan adresi kontrol ediniz.", {
+                      position: toast.POSITION.TOP_CENTER,
+                      autoClose: 2000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+              });
+              setTimeout(() => {
+                navigate("/profile");
+              }, 2000);
+            }      
+      }})
       .catch(error => {
         console.error(error);
         setErrorMessage(error.message);
       });
+      }
+      else{
+            if(data.success)
+            {
+              toast.success(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              setTimeout(() => {
+              navigate("/profile");
+            }, 2000);
+            }
+            else{
+              {
+              toast.error((data.message ?? data.Errors[0].ErrorMessage)?? "İşlem gerçekleşirken bir hata ile karşılaşıldı. Lütfen kayıt olan adresi kontrol ediniz.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                });
+              }      
+        }
+      }
     })
     .catch((error) => {
       setErrorMessage(error.message);
@@ -220,12 +270,18 @@ const AddUserAddress = () => {
             
               <p className="profile-text">Telefon:
               <input
-                type="number"
+                type="text"
                 name="phone"
                 value={address.phone}
-              
                 onChange={handleInputChange}
                 className="edit-input-area"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+                  if (e.target.value.length > 15) {
+                    e.target.value = e.target.value.slice(0, 15);
+                  }
+                }}
               /></p>
            
             <hr className="profile-hr" />
@@ -358,12 +414,24 @@ const AddUserAddress = () => {
            
               <p className="profile-text">Vergi Numarası:
               <input
-                type="number"
+                type="text"
                 name="taxIdentificationNumber"
-                value={address.taxIdentificationNumber}
-              
+                value={address.taxIdentificationNumber}            
                 onChange={handleInputChange}
                 className="edit-input-area"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            
+                  if (e.target.value.length < 10) {
+                    e.target.setCustomValidity("Minimum 10 rakam girmelisiniz.");
+                  } else {
+                    e.target.setCustomValidity("");
+                  }
+            
+                  if (e.target.value.length > 11) {
+                    e.target.value = e.target.value.slice(0, 11);
+                  }
+                }}
               /></p>
            
             <hr className="profile-hr" />

@@ -109,6 +109,17 @@ const EditUserAddress = () => {
     });
     return; // İşlemi tamamlama
   }
+
+  if (address.taxIdentificationNumber.length<10) {
+    toast.error('Lütfen vergi numarasını minimum 10 haneli olacak şekilde giriniz.', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return; // İşlemi tamamlama
+  }
   
       if (isCorporateEmpty) {
         console.log("kk")
@@ -158,18 +169,18 @@ const EditUserAddress = () => {
             {             
               fetch(baseUrl+`api/CorparateAddress/UpdateCorparateAddress`, requestOptions)
               .then(response => response.json())
-              .then(data => {
-                setErrorMessage(data.message);
-                toast.success('Adresteki Değişiklikler Başarıyla Eklenmiştir', {
-                  position: toast.POSITION.TOP_CENTER,
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                });
-                setTimeout(() => {
-                  navigate("/profile");
-                }, 2000);
+              .then(responsedata => {
+                setErrorMessage(responsedata.message);
+                if(!responsedata.success)
+                {
+                  toast.error((responsedata.message ?? responsedata.Errors[0].ErrorMessage)?? "Kurumsal adres güncellenirken bir hata ile karşılaşıldı.",{
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                });}
+               
               })
               .catch(error => {
                 console.error(error);
@@ -180,18 +191,18 @@ const EditUserAddress = () => {
               requestOptions.method = 'POST';
               fetch(baseUrl+`api/CorparateAddress/CreateCorparateAddress`, requestOptions)
               .then(response => response.json())
-              .then(data => {
-                setErrorMessage(data.message);
-                toast.success('Adresteki Değişiklikler Başarıyla Eklenmiştir', {
-                  position: toast.POSITION.TOP_CENTER,
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
+              .then(createdata => {
+                setErrorMessage(createdata.message);
+                if(!createdata.success)
+                {
+                  toast.error((createdata.message ?? createdata.Errors[0].ErrorMessage)?? "Kurumsal adres güncellenirken bir hata ile karşılaşıldı.",{
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
                 });
-                setTimeout(() => {
-                  navigate("/profile");
-                }, 2000);
+                }
               })
               .catch(error => {
                 console.error(error);
@@ -199,11 +210,34 @@ const EditUserAddress = () => {
               });
             }   
           }
+          if(data.success)
+            {
+              toast.success(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              setTimeout(() => {
+              navigate("/profile");
+            }, 2000);
+            }
+            else{
+              {
+              toast.error((data.message ?? data.Errors[0].ErrorMessage)?? "İşlem gerçekleşirken bir hata ile karşılaşıldı. Lütfen kayıt olan adresi kontrol ediniz.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                });
+              }      
+        }
+
         })
         .catch((error) => {
           setErrorMessage(error.message);
-        }).finally(()=>{
-          navigate("/profile")
         });
     };
 
@@ -319,12 +353,19 @@ const EditUserAddress = () => {
               
               <p  className="profile-text">Telefon:
               <input
-                type="number"
+                type="text"
                 name="phone"
                 value={address.phone}
               
                 onChange={handleInputChange}
                 className="edit-input-area"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+                  if (e.target.value.length > 15) {
+                    e.target.value = e.target.value.slice(0, 15);
+                  }
+                }}
               />
             </p>
             <hr className="profile-hr" />
@@ -450,12 +491,25 @@ const EditUserAddress = () => {
           
               <p  className="profile-text">Vergi Numarası:
               <input
-                type="number"
+                type="text"
                 name="taxIdentificationNumber"
                 value={address.taxIdentificationNumber}
               
                 onChange={handleInputChange}
                 className="edit-input-area"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            
+                  if (e.target.value.length < 10) {
+                    e.target.setCustomValidity("Minimum 10 rakam girmelisiniz.");
+                  } else {
+                    e.target.setCustomValidity("");
+                  }
+            
+                  if (e.target.value.length > 11) {
+                    e.target.value = e.target.value.slice(0, 11);
+                  }
+                }}
               /></p>
            
             <hr className="profile-hr" />
@@ -516,7 +570,7 @@ const EditUserAddress = () => {
 
           </div>
           </div>
-          {errorMessage && <p className="message">{errorMessage}</p>}
+          {/* {errorMessage && <p className="message">{errorMessage}</p>} */}
 
           </div>
   

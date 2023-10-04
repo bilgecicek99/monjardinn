@@ -108,14 +108,14 @@ const ChangePassword = () => {
       
          <input
           placeholder="Mevcut Şifre"
-          type="text"
+          type="password"
           value={oldPassword}
           onChange={handlePasswordChangeOld}
           className="input-action"
         /></div>
         <div>
             <input
-            type="text"
+            type="password"
             placeholder="Yeni Şifre"
             value={newPassword}
             onChange={handlePasswordChangeNew}

@@ -160,6 +160,7 @@ const handleSelectQuarterChange = (event) => {
   };
  
   const handleSelectShipmetDate = (selectedDate) => {
+    console.log(selectedDate);
     setShipmentDate(selectedDate);
   };
   
@@ -330,7 +331,15 @@ const handleSelectQuarterChange = (event) => {
         });
         return;
       }
+      const year = shipmentDate.getFullYear();
+      const month = String(shipmentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 to month since it's zero-based
+      const day = String(shipmentDate.getDate()).padStart(2, '0');
+      const hours = String(shipmentDate.getHours()).padStart(2, '0');
+      const minutes = String(shipmentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(shipmentDate.getSeconds()).padStart(2, '0');
+      const milliseconds = String(shipmentDate.getMilliseconds()).padStart(3, '0');
 
+      const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
       fetch(baseUrl+"api/Basket/CreateBasket", {
         method: "POST",
         headers: {
@@ -342,7 +351,7 @@ const handleSelectQuarterChange = (event) => {
                               productId: props.urunId,
                               total: selectedPiece,
                               userAddressId: selectedAddress,
-                              shipmentDate: shipmentDate,
+                              shipmentDate: formattedDate,
                               cardNote: note}),
                             })
         .then((response) => response.json())
@@ -350,7 +359,6 @@ const handleSelectQuarterChange = (event) => {
           
           if(data.success)
           {
-            console.log(data);
             toast.success('Ürün Sepete Başarıyla Eklenmiştir', {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 2000,
@@ -363,7 +371,6 @@ const handleSelectQuarterChange = (event) => {
             }, 2000);
           }
           else{
-            console.log(data);
             toast.error(data.message, {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 3000,
@@ -414,16 +421,16 @@ const handleSelectQuarterChange = (event) => {
             return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
           });
           const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(updatedAddress.email)) {
-    toast.error('Lütfen geçerli bir email adresi giriniz.', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
-    return;
-  }
+            if (!emailPattern.test(updatedAddress.email)) {
+              toast.error('Lütfen geçerli bir email adresi giriniz.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+              return;
+            }
           if (isEmptyField) {
             toast.error('Lütfen Tüm Alanları Doldurunuz.', {
               position: toast.POSITION.TOP_CENTER,
@@ -433,6 +440,16 @@ const handleSelectQuarterChange = (event) => {
               pauseOnHover: true,
             });
             return; 
+          }
+          if (address.taxIdentificationNumber.length<10) {
+            toast.error('Lütfen vergi numarasını minimum 10 haneli olacak şekilde giriniz.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return;
           }
         }
         fetch(baseUrl+"api/UserAddress/CreateUserAddress", {
@@ -451,6 +468,17 @@ const handleSelectQuarterChange = (event) => {
               setNewUserAddressId=addressdata.data;
               setSaveBasket(true)
             }
+            else
+            {
+              toast.error((addressdata.message ?? addressdata.Errors[0].ErrorMessage) ?? "İşlem gerçekleşirken bir hata ile karşılaşıldı.", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+            }
+
             //setErrorMessage(data.message);
            const requestBody = {
             userId: userInfo.userId,
@@ -476,19 +504,21 @@ const handleSelectQuarterChange = (event) => {
 
             fetch(baseUrl+`api/CorparateAddress/CreateCorparateAddress`, requestOptions)
             .then(response => response.json())
-            .then(data => {
-              if(data.success)
-                {
-                  toast.success('Adres Başarıyla Eklenmiştir', {
+            .then(data => { 
+              if(data.success)   
+              {
+                setSaveBasket(true)
+              }  
+                else{
+                  toast.error(data.message ?? "İşlem gerçekleşirken bir hata ile karşılaşıldı.", {
                     position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
+                    autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                   });
-            
-                  setSaveBasket(true)
                 }
+                
               })
             .catch(error => {
               setSaveBasket(false);
@@ -502,6 +532,15 @@ const handleSelectQuarterChange = (event) => {
           }).finally(()=>{
             if(setSaveBasket)
             {  
+              const year = shipmentDate.getFullYear();
+              const month = String(shipmentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 to month since it's zero-based
+              const day = String(shipmentDate.getDate()).padStart(2, '0');
+              const hours = String(shipmentDate.getHours()).padStart(2, '0');
+              const minutes = String(shipmentDate.getMinutes()).padStart(2, '0');
+              const seconds = String(shipmentDate.getSeconds()).padStart(2, '0');
+              const milliseconds = String(shipmentDate.getMilliseconds()).padStart(3, '0');
+
+              const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
                 fetch(baseUrl+"api/Basket/CreateBasket", {
                   method: "POST",
                   headers: {
@@ -513,7 +552,7 @@ const handleSelectQuarterChange = (event) => {
                     productId: props.urunId,
                     total: selectedPiece,
                     userAddressId: parseInt(setNewUserAddressId),
-                    shipmentDate: shipmentDate,
+                    shipmentDate: formattedDate,
                     cardNote: note
                   }),
                   })
@@ -784,13 +823,15 @@ const handleSelectQuarterChange = (event) => {
                         name="phone"
                         value={address.districtId}
                         onChange={handleInputChange}
-                        onKeyPress={(e) => {
-                          if (isNaN(String.fromCharCode(e.charCode))) {
-                            e.preventDefault();
-                          }
-                        }}
                         className="product-detail-form"
                         placeholder="Telefon Numaranız"
+                        onInput={(e) => {
+                          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        
+                          if (e.target.value.length > 15) {
+                            e.target.value = e.target.value.slice(0, 15);
+                          }
+                        }}
                       />
                           <select
                             name="districtId"
@@ -909,12 +950,25 @@ const handleSelectQuarterChange = (event) => {
                       {address.corporate && (
                       <div>
                           <input
-                            type="number"
+                            type="text"
                             name="taxIdentificationNumber"
                             value={address.taxIdentificationNumber}
                             onChange={handleInputChange}
                             className="product-detail-form"
                             placeholder="Vergi Kimlik Numarası"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                        
+                              if (e.target.value.length < 10) {
+                                e.target.setCustomValidity("Minimum 10 rakam girmelisiniz.");
+                              } else {
+                                e.target.setCustomValidity("");
+                              }
+                        
+                              if (e.target.value.length > 11) {
+                                e.target.value = e.target.value.slice(0, 11);
+                              }
+                            }}
                           />
                             <input
                             type="text"

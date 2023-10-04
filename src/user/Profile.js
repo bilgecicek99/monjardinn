@@ -477,6 +477,13 @@ const Profile = () => {
       }}
       className="profile-edit-input-area"
       readOnly
+      onInput={(e) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+        if (e.target.value.length > 15) {
+          e.target.value = e.target.value.slice(0, 15);
+        }
+      }}
 />
             </p>
       <hr className="profile-hr"  />
