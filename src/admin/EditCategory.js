@@ -84,10 +84,20 @@ function EditCategory() {
       const handleSaveClick =async (event) => {
     
         let updatedProduct = "";    
-
+        console.log(previewImageEdit);
+        if(selectedImageEdit===null && !fileUrl)
+        {
+          toast.error("Lütfen resim ekleyiniz.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return null;
+        }
         if(previewImageEdit){
           let downloadURL = "";     
-         
           if (selectedImageEdit) {  
           const storageRef = ref(storage, "images/" + selectedImageEdit.name);    
           try {
