@@ -304,7 +304,7 @@ const Search = () => {
           {product.stock === 0 && (
             <p className='search-tukendi'>Tükendi</p>
           )}
-          <h3 className="product-name" style={{ marginTop: '25px', marginBottom: 0, fontFamily: 'times',width:"250px" }}>
+          <h3 className="product-name" style={{ marginTop: '25px', marginBottom: 0, fontFamily: 'times',width:"250px" ,  whiteSpace: 'pre-wrap',textAlign:"left"}}>
             {product.name}
           </h3>
           <p className="product-price" style={{ marginTop: '0px' }}>
