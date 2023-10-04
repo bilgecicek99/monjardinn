@@ -114,21 +114,24 @@ const Search = () => {
       <div style={{textAlign:"center",marginTop:"100px", padding:"0% 5%"}}>
         <form onSubmit={handleSearch}>
           <input type="text"
-      id="searchTerm"
-      name="searchTerm"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)} 
-      style={{border:"1px solid #D9D9D9",
-        display: 'inline-block', 
-        border: 'none',
-        borderBottom: '1px solid black',
-        outline: 'none',
-        fontSize: '16px',
-        padding: '5px 0',
-        width: '70%', 
-        marginRight: '5px',
-        fontStyle: 'italic',
-      }}
+            id="searchTerm"
+            name="searchTerm"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              handleSearch(e); 
+            }}
+            style={{border:"1px solid #D9D9D9",
+              display: 'inline-block', 
+              border: 'none',
+              borderBottom: '1px solid black',
+              outline: 'none',
+              fontSize: '16px',
+              padding: '5px 0',
+              width: '70%', 
+              marginRight: '5px',
+              fontStyle: 'italic',
+            }}
       placeholder="Ürün adını, kategorisini veya rengini giriniz" />
           <img src="/images/search.png"
                 alt="Search"
