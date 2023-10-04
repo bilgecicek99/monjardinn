@@ -36,7 +36,7 @@ function Admincard( { cards }) {
     const isSmallScreen = window.innerWidth <= 768; // Örnek: 768px'den küçük ekranlar için
 
 const cardImageStyle = {
-  width: isSmallScreen ? "100%" : "auto",
+  width: isSmallScreen ? "150px" : "150px",
   height: isSmallScreen ? "auto" : "100%",
 };
 
