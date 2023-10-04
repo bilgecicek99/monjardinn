@@ -93,6 +93,17 @@ export default function EditProduct() {
   else {
     console.log("selectedImage boş veya tanımsız.");
   }
+  if(!selectedImage && product.fileResponses.length===0)
+  {
+    toast.error("Lütfen resim ekleyiniz.", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    return null;
+  }
   const { fileResponses,labelProducts,productDiscountInfo,categoryName, ...newProduct } = product;
   const token = getToken();
   fetch(baseUrl+"api/Product/UpdateProduct", {
