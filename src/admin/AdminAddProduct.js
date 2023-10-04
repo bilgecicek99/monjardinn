@@ -121,7 +121,14 @@ export default function AdminAddProduct() {
           console.error("Resim yükleme hatası:", error);
         }
       } else {
-        console.log("selectedImage boş veya tanımsız.");
+        toast.error("Lütfen resim ekleyiniz.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return null;
       }
   
       const { fileResponses, labelProducts, productDiscountInfo, categoryName, ...newProduct } = product;
