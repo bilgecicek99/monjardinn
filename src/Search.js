@@ -11,8 +11,9 @@ const Search = () => {
   const [previousSearches, setPreviousSearches] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [priceFilter, setPriceFilter] = useState(""); 
-  const [colorFilter, setColorFilter] = useState('');
+  const [colorFilter, setColorFilter] = useState([]);
   const [categories, setCategories] = useState([]);
+  const colors = ["Mor", "Pembe", "Lila", "Sarı","Mavi"];
 
 
   useEffect(() => {
@@ -84,29 +85,106 @@ const Search = () => {
     setPreviousSearches([...previousSearches, trimmedSearchTerm]);
   };
 
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState([]);
 
   const handleCategoryFilterChange = (event) => {
-
-    setFilteredProducts(filteredProduct)
-    setCategoryFilter(event.target.value);
-  }
+    const categoryValue = event.target.value;
+    let newCategoryFilter;
+  
+    if (categoryValue === "") {
+      if (categoryFilter.length === categories.length) {
+        newCategoryFilter = [];
+      } else {
+        newCategoryFilter = categories.map((category) => `${category.id}`);
+      }
+    } else {
+      if (categoryFilter.includes(categoryValue)) {
+        newCategoryFilter = categoryFilter.filter((category) => category !== categoryValue);
+      } else {
+        newCategoryFilter = [...categoryFilter, categoryValue];
+      }
+    }
+  
+    const filteredProduct = productList.filter((product) => {
+      const selectedColorsLowercase = colorFilter.map((color) => color.toLowerCase());
+      const productColorLowercase = product.color.toLowerCase();
+      const colorFilterApplied = colorFilter.length > 0 && (colors.length > colorFilter.length);
+      return (
+        (newCategoryFilter.length === 0 || newCategoryFilter.includes(`${product.categoryId}`)) &&
+        ((!colorFilterApplied) || (colorFilterApplied && selectedColorsLowercase.includes(productColorLowercase))) &&
+        (priceFilter === "" || isPriceInRange(product.price, priceFilter))
+      );
+    });
+  
+    setCategoryFilter(newCategoryFilter);
+    setFilteredProducts(filteredProduct);
+  };
+    
   const handlePriceFilterChange = (e) => {
-    setFilteredProducts(filteredProduct)
-    setPriceFilter(e.target.value);
+    const newPriceFilter = e.target.value;
+    setPriceFilter(newPriceFilter);
+  
+    const filteredProduct = productList.filter((product) => {
+      const selectedColorsLowercase = colorFilter.map((color) => color.toLowerCase());
+      const productColorLowercase = product.color.toLowerCase();
+      const colorFilterApplied = colorFilter.length > 0 && (colors.length > colorFilter.length);
+      return (
+        (categoryFilter.length === 0 || categoryFilter.includes(`${product.categoryId}`)) &&
+        ((!colorFilterApplied) || (colorFilterApplied && selectedColorsLowercase.includes(productColorLowercase))) &&
+        (newPriceFilter === "" || isPriceInRange(product.price, newPriceFilter))
+      );
+    });
+  
+    setFilteredProducts(filteredProduct);
   };
   const handleColorFilterChange = (event) => {
-    setFilteredProducts(filteredProduct)
-    setColorFilter(event.target.value);
+    const colorValue = event.target.value;
+    let newColorFilter;
+  
+    if (colorValue === "") {
+      if (colorFilter.length === colors.length) {
+        newColorFilter = [];
+      } else {
+        newColorFilter = colors;
+      }
+    } else {
+      if (colorFilter.includes(colorValue)) {
+        newColorFilter = colorFilter.filter((color) => color !== colorValue);
+      } else {
+        newColorFilter = [...colorFilter, colorValue];
+      }
+    }
+    const filteredProduct = productList.filter((product) => {
+      const selectedColorsLowercase = newColorFilter.map((color) => color.toLowerCase());
+      const productColorLowercase = product.color.toLowerCase();
+      const colorFilterApplied = newColorFilter.length > 0 && (colors.length > newColorFilter.length);
+      return (
+        (categoryFilter.length === 0 || categoryFilter.includes(`${product.categoryId}`)) &&
+        ((!colorFilterApplied) || (colorFilterApplied && selectedColorsLowercase.includes(productColorLowercase))) &&
+        (priceFilter === "" || isPriceInRange(product.price, priceFilter))
+      );
+    });
+  
+    setColorFilter(newColorFilter);
+    setFilteredProducts(filteredProduct);
   };
 
-  let filteredProduct = productList.filter((product) => {
-    return (
-      (categoryFilter === "" || product.categoryId === parseInt(categoryFilter)) &&
-      (colorFilter === "" || product.color === colorFilter) &&
-      (priceFilter === "" || product.price <= parseInt(priceFilter)) 
-    );
-  });
+  function isPriceInRange(productPrice, selectedPriceRange) {
+    if (!selectedPriceRange) {
+      return true; 
+    }
+  
+    if (selectedPriceRange === "500+") {
+      return productPrice >= 500; 
+    }
+  
+    const [min, max] = selectedPriceRange.split("-").map(Number);
+  
+    return productPrice >= min && productPrice <= max;
+  }
+  const isAllColorsSelected = colorFilter.length === colors.length;
+
+  const isAllCategorysSelected = categoryFilter.length === categories.length;
 
 
   return (
@@ -155,11 +233,30 @@ const Search = () => {
         />
       </div> 
       </button>
-      <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)",width:"210px",borderRadius:"0px"}}>
+      <ul class="dropdown-menu" style={{maxHeight: "450px",overflowX: "hidden",border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)",width:"210px",borderRadius:"0px"}}>
+      <li style={{lineHeight:"1px"}}>
+       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
+      <input type="checkbox" 
+      id="all" 
+      name="all" 
+      value="" 
+      checked={isAllCategorysSelected} 
+      onChange={handleCategoryFilterChange} 
+      style={{marginRight:"5px"}}/>
+      Tümü
+    </label>
+     <hr/>
+      </li>
  	    {categories.map((category) => (
         <li style={{lineHeight:"1px"}}>
           <label key={category.id} style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id={`kategori${category.id}`} name={`kategori${category.id}`} value={category.id} onChange={handleCategoryFilterChange} style={{marginRight:"5px"}} />
+          <input type="checkbox" 
+          id={category.id} 
+          name="category"
+          value={category.id}  
+          onChange={handleCategoryFilterChange} 
+          checked={categoryFilter.includes(`${category.id}`)}
+          style={{marginRight:"5px"}} />
           {category.name}
         </label>
         <hr/>
@@ -180,42 +277,37 @@ const Search = () => {
       </button>
       <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)",borderRadius:"0px"}}>
   	<li style={{lineHeight:"1px"}}>
-       <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-      <input type="checkbox" id="all" name="all" value="" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
-      Tümü
-    </label>
+    <label style={{ display: "block", fontFamily: "Times New Roman", fontStyle: "italic", fontSize: "18px" }}>
+            <input
+              type="checkbox"
+              id="all"
+              name="color"
+              value=""
+              onChange={handleColorFilterChange}
+              checked={isAllColorsSelected}
+              style={{ marginRight: "5px" }}
+            />
+            Tümü
+          </label>
      <hr/>
       </li>
-  <li style={{lineHeight:"1px"}}>
-    <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-      <input type="checkbox" id="Mor" name="Mor" value="Mor" onChange={handleColorFilterChange} style={{marginRight:"5px"}} />
-      Mor
-    </label>
-	<hr/>
-      </li>
-    
-  <li style={{lineHeight:"1px"}}>
-    <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-      <input type="checkbox" id="Pembe" name="Pembe" value="Pembe" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
-      Pembe
-    </label>
-   <hr/>
-      </li>
-    
-  <li style={{lineHeight:"1px"}}>
-    <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-      <input type="checkbox" id="Lila" name="Lila" value="Lila" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
-      Lila
-    </label>
- 	<hr/>
-      </li>
-
-      <li style={{lineHeight:"1px"}}>
-    <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-      <input type="checkbox" id="Sarı" name="Sarı" value="Sarı" onChange={handleColorFilterChange} style={{marginRight:"5px"}}/>
-      Sarı
-    </label>
-      </li>
+      {colors.map((color) => (
+          <li key={color} style={{ lineHeight: "1px" }}>
+            <label style={{ display: "block", fontFamily: "Times New Roman", fontStyle: "italic", fontSize: "18px" }}>
+              <input
+                type="checkbox"
+                id={color}
+                name="color"
+                value={color}
+                onChange={handleColorFilterChange}
+                checked={colorFilter.includes(color)}
+                style={{ marginRight: "5px" }}
+              />
+              {color}
+            </label>
+            <hr />
+          </li>
+        ))}
       </ul>
     </div>
   <hr/>
@@ -233,34 +325,34 @@ const Search = () => {
       <ul class="dropdown-menu" style={{border:"none",boxShadow: "0 6px 20px rgba(56, 125, 255, 0.17)",borderRadius:"0px"}}>
         <li style={{lineHeight:"1px"}}>
           <label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="all" name="all" value="" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+          <input type="radio" id="all" name="all" value="" onChange={handlePriceFilterChange} checked={priceFilter === ""} style={{marginRight:"5px"}}/>
             Tümü
         </label>
         <hr/>
       </li>
       <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-        <input type="checkbox" id="0-100" name="0-100" value="0-100" onChange={handlePriceFilterChange} style={{marginRight:"5px"}} />
+        <input type="radio" id="0-100" name="0-100" value="0-100" onChange={handlePriceFilterChange} checked={priceFilter === "0-100"} style={{marginRight:"5px"}} />
         0 TL - 100 TL
       </label>
       <hr/>
       </li>
       
       <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-        <input type="checkbox" id="100-200" name="100-200" value="100-200" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+        <input type="radio" id="100-200" name="100-200" value="100-200" onChange={handlePriceFilterChange} checked={priceFilter === "100-200"} style={{marginRight:"5px"}}/>
         100 TL - 200 TL
       </label>
       <hr/>
       </li>
       
       <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-        <input type="checkbox" id="200-500" name="200-500" value="200-500" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+        <input type="radio" id="200-500" name="200-500" value="200-500" onChange={handlePriceFilterChange} checked={priceFilter === "200-500"} style={{marginRight:"5px"}}/>
         200 TL - 500 TL
       </label>
       <hr/>
       </li>
 
         <li style={{lineHeight:"1px"}}><label style={{display:"block", fontFamily:"Times New Roman", fontStyle:"italic", fontSize:"18px"}}>
-          <input type="checkbox" id="500+" name="500+" value="500+" onChange={handlePriceFilterChange} style={{marginRight:"5px"}}/>
+          <input type="radio" id="500+" name="500+" value="500+" onChange={handlePriceFilterChange} checked={priceFilter === "500+"} style={{marginRight:"5px"}}/>
           500 TL +
         </label>
         </li>
@@ -309,6 +401,12 @@ const Search = () => {
           </h3>
           <p className="product-price" style={{ marginTop: '0px' }}>
             {product.price} ₺
+          </p>
+          <p className="product-price" style={{ marginTop: '0px' }}>
+            {product.color} ₺
+          </p>
+          <p className="product-price" style={{ marginTop: '0px' }}>
+            {product.categoryName} ₺
           </p>
         </div>
       </Link>
