@@ -187,11 +187,18 @@ const SignUp = () => {
         <div style={{ display: "block", justifyContent: "center", textAlign:"center" }}>
           <div style={{ marginTop: "20px"}}>
         <input
-          type="number"
+          type="text"
           placeholder="Telefon Numarası"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="input-action"
+          onInput={(e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+            if (e.target.value.length > 15) {
+              e.target.value = e.target.value.slice(0, 15);
+            }
+          }}
         />
         </div>
         <div  style={{ marginTop: "20px"}} >
