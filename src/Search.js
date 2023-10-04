@@ -402,12 +402,6 @@ const Search = () => {
           <p className="product-price" style={{ marginTop: '0px' }}>
             {product.price} ₺
           </p>
-          <p className="product-price" style={{ marginTop: '0px' }}>
-            {product.color} ₺
-          </p>
-          <p className="product-price" style={{ marginTop: '0px' }}>
-            {product.categoryName} ₺
-          </p>
         </div>
       </Link>
     </div>
