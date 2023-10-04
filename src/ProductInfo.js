@@ -160,6 +160,7 @@ const handleSelectQuarterChange = (event) => {
   };
  
   const handleSelectShipmetDate = (selectedDate) => {
+    console.log(selectedDate);
     setShipmentDate(selectedDate);
   };
   
@@ -330,7 +331,15 @@ const handleSelectQuarterChange = (event) => {
         });
         return;
       }
+      const year = shipmentDate.getFullYear();
+      const month = String(shipmentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 to month since it's zero-based
+      const day = String(shipmentDate.getDate()).padStart(2, '0');
+      const hours = String(shipmentDate.getHours()).padStart(2, '0');
+      const minutes = String(shipmentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(shipmentDate.getSeconds()).padStart(2, '0');
+      const milliseconds = String(shipmentDate.getMilliseconds()).padStart(3, '0');
 
+      const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
       fetch(baseUrl+"api/Basket/CreateBasket", {
         method: "POST",
         headers: {
@@ -342,7 +351,7 @@ const handleSelectQuarterChange = (event) => {
                               productId: props.urunId,
                               total: selectedPiece,
                               userAddressId: selectedAddress,
-                              shipmentDate: shipmentDate,
+                              shipmentDate: formattedDate,
                               cardNote: note}),
                             })
         .then((response) => response.json())
@@ -350,7 +359,6 @@ const handleSelectQuarterChange = (event) => {
           
           if(data.success)
           {
-            console.log(data);
             toast.success('Ürün Sepete Başarıyla Eklenmiştir', {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 2000,
@@ -363,7 +371,6 @@ const handleSelectQuarterChange = (event) => {
             }, 2000);
           }
           else{
-            console.log(data);
             toast.error(data.message, {
               position: toast.POSITION.TOP_CENTER,
               autoClose: 3000,
@@ -525,6 +532,15 @@ const handleSelectQuarterChange = (event) => {
           }).finally(()=>{
             if(setSaveBasket)
             {  
+              const year = shipmentDate.getFullYear();
+              const month = String(shipmentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 to month since it's zero-based
+              const day = String(shipmentDate.getDate()).padStart(2, '0');
+              const hours = String(shipmentDate.getHours()).padStart(2, '0');
+              const minutes = String(shipmentDate.getMinutes()).padStart(2, '0');
+              const seconds = String(shipmentDate.getSeconds()).padStart(2, '0');
+              const milliseconds = String(shipmentDate.getMilliseconds()).padStart(3, '0');
+
+              const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
                 fetch(baseUrl+"api/Basket/CreateBasket", {
                   method: "POST",
                   headers: {
@@ -536,7 +552,7 @@ const handleSelectQuarterChange = (event) => {
                     productId: props.urunId,
                     total: selectedPiece,
                     userAddressId: parseInt(setNewUserAddressId),
-                    shipmentDate: shipmentDate,
+                    shipmentDate: formattedDate,
                     cardNote: note
                   }),
                   })
