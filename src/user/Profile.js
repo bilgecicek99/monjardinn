@@ -6,13 +6,7 @@ import { baseUrl } from '../config/Constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function enableEditMode() {
-  const inputs = document.querySelectorAll('.profile-edit-input-area');
-  for (const input of inputs) {
-    input.removeAttribute('readonly');
-    input.style.border = '1px solid #ccc'; 
-  }
-}
+
 
 
 const Profile = () => {
@@ -20,6 +14,26 @@ const Profile = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [userAddress, setUserAddress] = useState([]);
   const [errorAddressMessage, setErrorAddressMessage] = useState(null);
+  const [saveButtonVisibility, setSaveButtonVisibility]= useState(false);
+
+  function enableEditMode() {
+    const inputs = document.querySelectorAll('.profile-edit-input-area');
+    if(!saveButtonVisibility)
+    {
+      for (const input of inputs) {
+      input.removeAttribute('readonly');
+      input.style.border = '1px solid #ccc'; 
+    }
+    }
+    else{
+      for (const input of inputs) {
+        input.setAttribute('readonly', 'readonly');
+        input.style.border = 'none'; 
+      }
+    }
+   
+      setSaveButtonVisibility(!saveButtonVisibility);
+  }
 
   const [user, setUser] = useState({
     firstName: '',
@@ -202,6 +216,7 @@ const Profile = () => {
           input.setAttribute('readonly', 'readonly');
           input.style.border = "none"
         }
+        setSaveButtonVisibility(false)
       } else {
         // Başarısız mesajı göster
         toast.error('Profil Güncelleme Başarısız. Lütfen Daha Sonra Deneyiniz.', {
@@ -490,9 +505,9 @@ const Profile = () => {
               /> */}
       <hr className="profile-hr" />
       <div style={{float:"right"}}>
-        <button className="profile-save-button profile-mobile-button"  onClick={logoutHandler}>Çıkış Yap</button>
+       {saveButtonVisibility && <button className="save-button profile-mobile-button" onClick={updateUser}>Kaydet</button>} 
         <button className="profile-save-button profile-mobile-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
-        <button className="save-button profile-mobile-button" onClick={updateUser}>Kaydet</button>
+        <button className="profile-save-button profile-mobile-button"  onClick={logoutHandler}>Çıkış Yap</button>
       </div>
       {/* <div style={{ display:"flex", flexDirection: "column",marginTop:"20%"}} >
      <div> <p className="profile-text"> Mevcut Şifre: <input

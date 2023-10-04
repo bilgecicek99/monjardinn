@@ -106,14 +106,26 @@ export default function EditProduct() {
       .then((response) => response.json())
       .then((data) => {
         navigate('/AdminProductList');
-        toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
+        if(data.success)
+        {
+           toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-        });
-        console.log(data);
+        });}
+        else{
+          toast.error(data.message, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+        }
+        
+       
         if (selectedImage) {
         fetch(baseUrl+"api/ProductFile/CreateProductFile", {
           method: "POST",
@@ -126,6 +138,25 @@ export default function EditProduct() {
         })
           .then((response) => response.json())
           .then((responseData) => {
+            if(responseData.success)
+            {
+              toast.success(responseData.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+            }
+            else{
+              toast.error(responseData.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
+            }
             // İsteğin sonucunu kullanma
             console.log("foto gitti",responseData);
           })
