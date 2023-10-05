@@ -1062,7 +1062,7 @@ input[type='checkbox'] {
   }
   
  .product-image{
-  width: 290px !important;
+  /* width: 290px !important; */
   height: 200px !important;
  }
  .search-product-image{
