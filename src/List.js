@@ -328,7 +328,16 @@ const List = () => {
     <div style={{ flex: "0 0 100%" }}>
   <div className="container  mobile-list" style={{margin:"8%"}}>
     {filteredProducts.length === 0 ? (
-      <div style={{marginLeft:"20%", justifyContent:"center", textAlign: "center", marginTop: "20%", fontSize: "18px", fontFamily:"sans-serif", textSizeAdjust:"bold" }}>
+      <div style={{
+        position: "absolute",
+        left: "50%",
+        transform: "translate(-50%, -180%)",
+        textAlign: "center",
+        fontSize: "18px",
+        fontFamily: "sans-serif",
+        margin: "150px auto 100px", 
+        paddingBottom:"30px"
+      }}>
         Ürün bulunmamaktadır.
       </div>
     ) : (
