@@ -73,6 +73,17 @@ const AddUserAddress = () => {
     };
     const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle', 'corporate'];
   
+    if(updatedAddress.phone.length < 11)
+      {
+        toast.error("Telefon numarası minimum 11 karakterden oluşmalıdır.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return;
+      }
     if (!updatedAddress.corporate) {
       // Corporate işaretli değilse, diğer alanları kontrol et
       const isNonCorporateEmpty = requiredFields.some((field) => {
@@ -282,7 +293,7 @@ const AddUserAddress = () => {
                     e.target.value = e.target.value.slice(0, 15);
                   }
                 }}
-                placeholder="0(5xx) xxx xx xx"
+                placeholder="05xxxxxxxxx"
               /></p>
            
             <hr className="profile-hr" />

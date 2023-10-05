@@ -169,6 +169,18 @@ const Profile = () => {
         });
         return; 
       }
+
+      if(user.phoneNumber.length < 11)
+      {
+        toast.error("Telefon numarası minimum 11 karakterden oluşmalıdır.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return;
+      }
      
       if (user.phoneNumber.length > 15) {
         toast.error("Telefon numarası en fazla 15 karakterden oluşabilir.", {
@@ -464,7 +476,7 @@ const Profile = () => {
       <input
       type="text"
       name="phoneNumber"
-      placeholder="0(5xx) xxx xx xx"
+      placeholder="05xxxxxxxxx"
       value={user.phoneNumber}
       onChange={(e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Sadece rakamları korur

@@ -67,7 +67,7 @@ const SignUp = () => {
     }
     if(phone.length < 11)
     {
-      toast.error("Telefon minimum 11 karakterden oluşmalıdır.", {
+      toast.error("Telefon numarası minimum 11 karakterden oluşmalıdır.", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
         hideProgressBar: false,
@@ -199,7 +199,7 @@ const SignUp = () => {
           <div style={{ marginTop: "20px"}}>
         <input
           type="text"
-          placeholder="Telefon Numarası 0(5xx) xxx xx xx"
+          placeholder="Telefon Numarası 05xxxxxxxxx"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="input-action"
