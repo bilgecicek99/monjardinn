@@ -15,7 +15,6 @@ function Carousel1() {
         throw new Error('Duyuru listesi getirilemedi. Lütfen daha sonra tekrar deneyin.');
       }
       const data = await response.json();
-      console.log(data);
       const noticeData = data.data;
       setNoticeData(noticeData);
     } catch (error) {

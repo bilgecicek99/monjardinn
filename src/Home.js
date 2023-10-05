@@ -24,7 +24,6 @@ const Home = () => {
       }
       const data = await response.json();
       const categoryData = data.data;
-      console.log(data.data);
       setCategoryList(categoryData);
     } catch (error) {
       console.error(error);
@@ -48,7 +47,6 @@ const Home = () => {
   function HomeCard({ cards }) {
     const Cardx = ({ fileUrl, name, id, data, click }) => {
       const defaultImageUrl = '/images/monjardinlogo.png';
-      console.log(name);
   
       return (<>
 

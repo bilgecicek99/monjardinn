@@ -56,7 +56,6 @@ import ChangePassword from './user/ChangePassword';
 function App() {
   
   const token = getToken();
- console.log("token",token);
  
   return (
     
