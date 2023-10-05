@@ -65,13 +65,15 @@ const ChangePassword = () => {
             if (data.success === true) {
               toast.success('Şifreniz başarıyla değiştirilmiştir.', {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
               });
-              navigate('/profile'); 
-
+              
+              setTimeout(() => {
+                navigate("/profile");
+              }, 3000);
             } else {
               toast.error(data.message, {
                 position: toast.POSITION.TOP_CENTER,
