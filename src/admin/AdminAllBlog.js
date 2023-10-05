@@ -208,9 +208,10 @@ const AdminAllBlog = () => {
         backgroundColor: "#893694",
         border: "1px solid gray",
         boxShadow: "2px 2px 5px rgba(0,0,0,0.3)",
-        position: "fixed",
         right: "20px",
         zIndex: "999",
+        float:"right",
+        marginTop:"15px"
       }}
       onClick={gotoBlogSavePage}
     >
