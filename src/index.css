@@ -651,6 +651,7 @@ nav li {
 .product-info-detay{
   margin-top: 2%;
   font-family: 'Times New Roman', Times, serif;
+  word-break: break-word;
 }
 .basket-no-product{
   font-size: 150%;

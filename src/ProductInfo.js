@@ -402,7 +402,16 @@ const handleSelectQuarterChange = (event) => {
         return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
       });
       
-        
+        if (address.phone.length<10) {
+            toast.error('Telefon numarası minimum 11 karakterden oluşmalıdır.', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+            });
+            return;
+          }
       if (isEmptyField) {
         toast.error('Lütfen Tüm Alanları Doldurunuz.', {
           position: toast.POSITION.TOP_CENTER,
@@ -824,7 +833,7 @@ const handleSelectQuarterChange = (event) => {
                         value={address.districtId}
                         onChange={handleInputChange}
                         className="product-detail-form"
-                        placeholder="Telefon Numaranız"
+                        placeholder="Telefon Numaranız 05xxxxxxxxx"
                         onInput={(e) => {
                           e.target.value = e.target.value.replace(/[^0-9]/g, '');
         

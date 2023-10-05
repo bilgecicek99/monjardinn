@@ -65,6 +65,17 @@ const SignUp = () => {
       });
       return; 
     }
+    if(phone.length < 11)
+    {
+      toast.error("Telefon numarası minimum 11 karakterden oluşmalıdır.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
+    }
     if (phone.length > 15) {
       toast.error("Telefon numarası en fazla 15 karakterden oluşabilir.", {
         position: toast.POSITION.TOP_CENTER,
@@ -188,7 +199,7 @@ const SignUp = () => {
           <div style={{ marginTop: "20px"}}>
         <input
           type="text"
-          placeholder="Telefon Numarası"
+          placeholder="Telefon Numarası 05xxxxxxxxx"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="input-action"

@@ -73,7 +73,17 @@ const EditUserAddress = () => {
     
 
     const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId', 'quarterId', 'address', 'addressTitle', 'corporate'];
-  
+    if(updatedAddress.phone.length < 11)
+    {
+      toast.error("Telefon numarası minimum 11 karakterden oluşmalıdır.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      return;
+    }
     if (!updatedAddress.corporate) {
       // Corporate işaretli değilse, diğer alanları kontrol et
       const isNonCorporateEmpty = requiredFields.some((field) => {
@@ -356,7 +366,7 @@ const EditUserAddress = () => {
                 type="text"
                 name="phone"
                 value={address.phone}
-              
+                placeholder="05xxxxxxxxx"
                 onChange={handleInputChange}
                 className="edit-input-area"
                 onInput={(e) => {
