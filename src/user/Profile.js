@@ -464,6 +464,7 @@ const Profile = () => {
       <input
       type="text"
       name="phoneNumber"
+      placeholder="0(5xx) xxx xx xx"
       value={user.phoneNumber}
       onChange={(e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Sadece rakamları korur

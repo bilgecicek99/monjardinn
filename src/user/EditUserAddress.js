@@ -356,7 +356,7 @@ const EditUserAddress = () => {
                 type="text"
                 name="phone"
                 value={address.phone}
-              
+                placeholder="0(5xx) xxx xx xx"
                 onChange={handleInputChange}
                 className="edit-input-area"
                 onInput={(e) => {

@@ -824,7 +824,7 @@ const handleSelectQuarterChange = (event) => {
                         value={address.districtId}
                         onChange={handleInputChange}
                         className="product-detail-form"
-                        placeholder="Telefon Numaranız"
+                        placeholder="Telefon Numaranız 0(5xx) xxx xx xx"
                         onInput={(e) => {
                           e.target.value = e.target.value.replace(/[^0-9]/g, '');
         

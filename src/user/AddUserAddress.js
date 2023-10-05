@@ -282,6 +282,7 @@ const AddUserAddress = () => {
                     e.target.value = e.target.value.slice(0, 15);
                   }
                 }}
+                placeholder="0(5xx) xxx xx xx"
               /></p>
            
             <hr className="profile-hr" />
