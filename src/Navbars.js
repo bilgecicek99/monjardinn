@@ -155,7 +155,7 @@ useEffect(() => {
                   onClick={() => setActiveMenufav('/search')}
                   style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
                 >
-                  <img src={activeMenufav === '/search' ? "/images/searchpage.png" : "/images/searchpage.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
+                  <img src={activeMenufav === '/search' ? "/images/dolusearch.svg" : "/images/searchpage.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
                   <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Arama</p>
               </NavLink>
             <NavLink
@@ -164,7 +164,7 @@ useEffect(() => {
                 onClick={() => setActiveMenufav('/Blog')}
                 style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
               >
-                <img src={activeMenufav === '/Blog' ? "/images/blogicon.png" : "/images/blogicon.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
+                <img src={activeMenufav === '/Blog' ? "/images/dolublog2.svg" : "/images/blogicon.png"} alt="" width={18} height={18} style={{marginTop:"20px"}}/>
                 <p className='nav-icon-text' style={{textAlign:"center",marginTop:"0px"}}>Blog</p>
 
             </NavLink>
@@ -269,7 +269,7 @@ useEffect(() => {
                   onClick={() => setActiveMenufav('/search')}
                   style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
                 >
-                  <img src={activeMenufav === '/search' ? "/images/searchpage.png" : "/images/searchpage.png"} alt="" width={30} height={30} />
+                  <img src={activeMenufav === '/search' ? "/images/dolusearch.svg" : "/images/searchpage.png"} alt="" width={30} height={30} />
                   <p className='nav-icon-text' style={{textAlign:"center"}}>Arama</p>
               </NavLink>
             <NavLink
@@ -278,7 +278,7 @@ useEffect(() => {
                 onClick={() => setActiveMenufav('/Blog')}
                 style={{color:"black", textDecoration: 'none',marginTop: "8px"}}
               >
-                <img src={activeMenufav === '/Blog' ? "/images/blogicon.png" : "/images/blogicon.png"} alt="" width={35} height={30} />
+                <img src={activeMenufav === '/Blog' ? "/images/dolublog2.svg" : "/images/blogicon.png"} alt="" width={35} height={30} />
                 <p className='nav-icon-text' style={{textAlign:"center"}}>Blog</p>
 
             </NavLink>
