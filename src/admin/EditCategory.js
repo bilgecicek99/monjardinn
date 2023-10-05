@@ -73,8 +73,6 @@ function EditCategory() {
       
       const handleEditClick = () => {
         setIsEditing(true);
-        console.log("item",fileUrl);
-
       };
     
       const handleCancelClick = () => {

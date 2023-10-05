@@ -43,7 +43,6 @@ function EditSlider() {
       }
       const data = await response.json();
       const noticeData = data.data;
-      console.log("notice",noticeData);
       setNoticeData(noticeData);
     } catch (error) {
       console.error(error);

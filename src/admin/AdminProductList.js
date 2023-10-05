@@ -83,7 +83,6 @@ export default function AdminProductList() {
 
       const response = await fetch(baseUrl+`api/Product/GetAllProducts`);
       const data = await response.json();
-      console.log("data",data.data)
       const productData= data.data;
       setProductList(productData);  
       setFilteredProducts(productData);

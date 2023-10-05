@@ -154,7 +154,6 @@ const cardImageStyle = {
      
     
       const categoryData= data.data;
-      console.log("cateogryyyyyyy",categoryData)
       setCategoryList(categoryData);  
       //setFilteredProducts(categoryData);
     } catch (error) {

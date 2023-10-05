@@ -98,7 +98,6 @@ const AdminAllBlog = () => {
     const defaultImage = '/images/monjardinlogo.png';
   
     const handleEditClick = (blog) => {
-      console.log("blog", blog);
       // Edit sayfasına yönlendirme işlemi
       navigate(`/editblog/${blog}`, { state: { blog } });
     };
