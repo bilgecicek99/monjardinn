@@ -116,7 +116,9 @@ export default function EditProduct() {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigate('/AdminProductList');
+        setTimeout(() => {
+          navigate("/AdminProductList");
+        }, 3000);
         if(data.success)
         {
            toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
@@ -125,7 +127,8 @@ export default function EditProduct() {
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-        });}
+        });
+      }
         else{
           toast.error(data.message, {
             position: toast.POSITION.TOP_CENTER,

@@ -34,11 +34,9 @@ const logoutHandler = () => {
 
 const token = getToken();
 useEffect(() => {
- console.log("tokennn", token);
 
   const fetchLastProduct = async () => {
     try {
-      console.log("token",token)
       // İstek yapma kodu
       const requestOptions = {
         headers: {
@@ -50,7 +48,6 @@ useEffect(() => {
       // Başarılı yanıtın kontrolü
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data.data);
         const productData = data.data;
         setLastProduct(productData);
       } else {
@@ -70,7 +67,6 @@ useEffect(() => {
       };
       const response = await fetch(baseUrl+ `api/Dashboard/LastBlog`, requestOptions);
       const data = await response.json();
-      console.log("data", data.data);
       const blog = data.data;
       setLastBlog(blog);
     } catch (error) {
@@ -88,7 +84,6 @@ useEffect(() => {
       };
       const response = await fetch(baseUrl+`api/Dashboard/TotalUserComments`, requestOptions);
       const data = await response.json();
-      console.log("dataaaaaa", data);
       const totalUserCommentsCount = data.data;
       setTotalUserComments(totalUserCommentsCount);
     } catch (error) {
@@ -107,7 +102,6 @@ useEffect(() => {
       };
       const response = await fetch(baseUrl+`api/Dashboard/TotalUserRecords`, requestOptions);
       const data = await response.json();
-      console.log("dataaaaaa", data);
       const totalUserRecordsCount = data.data;
       setTotalUserRecords(totalUserRecordsCount);
     } catch (error) {
@@ -123,7 +117,6 @@ useEffect(() => {
 }, []);
 
 const user=getUserInfo();
-console.log("user",user);
 
   return (
     <>

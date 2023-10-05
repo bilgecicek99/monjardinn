@@ -53,7 +53,6 @@ const FavoriListesi = () => {
           const favoriUrunData = data.data;
           setProducts(favoriUrunData);
 
-          console.log('Favori ürünler:', favoriUrunData);
         } catch (error) {
           console.error(error);
           toast.error("Lütfen Daha Sonra Tekrar Deneyiniz", {

@@ -156,14 +156,16 @@ export default function AdminAddProduct() {
         })
         .then((data) => {
           console.log("dd", data);
-          toast.error('Değişiklikler başarıyla kaydedilmiştir.', {
+          toast.success('Değişiklikler başarıyla kaydedilmiştir.', {
             position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
           });
-          navigate('/AdminProductList');
+          setTimeout(() => {
+            navigate("/AdminProductList");
+          }, 3000);
   
           fetch(baseUrl + "api/ProductFile/CreateProductFile", {
             method: "POST",

@@ -114,7 +114,6 @@ const Profile = () => {
           }
           localStorage.setItem('UserAllInfo', JSON.stringify(updatedUser));
 
-          console.log("uppp",updatedUser);
           setUser(updatedUser);
         } else {
           console.error('Profil verileri alınamadı');

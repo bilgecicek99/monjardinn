@@ -25,7 +25,6 @@ function Navbars() {
   const navigate = useNavigate();
  const token=getToken();
  const user=getUserInfo();
- console.log("user",user);
   const logoutHandler = () => {
     resetUserSession();
     navigate("/");
@@ -49,7 +48,6 @@ function Navbars() {
     setActiveMenuSearch(menu);
   };
 
-console.log("userall",userAllInfo);
 
 useEffect(() => {
   const fetchProfilVerileri = async () => {
@@ -74,7 +72,6 @@ useEffect(() => {
         }
         localStorage.setItem('UserAllInfo', JSON.stringify(updatedUser));
 
-        console.log("uppp",updatedUser);
        
       } else {
         console.error('Profil verileri alınamadı');

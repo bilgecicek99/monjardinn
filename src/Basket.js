@@ -74,7 +74,7 @@ const Basket = () => {
         else{
          // alert(data.message ?? "Bilinmeyen bir hata ile karşılaşıldı.")
         }
-        console.log(data.data);        
+        // console.log(data.data);        
        })
        .catch(error => {
         toast.error(error.message, {
