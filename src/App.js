@@ -51,6 +51,7 @@ import Contact from './Contact';
 import AddBlog from './admin/AddBlog';
 import Footer from './footer';
 import ChangePassword from './user/ChangePassword';
+import ScrollToTop from './ScrollToTop';
 
 
 function App() {
@@ -58,8 +59,8 @@ function App() {
   const token = getToken();
  
   return (
-    
-    <Router> 
+    <Router>  
+       <ScrollToTop/>
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/adminpanel" element={<AdminpanelWrapper />} />
@@ -103,7 +104,7 @@ function App() {
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
       </Routes>
-
+      
     </Router>
   );
 } 
