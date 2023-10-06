@@ -319,10 +319,10 @@ const handleSelectQuarterChange = (event) => {
       return;
     }
 
-    if(isExistingAddress && selectedAddress)
+    if(isExistingAddress)
     {
       if ( !selectedAddress) {
-        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        toast.error('Lütfen Adres Seçimi Yapınız.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
           hideProgressBar: false,
