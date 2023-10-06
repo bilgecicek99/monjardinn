@@ -80,16 +80,21 @@ const NewPassword = () => {
          <ToastContainer />
       <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Yeni Parolanız Bir Mail Uzaklıkta</h1>
       <div style={{ justifyContent: "center", marginTop: "50px", textAlign: "center" , display:"block"}}>
-      <div>
-      
+        <div>
+
          <input
           type="password"
           placeholder="Yeni Şifre"
           value={newPassword}
           onChange={handlePasswordChange}
           className="input-action"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSend(); 
+            }
+          }}
         />
-   </div>
+        </div>
     
          <button onClick={handleSend} className="button-action">
             Gönder
