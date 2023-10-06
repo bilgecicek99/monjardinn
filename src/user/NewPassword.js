@@ -83,7 +83,7 @@ const NewPassword = () => {
       <div>
       
          <input
-          type="text"
+          type="password"
           placeholder="Yeni Şifre"
           value={newPassword}
           onChange={handlePasswordChange}
