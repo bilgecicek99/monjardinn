@@ -265,7 +265,7 @@ const handlePieceSave = async (item, action) => {
                 <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
               </a>
               {deleteConfirmationStates[item.id] && (
-                <div className="delete-confirmation-overlay">
+                <div className="delete-confirmation-overlay" style={{zIndex:"9999"}}>
                   <div className="delete-confirmation-box">
                     <p>Silmek istediğinize emin misiniz?</p>
                     <button onClick={() => handleDelete(item.id)}>Evet</button>
