@@ -399,7 +399,7 @@ const Search = () => {
           <h3 className="product-name" style={{ marginTop: '25px', marginBottom: 0, fontFamily: 'times',width:"250px" ,  whiteSpace: 'pre-wrap',textAlign:"left"}}>
             {product.name}
           </h3>
-          <p className="product-price" style={{ marginTop: '0px' }}>
+          <p className="product-price" style={{ marginTop: '0px',textAlign:"left" }}>
             {product.price} ₺
           </p>
         </div>
