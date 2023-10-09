@@ -499,7 +499,7 @@ return (
     />
   </div>
   <div className="input-wrapper">
-    <input
+    <textarea
       type="text"
       placeholder="Açıklama"
       value={description}
