@@ -319,10 +319,10 @@ const handleSelectQuarterChange = (event) => {
       return;
     }
 
-    if(isExistingAddress && selectedAddress)
+    if(isExistingAddress)
     {
       if ( !selectedAddress) {
-        toast.error('Lütfen Tüm Alanları Doldurunuz.', {
+        toast.error('Lütfen Adres Seçimi Yapınız.', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
           hideProgressBar: false,
@@ -402,16 +402,6 @@ const handleSelectQuarterChange = (event) => {
         return value === undefined || value === null || value === "" ||(typeof value === 'number' && isNaN(value)) ;
       });
       
-        if (address.phone.length<10) {
-            toast.error('Telefon numarası minimum 11 karakterden oluşmalıdır.', {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-            });
-            return;
-          }
       if (isEmptyField) {
         toast.error('Lütfen Tüm Alanları Doldurunuz.', {
           position: toast.POSITION.TOP_CENTER,
@@ -422,6 +412,16 @@ const handleSelectQuarterChange = (event) => {
         });
         return; 
       } else {
+        if (address.phone.length<10) {
+          toast.error('Telefon numarası minimum 11 karakterden oluşmalıdır.', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+          return;
+        }
         if(updatedAddress.corporate)
         {
           const requiredFields = ['nameSurname', 'phone', 'city', 'country', 'districtId','quarterId','address','addressTitle','corporate','taxIdentificationNumber', 'taxOffice', 'companyName','email'];

@@ -36,20 +36,30 @@ const NewPassword = () => {
     await fetch(baseUrl+`api/Auth/PasswordUpdateWithoutLogin`, requestOptions)
       .then((response) => response.json())
       .then((data) => { 
-        console.log("data,",data);
-       
-        toast.error('Şifre Başarıyla Güncellendi', {
+        if(data.success)
+        {
+          toast.success('Şifre Başarıyla Güncellendi', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+          });
+    
+      
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
+       else{
+        toast.error(data.message??"Lütfen daha sonra tekrar deneyiniz.", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
         });
-  
-    
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+       }
        
       })
       .catch((error) => {
@@ -70,16 +80,21 @@ const NewPassword = () => {
          <ToastContainer />
       <h1 style={{ textAlign: "center", fontStyle: "italic" }}>Yeni Parolanız Bir Mail Uzaklıkta</h1>
       <div style={{ justifyContent: "center", marginTop: "50px", textAlign: "center" , display:"block"}}>
-      <div>
-      
+        <div>
+
          <input
-          type="text"
+          type="password"
           placeholder="Yeni Şifre"
           value={newPassword}
           onChange={handlePasswordChange}
           className="input-action"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSend(); 
+            }
+          }}
         />
-   </div>
+        </div>
     
          <button onClick={handleSend} className="button-action">
             Gönder

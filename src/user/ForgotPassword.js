@@ -150,20 +150,27 @@ const ForgotPassword = () => {
        
         {mailGeldiMi ? (
           <div style={{ marginTop: "20px", fontStyle: "italic", justifyContent: "center" }}>
+            <form onSubmit={handleCodeSend}>
            <div>Lütfen mailinize gelen kodu giriniz: </div>
            <input
-          type="number"
+          type="text"
           placeholder="Kod"
           value={code}
           onChange={handleCode}
           className="input-action"
+          onInput={(e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            if (e.target.value.length > 4) {
+              e.target.value = e.target.value.slice(0, 4);
+            }
+          }}
         />
       <div>
-         <button  onClick={handleCodeSend}  className="button-action">
+         <button  className="button-action">
            Kodu Gönder
           </button>
           </div>
-         
+          </form>
           </div>
           
         ) : (
@@ -172,6 +179,7 @@ const ForgotPassword = () => {
 
         {send ? ( 
           <>
+          <form onSubmit={handleGonderClick}>
           <input
           type="email"
           placeholder="E-posta adresiniz"
@@ -180,11 +188,12 @@ const ForgotPassword = () => {
           className="input-action"
           />
         <div style={{marginTop:"20px"}} >
-          <button onClick={handleGonderClick} disabled={mailGeldiMi} className="save-button">
+          <button disabled={mailGeldiMi} className="save-button">
             
             Gönder
           </button>
         </div> 
+        </form>
         </>)
         : 
        <div></div>

@@ -109,6 +109,7 @@ const EditUserAddress = () => {
       });
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(address.email)) {
+    console.log(address);
     // Eğer email formatı doğru değilse hata mesajı göster
     toast.error('Lütfen geçerli bir email adresi giriniz.', {
       position: toast.POSITION.TOP_CENTER,
@@ -119,18 +120,7 @@ const EditUserAddress = () => {
     });
     return; // İşlemi tamamlama
   }
-
-  if (address.taxIdentificationNumber.length<10) {
-    toast.error('Lütfen vergi numarasını minimum 10 haneli olacak şekilde giriniz.', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-    });
-    return; // İşlemi tamamlama
-  }
-  
+ 
       if (isCorporateEmpty) {
         console.log("kk")
         toast.error('Lütfen Kurumsal Alan ve Diğer Alanların Tümünü Doldurunuz.', {
@@ -142,6 +132,16 @@ const EditUserAddress = () => {
         });
         console.log(updatedAddress)
         return; // Corporate alanlar eksik, işlemi tamamlama
+      }
+      if (address.taxIdentificationNumber.length<10) {
+        toast.error('Lütfen vergi numarasını minimum 10 haneli olacak şekilde giriniz.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; // İşlemi tamamlama
       }
     }
 

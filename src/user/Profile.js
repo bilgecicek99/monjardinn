@@ -389,22 +389,23 @@ const Profile = () => {
         <div className="address-detail-overlay">
           <div className="address-detail-box">
                    <a
-                    style={{cursor: "pointer",float:"right",marginTop: "-10px", marginRight: "-4px" }}
+                    style={{cursor: "pointer",float:"right",marginTop: "15px", marginRight: "-4px" }}
                     onClick={handleClosePopup}
                   >
                     <img src={"/images/delete.png"} alt="" width={15} height={15} />
                   </a>
-            <p style={{ fontSize: "21px",fontWeight: "bold",marginTop:"25px",fontFamily: "'Times New Roman', Times, serif"}}>{address.addressTitle}</p>
-            <p className="address-detail-box-text">{address.nameSurname}</p>
-            <p className="address-detail-box-text">{address.phone}</p>
-            <p className="address-detail-box-text">{quarter} - {district}/İzmir</p>
-            <p className="address-detail-box-text">{address.address}</p>
+            <p style={{ fontSize: "21px",fontWeight: "bold",marginTop:"25px",fontFamily: "'Times New Roman', Times, serif"}}>Adres Detayları</p>
+            <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Adres Başlığı:</span> {address.addressTitle}</p>
+            <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>İsim soyisim: </span>{address.nameSurname}</p>
+            <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Telefon Numarası:</span> {address.phone}</p>
+            <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>İlçe-Mahalle: </span> {quarter} - {district}/İzmir</p>
+            <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Adres:</span> {address.address}</p>
              {address.corporate && (
               <> 
-                 <p className="address-detail-box-text">{address.corparateResponseModel.email}</p>
-                 <p className="address-detail-box-text">Firma Adı: {address.corparateResponseModel.companyName}</p>
-                 <p className="address-detail-box-text">Vergi No: {address.corparateResponseModel.taxIdentificationNumber}</p>
-                 <p className="address-detail-box-text">Vergi Daire: {address.corparateResponseModel.taxOffice}</p>
+                 <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Email:</span> {address.corparateResponseModel.email}</p>
+                 <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Firma Adı:</span> {address.corparateResponseModel.companyName}</p>
+                 <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Vergi No:</span> {address.corparateResponseModel.taxIdentificationNumber}</p>
+                 <p className="address-detail-box-text"><span style={{fontWeight: "600"}}>Vergi Daire:</span> {address.corparateResponseModel.taxOffice}</p>
               </>
              )}
           </div>

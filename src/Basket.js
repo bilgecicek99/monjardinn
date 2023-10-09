@@ -112,8 +112,15 @@ const [deleteConfirmationStates, setDeleteConfirmationStates] = useState({});
     }));
   };
 
+  const cancelDelete = (itemId) => {
+    // Silme onay penceresini kapat
+    setDeleteConfirmationStates((prevStates) => ({
+      ...prevStates,
+      [itemId]: false,
+    }));
+  };
+
 const handleDelete = async (id) => {
-  console.log(`Ürün ID ${id} silindi.`);
   try {
     const requestOptions = {
       headers: {
@@ -258,11 +265,11 @@ const handlePieceSave = async (item, action) => {
                 <img src={"/images/delete.png"} alt="" className="basket-delete-image" />
               </a>
               {deleteConfirmationStates[item.id] && (
-                <div className="delete-confirmation-overlay">
+                <div className="delete-confirmation-overlay" style={{zIndex:"9999"}}>
                   <div className="delete-confirmation-box">
                     <p>Silmek istediğinize emin misiniz?</p>
                     <button onClick={() => handleDelete(item.id)}>Evet</button>
-                    <button onClick={() => confirmDelete(item.id)}>Hayır</button>
+                    <button onClick={() => cancelDelete(item.id)}>Hayır</button>
                   </div>
                 </div>
               )}
