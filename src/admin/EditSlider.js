@@ -210,11 +210,17 @@ function EditSlider() {
         console.log("buname",e.target.value);
 
       };
+      // const handleDescription = (e) => {
+      //   setDescription(e.target.value);
+      //   console.log("budescrip",e.target.value);
+      // };
+      const maxLength = 70;
       const handleDescription = (e) => {
-        setDescription(e.target.value);
-        console.log("budescrip",e.target.value);
-       
-
+        const inputValue = e.target.value;
+    
+        if (inputValue.length <= maxLength) {
+          setDescription(inputValue);
+        }
       };
       const handleImageUpload = async(event) => {
         const file = event.target.files[0];
@@ -241,12 +247,16 @@ function EditSlider() {
             value={editedtitle}
             onChange={handleNameChange}
           />
-           <input
+          <div>
+           <textarea
             type="text"
             value={editedDescription}
-            onChange={handleDescription}
-            
+            onChange={handleDescription}    
           />
+          <div className="character-count">
+            {editedDescription.length}/{maxLength} karakter
+          </div>
+          </div>
           <input type="file" onChange={handleImageUpload} />
           {previewImageEdit && (
            <img src={previewImageEdit} alt="Preview" style={{ width: "100px" }} />
@@ -454,7 +464,14 @@ return (
   const handleGoBack = () => {
     navigate(-1); // Bir önceki sayfaya yönlendirir
   };
+  const maxLength = 70;
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
 
+    if (inputValue.length <= maxLength) {
+      setDescription(inputValue);
+    }
+  };
 return (
   <div style={{ marginTop:"50px", paddingLeft:"50px", paddingRight:"50px" }}>
      <ToastContainer />
@@ -503,8 +520,11 @@ return (
       type="text"
       placeholder="Açıklama"
       value={description}
-      onChange={(e) => setDescription(e.target.value)}
+      onChange={handleChange}
     />
+     <div className="character-count">
+        {description.length}/{maxLength} karakter
+      </div>
   </div>
   <div className="input-wrapper">
     <input type="file" onChange={handleImageUpload} />
