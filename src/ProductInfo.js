@@ -307,6 +307,17 @@ const handleSelectQuarterChange = (event) => {
       });
       return; 
     }
+    if(props.stock ===0)
+      {
+        toast.error('Stokta yeterli ürün bulunmamaktadır.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return; 
+      }
 
     if (!selectedPiece  || !shipmentDate) {
       toast.error('Lütfen Tüm Alanları Doldurunuz.', {
@@ -388,7 +399,7 @@ const handleSelectQuarterChange = (event) => {
         });
     }
     if(!isExistingAddress)
-    {
+    { 
       const updatedAddress = {
         ...address,
         userId: userInfo.userId,
@@ -1073,6 +1084,7 @@ useEffect(() => {
           fiyat={productDetail.price} 
           detay={productDetail.description} 
           puan={productDetail.pointAverage}
+          stock={productDetail.stock}
           />;
 };
 
