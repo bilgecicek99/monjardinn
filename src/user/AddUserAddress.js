@@ -152,6 +152,16 @@ const AddUserAddress = () => {
     })
     .then((response) => response.json())
     .then((data) => {
+      if(!data.success)
+      {
+        toast.error((data.message ?? data.Errors[0].ErrorMessage)??"Lüütfen Daha Sonra Tekrar Deneyiniz.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+      }
       setErrorMessage(data.message);
       const requestBody = {
         userId: userInfo.userId,
@@ -171,41 +181,45 @@ const AddUserAddress = () => {
       };
       if(address.corporate)
       {
-        fetch(baseUrl + `api/CorparateAddress/CreateCorparateAddress`, requestOptions)
-        .then(response => response.json())
-        .then(responsedata => {
-          setErrorMessage(responsedata.message);
-          if(responsedata.success)
-          {
-          toast.success(responsedata.message, {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                  });
-            setTimeout(() => {
-            navigate("/profile");
-          }, 2000);
-          }
-          else{
+        if(data.success)
+        {
+          fetch(baseUrl + `api/CorparateAddress/CreateCorparateAddress`, requestOptions)
+          .then(response => response.json())
+          .then(responsedata => {
+            setErrorMessage(responsedata.message);
+            if(responsedata.success)
             {
-            toast.error((responsedata.message ?? responsedata.Errors[0].ErrorMessage) ?? "İşlem gerçekleşirken bir hata ile karşılaşıldı. Lütfen kayıt olan adresi kontrol ediniz.", {
+            toast.success(responsedata.message, {
                       position: toast.POSITION.TOP_CENTER,
                       autoClose: 2000,
                       hideProgressBar: false,
                       closeOnClick: true,
                       pauseOnHover: true,
-              });
+                    });
               setTimeout(() => {
-                navigate("/profile");
-              }, 2000);
-            }      
-      }})
-      .catch(error => {
-        console.error(error);
-        setErrorMessage(error.message);
-      });
+              navigate("/profile");
+            }, 2000);
+            }
+            else{
+              {
+              toast.error((responsedata.message ?? responsedata.Errors[0].ErrorMessage) ?? "İşlem gerçekleşirken bir hata ile karşılaşıldı. Lütfen kayıt olan adresi kontrol ediniz.", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                });
+                setTimeout(() => {
+                  navigate("/profile");
+                }, 2000);
+              }      
+        }})
+        .catch(error => {
+          console.error(error);
+          setErrorMessage(error.message);
+        });
+        }
+        
       }
       else{
             if(data.success)
