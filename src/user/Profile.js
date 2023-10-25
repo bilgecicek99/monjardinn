@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../config/Constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MyOrders from "./MyOrders";
 
 
 
@@ -13,7 +14,9 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [userAddress, setUserAddress] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [errorAddressMessage, setErrorAddressMessage] = useState(null);
+  const [errorOrderMessage, setErrorOrderMessage] = useState(null);
   const [saveButtonVisibility, setSaveButtonVisibility]= useState(false);
 
   function enableEditMode() {
@@ -85,6 +88,34 @@ const Profile = () => {
         console.error("Adres verileri getirilirken hata oluştu: ", error);
       }
   };
+
+  const fetchOrders = async () => {
+    try {  
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      
+     await fetch(baseUrl+`api/Order/GetOrdersByActiveUser`,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.data.length === 0) {
+          setErrorOrderMessage("Sipariş bulunamamıştır.");
+        } else {
+          console.log(data.data);
+          setOrders(data.data);
+        }
+     
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    } catch (error) {
+      console.error("Sipariş verileri getirilirken hata oluştu: ", error);
+    }
+};
+
   useEffect(() => {
    
     if (!token) {
@@ -130,6 +161,7 @@ const Profile = () => {
 
     fetchProfilVerileri();
     fetchUserAddress();
+    //fetchOrders();
   }, []);
 
 
@@ -510,51 +542,16 @@ const Profile = () => {
        <button className="profile-password" style={{marginLeft:"50px"}} onClick={()=>handleChangePassword()}>Şifreyi Değiştir</button>
     
        </p>
-      {/* 
-      <hr className="profile-hr" />
-      <p className="profile-text">Doğum Tarihi:
-      <span className="edit-input-area">{user.dateOfBirth}  </span>     </p>
-  */}
-      {/* <input
-                type="text"
-                name="dateOfBirth"
-                value={user.dateOfBirth}
-                onChange={handleInputChange}
-                className="edit-input-area"
-                disabled={true}
-              /> */}
       <hr className="profile-hr" />
       <div style={{float:"right"}}>
        {saveButtonVisibility && <button className="save-button profile-mobile-button" onClick={updateUser}>Kaydet</button>} 
         <button className="profile-save-button profile-mobile-button" id="editButton" onClick={enableEditMode}>Profili Düzenle</button>
         <button className="profile-save-button profile-mobile-button"  onClick={logoutHandler}>Çıkış Yap</button>
       </div>
-      {/* <div style={{ display:"flex", flexDirection: "column",marginTop:"20%"}} >
-     <div> <p className="profile-text"> Mevcut Şifre: <input
-          type="text"
-          value={oldPassword}
-          onChange={handlePasswordChangeOld}
-          className="password-input"
-          placeholder="Mevcut Şifre"
-        /></p>
       </div>
-      <div> 
-        <p className="profile-text"> Yeni Şifre:
-         <input
-         style={{marginLeft:"20px"}}
-          type="text"
-          value={newPassword}
-          onChange={handlePasswordChangeNew}
-          className="password-input"
-          placeholder="Yeni Şifre"
-        /></p>
-      </div>
-     <div> */}
-      {/* </div>
-      </div>  */}
-
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding:"0% 25% 0",marginBottom:"30px",marginTop:"90px" }}>
+      <div class="profile-sections">
+        <div class="profile-section" style={{marginInlineEnd: "auto"}}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",marginBottom:"30px",marginTop:"50px" }}>
         <h3 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Kayıtlı Adreslerim</h3>
         <a
           style={{ margin: "0 3px", color: "#893694", fontStyle: "italic", textAlign: "right", cursor: "pointer", fontFamily:"times", fontSize:"18px" }}
@@ -565,7 +562,7 @@ const Profile = () => {
       </div>
       {errorAddressMessage && <p className="message">{errorAddressMessage}</p>}
 
-      <div  className="profile-card-area" >
+      <div  className="profile-card-area-order-address" >
     <div className="card" style={{ border:"none"}}>
       {userAddress.map((card) => (
         <Address
@@ -577,6 +574,28 @@ const Profile = () => {
         />
       ))}
     </div>
+  </div>
+  </div>
+  <div class="profile-section" >
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",marginBottom:"30px",marginTop:"50px"}}>
+        <h3 style={{ textAlign: "left", fontStyle: "italic", margin: 0,  fontFamily:"times",fontWeight:"bold" }}>Siparişlerim</h3>
+      </div>
+      {errorOrderMessage && <p className="message">{errorOrderMessage}</p>}
+
+      <div  className="profile-card-area-order-address" >
+      <div className="card" style={{ border:"none"}}>
+        {orders.length>0 && orders.map((card) => (
+          <MyOrders
+            key={card.id}
+            id={card.id}
+            createdDate={card.createdDate}
+            productnames={card.producNames}
+          />
+        ))}
+         {orders.length==0 && <p className="message">Siparişiniz bulunmamaktadır.</p>}
+      </div>
+  </div></div>  
   </div>
     </div>
     </div>
