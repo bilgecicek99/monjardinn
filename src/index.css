@@ -1489,6 +1489,8 @@ margin-top: 5px !important;
 
 .timeline {
   display: flex;
+  margin-bottom: 4%;
+  margin-top: 2%;
 }
 
 .timeline-item {

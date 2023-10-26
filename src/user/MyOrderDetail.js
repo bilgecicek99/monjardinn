@@ -105,22 +105,8 @@ return (
       {orderDetails?.orderDetail?.map((item, index) => (
         <div style={styles.card} className="order-detail-card" key={item.orderDetailId}>
           <div style={{ ...styles.cardContent, padding: "20px" }}>        
-            <div className="timeline">
-              {orderProgress.map((progress, progressIndex) => (
-                <>
-                  {progressIndex > 0 && <div className="timeline-line"></div>}
-                  <div
-                    className={`timeline-item ${item.orderProgressId >= progress.id? "completed" : ""}`}
-                    key={progress.id}
-                  >
-                    <div className="timeline-circle"></div>
-                    <div className="timeline-content">{progress.name}</div>
-                  </div>
-                </>
-              ))}
-            </div>
-            <p style={{ fontWeight: "500", fontSize: "18px", marginLeft: "25px", marginTop: "25px" }}>
-              Siparişler
+            <p>
+              <span style={{ fontWeight: "500", fontSize: "18px", marginTop: "25px" }}>Sipariş No:</span>  <span style={{ fontSize: "16px" }}>#{orderDetails.orderNumber}</span>
             </p>
             <table className="table table-light">
               <thead></thead>
@@ -147,13 +133,26 @@ return (
                   </tr>
                   <tr>
                     <td colSpan="5" style={{ border: "none", padding: 0 }}>
-                      <hr style={{ color: "black" }} />
                     </td>
                   </tr>
                 </tbody>
             </table>
+            <div className="timeline">
+              {orderProgress.map((progress, progressIndex) => (
+                <>
+                  {progressIndex > 0 && <div className="timeline-line"></div>}
+                  <div
+                    className={`timeline-item ${item.orderProgressId >= progress.id? "completed" : ""}`}
+                    key={progress.id}
+                  >
+                    <div className="timeline-circle"></div>
+                    <div className="timeline-content">{progress.name}</div>
+                  </div>
+                </>
+              ))}
+            </div>
 
-            <p style={{ fontWeight: "600", fontSize: "16px" }}>Teslim Edileceği Yer</p>
+            <p style={{ fontWeight: "600", fontSize: "16px" }}>Teslimat Adresi</p>
             <p style={{ fontWeight: "500", fontSize: "15px",marginLeft:"7px" }}>{item.userAddressDetail.addressTitle}</p>
             <p style={{ fontSize: "15px", marginLeft:"7px" }}>{item.userAddressDetail.address}</p>
           </div>
