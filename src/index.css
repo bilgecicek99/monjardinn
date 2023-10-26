@@ -1531,10 +1531,10 @@ margin-top: 5px !important;
 }
 
 .profile-sections {
-  display: inline-flex;
-  justify-content: center;
-  margin: 0 auto;
-  
+  display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 80%;
 }
 
 .profile-section {

@@ -161,7 +161,7 @@ const Profile = () => {
 
     fetchProfilVerileri();
     fetchUserAddress();
-    //fetchOrders();
+    fetchOrders();
   }, []);
 
 
@@ -560,7 +560,7 @@ const Profile = () => {
           Adres Ekle
         </a>
       </div>
-      {errorAddressMessage && <p className="message">{errorAddressMessage}</p>}
+      {/* {errorAddressMessage && <p className="message">{errorAddressMessage}</p>} */}
 
       <div  className="profile-card-area-order-address" >
     <div className="card" style={{ border:"none"}}>
@@ -573,6 +573,7 @@ const Profile = () => {
           quarter={card.quarterName}
         />
       ))}
+        {userAddress.length==0 && <p className="message" style={{textAlign:"left"}}>Kayıtlı adresiniz bulunmamaktadır.</p>}
     </div>
   </div>
   </div>
@@ -585,7 +586,7 @@ const Profile = () => {
 
       <div  className="profile-card-area-order-address" >
       <div className="card" style={{ border:"none"}}>
-        {orders.length>0 && orders.map((card) => (
+        {orders.map((card) => (
           <MyOrders
             key={card.id}
             id={card.id}
@@ -593,7 +594,7 @@ const Profile = () => {
             productnames={card.producNames}
           />
         ))}
-         {orders.length==0 && <p className="message">Siparişiniz bulunmamaktadır.</p>}
+         {orders.length==0 && <p className="message" style={{textAlign:"left"}}>Siparişiniz bulunmamaktadır.</p>}
       </div>
   </div></div>  
   </div>
