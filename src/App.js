@@ -53,6 +53,7 @@ import Footer from './footer';
 import ChangePassword from './user/ChangePassword';
 import ScrollToTop from './ScrollToTop';
 import MyOrderDetail from './user/MyOrderDetail';
+import Order from './order/Order';
 
 
 function App() {
@@ -104,6 +105,9 @@ function App() {
         <Route path="/editslider" element={<EditSlider/>} />
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
+
+        <Route path="/order" element={<Order />} /> 
+
 
       </Routes>
       

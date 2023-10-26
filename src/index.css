@@ -1379,7 +1379,7 @@ margin-top: 5px !important;
 
 
 .toplamtext{
-  font-size: 25px !important;
+  font-size: 22px !important;
   font-weight: bold;
   font-style: italic ;
   font-family: 'Times New Roman', Times, serif;
@@ -1552,3 +1552,32 @@ margin-top: 5px !important;
     margin-bottom: 20px; 
   }
 }
+
+
+
+.order-responsive-main{
+  display: flex;
+}
+.order-responsive-products{
+  width: 60%;
+  display: block;
+}
+.order-responsive-credit-card{
+  width: 40%;
+  display: block
+}
+
+@media only screen and (max-width: 768px) {
+
+  .order-responsive-main{
+    display: block;
+  }
+  .order-responsive-products{
+    width: 100%;
+  }
+  .order-responsive-credit-card{
+    width: 100%;
+  
+  }
+  
+} 
