@@ -52,6 +52,7 @@ import AddBlog from './admin/AddBlog';
 import Footer from './footer';
 import ChangePassword from './user/ChangePassword';
 import ScrollToTop from './ScrollToTop';
+import MyOrderDetail from './user/MyOrderDetail';
 import Order from './order/Order';
 
 
@@ -86,6 +87,7 @@ function App() {
         <Route path="/adminallproductlist" element={<AdminAllProductList/>} />
         <Route path="/adminaddproduct" element={<AdminAddProduct/>} />
         <Route path="/adminallblog" element={<AdminAllBlog/>} />
+        <Route path="/orderdetail/:id" element={<MyOrderDetail/>} />
 
 
         {/* <Route path="/createyourself" element={<CreateYourself/>} /> */}
@@ -99,8 +101,8 @@ function App() {
         <Route path="/addaddress" element={<AddUserAddress />} />
         <Route path="/editaddres/:id" element={<EditUserAddress />} />
         <Route path="/Morethan" element={<MenuMoreThan />} />
-         <Route path="/Contact" element={<Contact />} /> 
-         <Route path="/editslider" element={<EditSlider/>} />
+        <Route path="/Contact" element={<Contact />} /> 
+        <Route path="/editslider" element={<EditSlider/>} />
 
         <Route path="/productlistbycategory"  element={<ProductListByCategory />} />
 
