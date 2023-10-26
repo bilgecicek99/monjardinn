@@ -40,6 +40,9 @@ const Footer = () => {
     <div className='mobile-footer-div' style={{ marginLeft: "10%" }}>
       <p className='footer-title'>Mon Jardin</p>
       <p className='footer-url'><img src={"/images/footer.png"} className='footer-url-image' /> www.mjcicek.com</p>
+      <img src={"/images/iyzico-logo-1.png"} alt=""  />
+      <img src={"/images/iyzico-logo-2.png"} alt=""  />
+
     </div>
     <div className='mobile-footer' style={{ width: 400, marginLeft: "40px" }}>
       <p className='footer-sub-title'>KURUMSAL</p>
