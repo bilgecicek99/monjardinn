@@ -173,6 +173,9 @@ const goHomePage = () => {
 const goLoginPage = () => {
   navigate('/login');
 };
+const goOrderPage = () => {
+  navigate('/order', { state: { items: items, totalItems: totalItems, totalPrice: totalPrice } });
+};
 
 const handlePieceSave = async (item, action) => {
   let total = item.total;
@@ -296,7 +299,7 @@ const handlePieceSave = async (item, action) => {
               <td></td>
               <td></td>
               <td colSpan="4">
-                  <button className='satinal-button'>Satın Al</button>
+                  <button className='satinal-button' onClick={goOrderPage}>Satın Al</button>
               </td>
               </tr>
             </tfoot>
