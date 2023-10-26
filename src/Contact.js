@@ -5,32 +5,36 @@ import GoogleMapReact from 'google-map-react';
 const contactSections = [
   {
     title:'Adres',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore  '
+    description: 'DR MUSTAFA ENVER BEY CADDESİ NO :34/C KONAK –ALSANCAK /İZMİR'
   },
   {
     title: 'Telefon Numarası',
-    description: '0 212 331 0 200'
+    description: '0232 421 04 70-4217694'
   },
   {
     title: 'Vergi Dairesi',
-    description: '313 055 7669'
+    description: 'KORDON 9500084035'
   },
   {
-    title: 'Vergi Numarası',
-    description: '711896'
+    title: 'Ticaret Sicil No',
+    description: '87362'
   },
   {
     title: 'Kep Adresi',
-    description: 'dsm@hs02.kep.tr'
+    description: 'yesildenizcicekcilik@hs01.kep.tr'
   },
   {
     title: 'Mersis Numarası ',
-    description: '0313055766900016'
+    description: '0950008403500015'
   },
   {
     title: 'Sorumlu Kişi',
-    description: 'Yasin Canki'
-  }
+    description: 'Ali Deniz'
+  },
+  {
+    title: 'İletişim',
+    description: '0532 311 31 38'
+  },
 ];
 
 
